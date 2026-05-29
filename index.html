@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NutriInfo — Proteínas, Almidones y Grasas</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", sans-serif; background: #f0f7f0; color: #1a2e1a; min-height: 100vh; }
+
+.app { max-width: 700px; margin: 0 auto; padding: 2rem 1rem; }
+
+header { text-align: center; margin-bottom: 1.5rem; }
+header h1 { font-size: 2rem; color: #2d6a2d; }
+header p  { color: #666; margin-top: 0.25rem; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  background: #e4f0e4;
+  border-radius: 12px;
+  padding: 4px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 0.55rem 0.5rem;
+  border: none;
+  border-radius: 9px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  background: transparent;
+  color: #555;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.tab-btn.active { background: white; color: #2d6a2d; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.tab-btn:hover:not(.active) { background: #d4e8d4; }
+
+/* Panel */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Buscador */
+.buscador { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.buscador input {
+  flex: 1; padding: 0.75rem 1rem; border: 2px solid #c8e6c8;
+  border-radius: 12px; font-size: 1rem; outline: none; transition: border-color 0.2s;
+}
+.buscador input:focus { border-color: #4caf50; }
+.buscador button {
+  padding: 0.75rem 1.25rem; background: #2d6a2d; color: white;
+  border: none; border-radius: 12px; font-size: 1rem; cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.buscador button:hover    { background: #1b5e20; }
+.buscador button:disabled { background: #aaa; cursor: not-allowed; }
+
+/* Código de barras */
+.barcode-row {
+  display: flex; gap: 0.5rem; margin-bottom: 1.25rem; align-items: center;
+}
+.barcode-row input {
+  flex: 1; padding: 0.65rem 1rem; border: 2px solid #c8e6c8;
+  border-radius: 12px; font-size: 1rem; outline: none; transition: border-color 0.2s;
+  letter-spacing: 0.08em;
+}
+.barcode-row input:focus { border-color: #4caf50; }
+.barcode-row button {
+  padding: 0.65rem 1.2rem; background: #2d6a2d; color: white;
+  border: none; border-radius: 12px; font-size: 0.95rem; cursor: pointer;
+}
+.barcode-row button:hover { background: #1b5e20; }
+.barcode-hint { font-size: 0.8rem; color: #888; margin-bottom: 1rem; }
+
+/* Resultados */
+.resultados-header { font-size: 0.95rem; color: #555; margin-bottom: 0.75rem; }
+.resultado-item {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; text-align: left; background: white; border: 1px solid #e0e0e0;
+  border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.5rem;
+  cursor: pointer; transition: all 0.15s; gap: 0.5rem;
+}
+.resultado-item:hover { border-color: #4caf50; background: #f1f8f1; }
+.resultado-item .info { flex: 1; }
+.resultado-item .nombre    { font-weight: 600; font-size: 0.95rem; }
+.resultado-item .categoria { font-size: 0.8rem; color: #888; margin-top: 2px; }
+.resultado-item .acciones  { display: flex; gap: 0.4rem; }
+.btn-icon {
+  background: none; border: none; cursor: pointer; font-size: 1.1rem;
+  padding: 4px 6px; border-radius: 6px; transition: background 0.15s;
+  line-height: 1;
+}
+.btn-icon:hover { background: #e8f5e9; }
+.btn-icon.comparar-activo { background: #fff3e0; }
+
+/* Tabla nutricional */
+.tabla-card {
+  background: white; border-radius: 16px; padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.tabla-card h2 { font-size: 1.2rem; color: #2d6a2d; margin-bottom: 1rem; }
+
+.gramos-control { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.gramos-control label { color: #555; font-size: 0.9rem; }
+.gramos-control input {
+  width: 80px; padding: 0.4rem 0.6rem; border: 2px solid #c8e6c8;
+  border-radius: 8px; font-size: 1rem; text-align: center;
+}
+.gramos-control span { color: #555; font-size: 0.9rem; }
+
+.slider { width: 100%; accent-color: #4caf50; margin-bottom: 1.5rem; }
+
+.macros-bar {
+  display: flex; height: 10px; border-radius: 8px; overflow: hidden;
+  margin-bottom: 1.25rem; gap: 2px;
+}
+.macros-bar .seg { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.seg-prot  { background: #4caf50; }
+.seg-carb  { background: #ff9800; }
+.seg-grasa { background: #e53935; }
+
+.macros-leyenda { display: flex; gap: 1.2rem; margin-bottom: 1.5rem; font-size: 0.8rem; flex-wrap: wrap; }
+.leyenda-item { display: flex; align-items: center; gap: 0.35rem; }
+.leyenda-dot  { width: 10px; height: 10px; border-radius: 50%; }
+
+.tabla-nutricional { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.tabla-nutricional th {
+  text-align: left; padding: 0.5rem 0.75rem; background: #f1f8f1;
+  color: #555; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.tabla-nutricional td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #f0f0f0; }
+.tabla-nutricional tr:last-child td { border-bottom: none; }
+.tabla-nutricional tr:hover td { background: #fafff8; }
+
+.valor           { text-align: right; font-variant-numeric: tabular-nums; }
+.valor.destacado { font-weight: 700; color: #2d6a2d; font-size: 1rem; }
+.valor.muted     { color: #999; font-size: 0.9rem; }
+
+/* Comparar */
+.comparar-card {
+  background: white; border-radius: 16px; padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 1rem;
+}
+.comparar-header {
+  display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;
+}
+.comparar-header h3 { flex: 1; font-size: 1rem; color: #2d6a2d; }
+.comparar-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.comparar-table th, .comparar-table td { padding: 0.5rem 0.6rem; border-bottom: 1px solid #f0f0f0; }
+.comparar-table th { background: #f1f8f1; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; color: #555; }
+.comparar-table th:not(:first-child), .comparar-table td:not(:first-child) { text-align: right; }
+.comparar-table tr:last-child td { border-bottom: none; }
+.ganador { font-weight: 700; color: #2d6a2d; }
+.placeholder-comparar {
+  text-align: center; color: #bbb; padding: 2rem 1rem; font-size: 0.95rem;
+}
+
+/* Favoritos */
+.fav-item {
+  display: flex; align-items: center; background: white; border: 1px solid #e0e0e0;
+  border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; gap: 0.5rem;
+}
+.fav-item .info { flex: 1; }
+.fav-item .nombre { font-weight: 600; font-size: 0.95rem; }
+.fav-item .meta   { font-size: 0.8rem; color: #888; margin-top: 2px; }
+.fav-vacio { text-align: center; color: #bbb; padding: 2rem 1rem; font-size: 0.95rem; }
+
+/* Botones generales */
+.btn-volver {
+  margin-top: 1.5rem; background: none; border: 2px solid #c8e6c8;
+  color: #2d6a2d; padding: 0.5rem 1rem; border-radius: 10px;
+  cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
+}
+.btn-volver:hover { background: #f1f8f1; }
+
+.btn-fav-add {
+  padding: 0.5rem 1rem; background: #e8f5e9; color: #2d6a2d;
+  border: 1px solid #c8e6c8; border-radius: 10px; cursor: pointer;
+  font-size: 0.85rem; margin-top: 1rem; transition: background 0.2s;
+}
+.btn-fav-add:hover { background: #c8e6c9; }
+
+.error {
+  background: #ffebee; color: #c62828; padding: 0.75rem 1rem;
+  border-radius: 10px; margin-bottom: 1rem; font-size: 0.9rem;
+}
+.info-msg {
+  background: #e3f2fd; color: #1565c0; padding: 0.65rem 1rem;
+  border-radius: 10px; margin-bottom: 1rem; font-size: 0.85rem;
+}
+.spinner { text-align: center; color: #888; padding: 1rem; font-size: 0.95rem; }
+.sin-datos { color: #bbb; font-style: italic; font-size: 0.9rem; }
+.fuente { font-size: 0.75rem; color: #bbb; margin-top: 1rem; text-align: right; }
+
+.badge-comparar {
+  display: inline-block; background: #fff3e0; color: #e65100;
+  border-radius: 20px; padding: 2px 10px; font-size: 0.78rem; font-weight: 600;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>🥦 NutriInfo</h1>
+    <p>Proteínas, almidones y grasas de alimentos y productos</p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="buscar">🔍 Buscar</button>
+    <button class="tab-btn" data-tab="barcode">📷 Código de barras</button>
+    <button class="tab-btn" data-tab="comparar">📊 Comparar <span id="badge-count" class="badge-comparar" style="display:none">0</span></button>
+    <button class="tab-btn" data-tab="favoritos">⭐ Favoritos</button>
+  </div>
+
+  <!-- Panel: Buscar -->
+  <div class="panel active" id="panel-buscar">
+    <div class="buscador">
+      <input id="q" type="text" placeholder="Buscar alimento o producto…" autocomplete="off" />
+      <button id="btn-buscar">Buscar</button>
+    </div>
+    <div id="error-busqueda"></div>
+    <div id="resultados"></div>
+  </div>
+
+  <!-- Panel: Código de barras -->
+  <div class="panel" id="panel-barcode">
+    <p class="barcode-hint">Ingresa el código de barras del producto (EAN-13, UPC-A, etc.)</p>
+    <div class="barcode-row">
+      <input id="barcode-input" type="text" inputmode="numeric" placeholder="Ej: 7501055300472" maxlength="14" />
+      <button id="btn-barcode">Buscar</button>
+    </div>
+    <div id="error-barcode"></div>
+    <div id="resultado-barcode"></div>
+  </div>
+
+  <!-- Panel: Comparar -->
+  <div class="panel" id="panel-comparar">
+    <div id="comparar-contenido">
+      <div class="placeholder-comparar">
+        Agrega alimentos desde la búsqueda usando el botón ⊕ para compararlos aquí.<br/><br/>
+        Puedes comparar hasta 3 alimentos.
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel: Favoritos -->
+  <div class="panel" id="panel-favoritos">
+    <div id="favoritos-lista"></div>
+  </div>
+
+  <!-- Vista tabla (capa sobre todo) -->
+  <div id="vista-tabla" style="display:none"></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+// ── Datos locales ─────────────────────────────────────────────────────────────
+const LOCALES = [
+  { id:'pollo-pechuga',  product_name:'Pechuga de pollo (cocida)',   brands:'', categories_tags:['Carnes'],          nutriments:{'energy-kcal_100g':165,'proteins_100g':31,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':3.6, 'saturated-fat_100g':1,   'salt_100g':0.2} },
+  { id:'pollo-muslo',    product_name:'Muslo de pollo (cocido)',      brands:'', categories_tags:['Carnes'],          nutriments:{'energy-kcal_100g':209,'proteins_100g':26,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':11,  'saturated-fat_100g':3,   'salt_100g':0.3} },
+  { id:'huevo-entero',   product_name:'Huevo entero',                 brands:'', categories_tags:['Huevos'],          nutriments:{'energy-kcal_100g':155,'proteins_100g':13,  'carbohydrates_100g':1.1, 'sugars_100g':1.1, 'fiber_100g':0,    'fat_100g':11,  'saturated-fat_100g':3.3, 'salt_100g':0.4} },
+  { id:'huevo-clara',    product_name:'Clara de huevo',               brands:'', categories_tags:['Huevos'],          nutriments:{'energy-kcal_100g':52, 'proteins_100g':11,  'carbohydrates_100g':0.7, 'sugars_100g':0.7, 'fiber_100g':0,    'fat_100g':0.2, 'saturated-fat_100g':0,   'salt_100g':0.5} },
+  { id:'atun-lata',      product_name:'Atún en agua (lata)',          brands:'', categories_tags:['Pescados'],        nutriments:{'energy-kcal_100g':116,'proteins_100g':26,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':1,   'saturated-fat_100g':0.3, 'salt_100g':0.8} },
+  { id:'salmon',         product_name:'Salmón (filete)',              brands:'', categories_tags:['Pescados'],        nutriments:{'energy-kcal_100g':208,'proteins_100g':20,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':13,  'saturated-fat_100g':3,   'salt_100g':0.1} },
+  { id:'sardina',        product_name:'Sardina en aceite',            brands:'', categories_tags:['Pescados'],        nutriments:{'energy-kcal_100g':208,'proteins_100g':25,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':11,  'saturated-fat_100g':1.5, 'salt_100g':1.2} },
+  { id:'res-molida',     product_name:'Carne molida de res (90%)',    brands:'', categories_tags:['Carnes'],          nutriments:{'energy-kcal_100g':176,'proteins_100g':20,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':10,  'saturated-fat_100g':4,   'salt_100g':0.3} },
+  { id:'cerdo-lomo',     product_name:'Lomo de cerdo (cocido)',       brands:'', categories_tags:['Carnes'],          nutriments:{'energy-kcal_100g':242,'proteins_100g':27,  'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':14,  'saturated-fat_100g':5,   'salt_100g':0.2} },
+  { id:'jamon-pavo',     product_name:'Jamón de pavo (bajo en grasa)',brands:'', categories_tags:['Embutidos'],       nutriments:{'energy-kcal_100g':100,'proteins_100g':17,  'carbohydrates_100g':2,   'sugars_100g':1,   'fiber_100g':0,    'fat_100g':2.5, 'saturated-fat_100g':0.8, 'salt_100g':1.5} },
+  { id:'leche-entera',   product_name:'Leche entera',                 brands:'', categories_tags:['Lácteos'],         nutriments:{'energy-kcal_100g':61, 'proteins_100g':3.2, 'carbohydrates_100g':4.8, 'sugars_100g':4.8, 'fiber_100g':0,    'fat_100g':3.3, 'saturated-fat_100g':1.9, 'salt_100g':0.1} },
+  { id:'leche-descrem',  product_name:'Leche descremada',             brands:'', categories_tags:['Lácteos'],         nutriments:{'energy-kcal_100g':35, 'proteins_100g':3.4, 'carbohydrates_100g':5,   'sugars_100g':5,   'fiber_100g':0,    'fat_100g':0.1, 'saturated-fat_100g':0.1, 'salt_100g':0.1} },
+  { id:'yogur-natural',  product_name:'Yogur natural',                brands:'', categories_tags:['Lácteos'],         nutriments:{'energy-kcal_100g':59, 'proteins_100g':3.5, 'carbohydrates_100g':4.7, 'sugars_100g':4.7, 'fiber_100g':0,    'fat_100g':3.3, 'saturated-fat_100g':2,   'salt_100g':0.06} },
+  { id:'queso-oaxaca',   product_name:'Queso Oaxaca',                 brands:'', categories_tags:['Lácteos'],         nutriments:{'energy-kcal_100g':320,'proteins_100g':22,  'carbohydrates_100g':1.3, 'sugars_100g':0.5, 'fiber_100g':0,    'fat_100g':25,  'saturated-fat_100g':16,  'salt_100g':1.4} },
+  { id:'queso-cottage',  product_name:'Queso cottage',                brands:'', categories_tags:['Lácteos'],         nutriments:{'energy-kcal_100g':98, 'proteins_100g':11,  'carbohydrates_100g':3.4, 'sugars_100g':2.7, 'fiber_100g':0,    'fat_100g':4.3, 'saturated-fat_100g':1.7, 'salt_100g':0.5} },
+  { id:'arroz-blanco',   product_name:'Arroz blanco (cocido)',        brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':130,'proteins_100g':2.7, 'carbohydrates_100g':28,  'sugars_100g':0.1, 'fiber_100g':0.4,  'fat_100g':0.3, 'saturated-fat_100g':0.1, 'salt_100g':0} },
+  { id:'arroz-integral', product_name:'Arroz integral (cocido)',      brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':123,'proteins_100g':2.7, 'carbohydrates_100g':26,  'sugars_100g':0.4, 'fiber_100g':1.8,  'fat_100g':1,   'saturated-fat_100g':0.2, 'salt_100g':0} },
+  { id:'tortilla-maiz',  product_name:'Tortilla de maíz',             brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':218,'proteins_100g':5.7, 'carbohydrates_100g':46,  'sugars_100g':0.9, 'fiber_100g':5.2,  'fat_100g':2.5, 'saturated-fat_100g':0.4, 'salt_100g':0.5} },
+  { id:'tortilla-harina',product_name:'Tortilla de harina',           brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':306,'proteins_100g':8.2, 'carbohydrates_100g':52,  'sugars_100g':3,   'fiber_100g':2.3,  'fat_100g':7,   'saturated-fat_100g':1.7, 'salt_100g':1.1} },
+  { id:'pan-blanco',     product_name:'Pan blanco (rebanada)',        brands:'', categories_tags:['Panadería'],       nutriments:{'energy-kcal_100g':265,'proteins_100g':9,   'carbohydrates_100g':49,  'sugars_100g':5,   'fiber_100g':2.7,  'fat_100g':3.2, 'saturated-fat_100g':0.7, 'salt_100g':1.1} },
+  { id:'pan-integral',   product_name:'Pan integral (rebanada)',      brands:'', categories_tags:['Panadería'],       nutriments:{'energy-kcal_100g':247,'proteins_100g':13,  'carbohydrates_100g':41,  'sugars_100g':5,   'fiber_100g':7,    'fat_100g':3.4, 'saturated-fat_100g':0.7, 'salt_100g':1} },
+  { id:'avena',          product_name:'Avena en hojuelas',            brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':389,'proteins_100g':17,  'carbohydrates_100g':66,  'sugars_100g':1,   'fiber_100g':10.6, 'fat_100g':7,   'saturated-fat_100g':1.2, 'salt_100g':0} },
+  { id:'pasta-cocida',   product_name:'Pasta (cocida)',               brands:'', categories_tags:['Cereales'],        nutriments:{'energy-kcal_100g':158,'proteins_100g':5.8, 'carbohydrates_100g':31,  'sugars_100g':0.6, 'fiber_100g':1.8,  'fat_100g':0.9, 'saturated-fat_100g':0.2, 'salt_100g':0} },
+  { id:'frijoles-neg',   product_name:'Frijoles negros (cocidos)',    brands:'', categories_tags:['Legumbres'],       nutriments:{'energy-kcal_100g':132,'proteins_100g':8.9, 'carbohydrates_100g':24,  'sugars_100g':0.3, 'fiber_100g':8.7,  'fat_100g':0.5, 'saturated-fat_100g':0.1, 'salt_100g':0} },
+  { id:'lentejas',       product_name:'Lentejas (cocidas)',           brands:'', categories_tags:['Legumbres'],       nutriments:{'energy-kcal_100g':116,'proteins_100g':9,   'carbohydrates_100g':20,  'sugars_100g':1.8, 'fiber_100g':7.9,  'fat_100g':0.4, 'saturated-fat_100g':0.1, 'salt_100g':0} },
+  { id:'garbanzo',       product_name:'Garbanzo (cocido)',            brands:'', categories_tags:['Legumbres'],       nutriments:{'energy-kcal_100g':164,'proteins_100g':8.9, 'carbohydrates_100g':27,  'sugars_100g':4.8, 'fiber_100g':7.6,  'fat_100g':2.6, 'saturated-fat_100g':0.3, 'salt_100g':0} },
+  { id:'platano',        product_name:'Plátano',                      brands:'', categories_tags:['Frutas'],          nutriments:{'energy-kcal_100g':89, 'proteins_100g':1.1, 'carbohydrates_100g':23,  'sugars_100g':12,  'fiber_100g':2.6,  'fat_100g':0.3, 'saturated-fat_100g':0.1, 'salt_100g':0} },
+  { id:'manzana',        product_name:'Manzana',                      brands:'', categories_tags:['Frutas'],          nutriments:{'energy-kcal_100g':52, 'proteins_100g':0.3, 'carbohydrates_100g':14,  'sugars_100g':10,  'fiber_100g':2.4,  'fat_100g':0.2, 'saturated-fat_100g':0,   'salt_100g':0} },
+  { id:'naranja',        product_name:'Naranja',                      brands:'', categories_tags:['Frutas'],          nutriments:{'energy-kcal_100g':47, 'proteins_100g':0.9, 'carbohydrates_100g':12,  'sugars_100g':9.4, 'fiber_100g':2.4,  'fat_100g':0.1, 'saturated-fat_100g':0,   'salt_100g':0} },
+  { id:'papa-cocida',    product_name:'Papa cocida (sin piel)',       brands:'', categories_tags:['Verduras'],        nutriments:{'energy-kcal_100g':87, 'proteins_100g':1.9, 'carbohydrates_100g':20,  'sugars_100g':0.9, 'fiber_100g':1.8,  'fat_100g':0.1, 'saturated-fat_100g':0,   'salt_100g':0} },
+  { id:'aguacate',       product_name:'Aguacate',                     brands:'', categories_tags:['Frutas'],          nutriments:{'energy-kcal_100g':160,'proteins_100g':2,   'carbohydrates_100g':9,   'sugars_100g':0.7, 'fiber_100g':6.7,  'fat_100g':15,  'saturated-fat_100g':2.1, 'salt_100g':0} },
+  { id:'brocoli',        product_name:'Brócoli (cocido)',             brands:'', categories_tags:['Verduras'],        nutriments:{'energy-kcal_100g':35, 'proteins_100g':2.4, 'carbohydrates_100g':7.2, 'sugars_100g':1.7, 'fiber_100g':3.3,  'fat_100g':0.4, 'saturated-fat_100g':0.1, 'salt_100g':0} },
+  { id:'espinaca',       product_name:'Espinaca (cruda)',             brands:'', categories_tags:['Verduras'],        nutriments:{'energy-kcal_100g':23, 'proteins_100g':2.9, 'carbohydrates_100g':3.6, 'sugars_100g':0.4, 'fiber_100g':2.2,  'fat_100g':0.4, 'saturated-fat_100g':0.1, 'salt_100g':0.1} },
+  { id:'aceite-oliva',   product_name:'Aceite de oliva',              brands:'', categories_tags:['Grasas'],          nutriments:{'energy-kcal_100g':884,'proteins_100g':0,   'carbohydrates_100g':0,   'sugars_100g':0,   'fiber_100g':0,    'fat_100g':100, 'saturated-fat_100g':14,  'salt_100g':0} },
+  { id:'almendras',      product_name:'Almendras',                    brands:'', categories_tags:['Nueces'],          nutriments:{'energy-kcal_100g':579,'proteins_100g':21,  'carbohydrates_100g':22,  'sugars_100g':4.4, 'fiber_100g':12.5, 'fat_100g':50,  'saturated-fat_100g':3.8, 'salt_100g':0} },
+  { id:'nuez',           product_name:'Nuez de castilla',             brands:'', categories_tags:['Nueces'],          nutriments:{'energy-kcal_100g':654,'proteins_100g':15,  'carbohydrates_100g':14,  'sugars_100g':2.6, 'fiber_100g':6.7,  'fat_100g':65,  'saturated-fat_100g':6.1, 'salt_100g':0} },
+  { id:'mantequilla',    product_name:'Mantequilla',                  brands:'', categories_tags:['Grasas'],          nutriments:{'energy-kcal_100g':717,'proteins_100g':0.9, 'carbohydrates_100g':0.1, 'sugars_100g':0.1, 'fiber_100g':0,    'fat_100g':81,  'saturated-fat_100g':51,  'salt_100g':1.1} },
+];
+
+// ── Estado global ─────────────────────────────────────────────────────────────
+let favoritos    = JSON.parse(localStorage.getItem('nutriFavs')  || '[]');
+let enComparacion= JSON.parse(localStorage.getItem('nutriComp')  || '[]');  // max 3 items
+let productoActual = null;
+
+function guardarFavs()  { localStorage.setItem('nutriFavs',  JSON.stringify(favoritos)); }
+function guardarComp()  { localStorage.setItem('nutriComp',  JSON.stringify(enComparacion)); }
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    $(`panel-${btn.dataset.tab}`).classList.add('active');
+    $('vista-tabla').style.display = 'none';
+    if (btn.dataset.tab === 'favoritos') renderFavoritos();
+    if (btn.dataset.tab === 'comparar')  renderComparar();
+  });
+});
+
+// ── Buscar por nombre ─────────────────────────────────────────────────────────
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter') buscar(); });
+$('btn-buscar').addEventListener('click', buscar);
+
+async function buscar() {
+  const q = $('q').value.trim();
+  if (!q) return;
+
+  const btn = $('btn-buscar');
+  btn.disabled = true;
+  $('error-busqueda').innerHTML = '';
+  $('resultados').innerHTML = '<div class="spinner">Buscando…</div>';
+
+  const qLow = q.toLowerCase();
+  const locales = LOCALES.filter(p => p.product_name.toLowerCase().includes(qLow));
+  if (locales.length) renderResultados('resultados', locales, true);
+
+  try {
+    const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(q)}&search_simple=1&action=process&json=1&page_size=15&fields=id,product_name,brands,categories_tags,nutriments`;
+    const res  = await fetch(url, { signal: AbortSignal.timeout(1500) });
+    const data = await res.json();
+    const deAPI = (data.products || []).filter(p =>
+      p.product_name && p.nutriments &&
+      (p.nutriments['energy-kcal_100g'] || p.nutriments['proteins_100g'] || p.nutriments['fat_100g'])
+    );
+    const nombresLocales = new Set(locales.map(p => p.product_name.toLowerCase()));
+    const combinados = [...locales, ...deAPI.filter(p => !nombresLocales.has(p.product_name.toLowerCase()))];
+    if (combinados.length) renderResultados('resultados', combinados, false);
+    else if (!locales.length) $('resultados').innerHTML = '<div class="spinner">Sin resultados. Prueba otro término.</div>';
+  } catch {
+    if (!locales.length) {
+      $('resultados').innerHTML = '<div class="spinner">Sin resultados locales.</div>';
+      $('error-busqueda').innerHTML = '<div class="error">Sin conexión a internet. Solo están disponibles los alimentos básicos.</div>';
+    }
+  }
+
+  btn.disabled = false;
+}
+
+// ── Buscar por código de barras ───────────────────────────────────────────────
+$('barcode-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarBarcode(); });
+$('btn-barcode').addEventListener('click', buscarBarcode);
+
+async function buscarBarcode() {
+  const codigo = $('barcode-input').value.trim().replace(/\D/g, '');
+  if (!codigo) return;
+
+  $('error-barcode').innerHTML = '';
+  $('resultado-barcode').innerHTML = '<div class="spinner">Buscando producto…</div>';
+  $('btn-barcode').disabled = true;
+
+  try {
+    const url = `https://world.openfoodfacts.org/api/v0/product/${codigo}.json`;
+    const res  = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    const data = await res.json();
+
+    if (data.status !== 1 || !data.product) {
+      $('resultado-barcode').innerHTML = '<div class="spinner">Producto no encontrado. Verifica el código.</div>';
+      return;
+    }
+
+    const p = data.product;
+    p.id = p._id || codigo;
+    $('resultado-barcode').innerHTML = '';
+    renderResultados('resultado-barcode', [p], false);
+  } catch {
+    $('error-barcode').innerHTML = '<div class="error">Error de conexión. Verifica tu internet.</div>';
+    $('resultado-barcode').innerHTML = '';
+  } finally {
+    $('btn-barcode').disabled = false;
+  }
+}
+
+// ── Render lista de resultados ────────────────────────────────────────────────
+function renderResultados(contenedorId, productos, cargando) {
+  const contenedor = $(contenedorId);
+  const nota = cargando ? ' <span style="color:#aaa;font-size:0.82rem">· buscando más en internet…</span>' : '';
+  contenedor.innerHTML = `<p class="resultados-header">${productos.length} resultado(s)${nota}</p>`;
+
+  productos.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'resultado-item';
+
+    const cat = limpiarCategoria(p.categories_tags);
+    const marca = p.brands ? ` · ${p.brands.split(',')[0].trim()}` : '';
+    const esFav  = favoritos.some(f => f.id === p.id);
+    const esComp = enComparacion.some(c => c.id === p.id);
+
+    div.innerHTML = `
+      <div class="info">
+        <div class="nombre">${p.product_name}${marca ? `<span style="font-weight:400;color:#888;font-size:0.85rem"> ${marca}</span>` : ''}</div>
+        ${cat ? `<div class="categoria">${cat}</div>` : ''}
+      </div>
+      <div class="acciones">
+        <button class="btn-icon btn-comp ${esComp ? 'comparar-activo' : ''}" title="Agregar a comparar">⊕</button>
+        <button class="btn-icon btn-fav"  title="${esFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">${esFav ? '⭐' : '☆'}</button>
+        <button class="btn-icon btn-ver"  title="Ver tabla">📋</button>
+      </div>
+    `;
+
+    div.querySelector('.btn-ver').addEventListener('click', e => { e.stopPropagation(); mostrarTabla(p); });
+    div.querySelector('.btn-fav').addEventListener('click', e => { e.stopPropagation(); toggleFav(p, div.querySelector('.btn-fav')); });
+    div.querySelector('.btn-comp').addEventListener('click', e => { e.stopPropagation(); toggleComparar(p, div.querySelector('.btn-comp')); });
+    div.querySelector('.info').addEventListener('click', () => mostrarTabla(p));
+
+    contenedor.appendChild(div);
+  });
+}
+
+function limpiarCategoria(tags) {
+  if (!tags || !tags.length) return '';
+  const last = tags[tags.length - 1] || '';
+  return last.replace(/^[a-z]{2}:/, '').replace(/-/g, ' ');
+}
+
+// ── Favoritos ─────────────────────────────────────────────────────────────────
+function toggleFav(producto, btn) {
+  const idx = favoritos.findIndex(f => f.id === producto.id);
+  if (idx === -1) {
+    favoritos.unshift(producto);
+    btn.textContent = '⭐';
+    btn.title = 'Quitar de favoritos';
+  } else {
+    favoritos.splice(idx, 1);
+    btn.textContent = '☆';
+    btn.title = 'Agregar a favoritos';
+  }
+  guardarFavs();
+}
+
+function renderFavoritos() {
+  const lista = $('favoritos-lista');
+  if (!favoritos.length) {
+    lista.innerHTML = '<div class="fav-vacio">Aún no tienes favoritos.<br/>Agrega alimentos desde la búsqueda con ☆</div>';
+    return;
+  }
+  lista.innerHTML = '';
+  favoritos.forEach(p => {
+    const n = p.nutriments || {};
+    const div = document.createElement('div');
+    div.className = 'fav-item';
+    const cat = limpiarCategoria(p.categories_tags);
+    div.innerHTML = `
+      <div class="info">
+        <div class="nombre">${p.product_name}</div>
+        <div class="meta">${cat ? cat + ' · ' : ''}${fmtNum(n['energy-kcal_100g'])} kcal · ${fmtNum(n['proteins_100g'])}g prot · ${fmtNum(n['fat_100g'])}g grasa (por 100g)</div>
+      </div>
+      <div class="acciones">
+        <button class="btn-icon" title="Ver tabla" data-ver>📋</button>
+        <button class="btn-icon" title="Quitar" data-del>🗑️</button>
+      </div>
+    `;
+    div.querySelector('[data-ver]').addEventListener('click', () => mostrarTabla(p));
+    div.querySelector('[data-del]').addEventListener('click', () => {
+      favoritos = favoritos.filter(f => f.id !== p.id);
+      guardarFavs();
+      renderFavoritos();
+    });
+    lista.appendChild(div);
+  });
+}
+
+// ── Comparar ──────────────────────────────────────────────────────────────────
+function actualizarBadge() {
+  const badge = $('badge-count');
+  if (enComparacion.length) {
+    badge.style.display = '';
+    badge.textContent = enComparacion.length;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function toggleComparar(producto, btn) {
+  const idx = enComparacion.findIndex(c => c.id === producto.id);
+  if (idx === -1) {
+    if (enComparacion.length >= 3) {
+      alert('Solo puedes comparar hasta 3 alimentos a la vez. Quita uno primero desde la pestaña Comparar.');
+      return;
+    }
+    enComparacion.push(producto);
+    btn.classList.add('comparar-activo');
+    btn.title = 'Quitar de comparación';
+  } else {
+    enComparacion.splice(idx, 1);
+    btn.classList.remove('comparar-activo');
+    btn.title = 'Agregar a comparar';
+  }
+  guardarComp();
+  actualizarBadge();
+}
+
+function renderComparar() {
+  const cont = $('comparar-contenido');
+
+  if (!enComparacion.length) {
+    cont.innerHTML = `<div class="placeholder-comparar">Agrega alimentos desde la búsqueda usando el botón ⊕ para compararlos aquí.<br/><br/>Puedes comparar hasta 3 alimentos.</div>`;
+    return;
+  }
+
+  const filas = [
+    { label: '⚡ Calorías',      key: 'energy-kcal_100g', unidad: 'kcal', mejor: 'min' },
+    { label: '💪 Proteínas',     key: 'proteins_100g',     unidad: 'g',    mejor: 'max' },
+    { label: '🌾 Carbohidratos', key: 'carbohydrates_100g',unidad: 'g',    mejor: null  },
+    { label: '↳ Almidón (est.)', key: '__almidon',          unidad: 'g',    mejor: null  },
+    { label: '↳ Azúcares',       key: 'sugars_100g',        unidad: 'g',    mejor: 'min' },
+    { label: '↳ Fibra',          key: 'fiber_100g',         unidad: 'g',    mejor: 'max' },
+    { label: '🧈 Grasas totales',key: 'fat_100g',           unidad: 'g',    mejor: null  },
+    { label: '↳ Saturadas',      key: 'saturated-fat_100g', unidad: 'g',    mejor: 'min' },
+    { label: '🧂 Sal',           key: 'salt_100g',          unidad: 'g',    mejor: 'min' },
+  ];
+
+  const headers = enComparacion.map((p, i) =>
+    `<th>${p.product_name}<br/><button class="btn-icon" style="font-size:0.8rem" data-idx="${i}" title="Quitar">✕</button></th>`
+  ).join('');
+
+  const filasHTML = filas.map(f => {
+    const vals = enComparacion.map(p => {
+      const n = p.nutriments || {};
+      if (f.key === '__almidon') return calcAlmidon(n, 1);
+      const v = parseFloat(n[f.key]);
+      return isNaN(v) ? null : v;
+    });
+
+    const mejorIdx = f.mejor ? encontrarMejor(vals, f.mejor) : -1;
+
+    const celdas = vals.map((v, i) => {
+      const cls = (mejorIdx === i) ? 'ganador' : '';
+      return `<td class="${cls}">${v != null ? v.toFixed(1) + ' ' + f.unidad : '<span class="sin-datos">—</span>'}</td>`;
+    }).join('');
+
+    const estilo = f.label.startsWith('↳') ? 'color:#888;font-size:0.85rem' : '';
+    return `<tr><td style="${estilo}">${f.label}</td>${celdas}</tr>`;
+  }).join('');
+
+  cont.innerHTML = `
+    <div class="comparar-card">
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1rem">Valores por 100 g · <strong style="color:#2d6a2d">verde</strong> = mejor valor</p>
+      <table class="comparar-table">
+        <thead><tr><th>Nutriente</th>${headers}</tr></thead>
+        <tbody>${filasHTML}</tbody>
+      </table>
+    </div>
+  `;
+
+  cont.querySelectorAll('[data-idx]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.idx);
+      enComparacion.splice(i, 1);
+      guardarComp();
+      actualizarBadge();
+      renderComparar();
+    });
+  });
+}
+
+function encontrarMejor(vals, tipo) {
+  const noNulos = vals.map((v, i) => ({ v, i })).filter(x => x.v != null);
+  if (!noNulos.length) return -1;
+  const elegido = tipo === 'max'
+    ? noNulos.reduce((a, b) => b.v > a.v ? b : a)
+    : noNulos.reduce((a, b) => b.v < a.v ? b : a);
+  return elegido.i;
+}
+
+// ── Tabla nutricional ─────────────────────────────────────────────────────────
+function mostrarTabla(producto) {
+  productoActual = producto;
+  $('vista-tabla').style.display = '';
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  renderTabla(100);
+}
+
+function renderTabla(gramos) {
+  const p  = productoActual;
+  const n  = p.nutriments || {};
+  const f  = gramos / 100;
+
+  const cal     = val(n['energy-kcal_100g'], f);
+  const prot    = val(n['proteins_100g'], f);
+  const carb    = val(n['carbohydrates_100g'], f);
+  const fibra   = val(n['fiber_100g'], f);
+  const azuc    = val(n['sugars_100g'], f);
+  const grasa   = val(n['fat_100g'], f);
+  const sat     = val(n['saturated-fat_100g'], f);
+  const sal     = val(n['salt_100g'], f);
+  const almidon = calcAlmidon(n, f);
+
+  const total = (prot ?? 0) + (carb ?? 0) + (grasa ?? 0);
+  const pctP  = total ? Math.round((prot  ?? 0) / total * 100) : 0;
+  const pctC  = total ? Math.round((carb  ?? 0) / total * 100) : 0;
+  const pctG  = total ? 100 - pctP - pctC : 0;
+
+  const marca   = p.brands ? ` <span style="font-weight:400;color:#888;font-size:0.9rem">· ${p.brands.split(',')[0].trim()}</span>` : '';
+  const esFav   = favoritos.some(f2 => f2.id === p.id);
+  const esComp  = enComparacion.some(c => c.id === p.id);
+
+  $('vista-tabla').innerHTML = `
+    <div class="tabla-card">
+      <h2>${p.product_name}${marca}</h2>
+
+      <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
+        <button id="tbl-fav"  class="btn-fav-add">${esFav  ? '⭐ En favoritos'       : '☆ Agregar a favoritos'}</button>
+        <button id="tbl-comp" class="btn-fav-add" style="${esComp ? 'background:#fff3e0;border-color:#ffcc80;color:#e65100' : ''}">${esComp ? '⊕ En comparación' : '⊕ Agregar a comparar'}</button>
+      </div>
+
+      <div class="gramos-control">
+        <label for="gramos-input">Porción:</label>
+        <input id="gramos-input" type="number" min="1" max="2000" value="${gramos}" />
+        <span>gramos</span>
+      </div>
+      <input class="slider" id="gramos-slider" type="range" min="1" max="500" value="${gramos}" />
+
+      <div class="macros-bar">
+        <div class="seg seg-prot"  style="width:${pctP}%"></div>
+        <div class="seg seg-carb"  style="width:${pctC}%"></div>
+        <div class="seg seg-grasa" style="width:${pctG}%"></div>
+      </div>
+      <div class="macros-leyenda">
+        <div class="leyenda-item"><div class="leyenda-dot" style="background:#4caf50"></div>Proteína ${pctP}%</div>
+        <div class="leyenda-item"><div class="leyenda-dot" style="background:#ff9800"></div>Carbohidratos ${pctC}%</div>
+        <div class="leyenda-item"><div class="leyenda-dot" style="background:#e53935"></div>Grasas ${pctG}%</div>
+      </div>
+
+      <table class="tabla-nutricional">
+        <thead>
+          <tr>
+            <th>Nutriente</th>
+            <th class="valor">por ${gramos} g</th>
+            <th class="valor">por 100 g</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${fila('⚡ Calorías',        fmt(cal),     fmt100(n['energy-kcal_100g']), 'kcal', true)}
+          ${fila('💪 Proteínas',       fmt(prot),    fmt100(n['proteins_100g']),    'g',    true)}
+          ${filaGrupo('🌾 Carbohidratos', fmt(carb),  fmt100(n['carbohydrates_100g']),'g')}
+          ${filaSubfila('Almidón (est.)', fmt(almidon),'',                          'g')}
+          ${filaSubfila('Azúcares',       fmt(azuc),   fmt100(n['sugars_100g']),    'g')}
+          ${filaSubfila('Fibra',          fmt(fibra),  fmt100(n['fiber_100g']),     'g')}
+          ${filaGrupo('🧈 Grasas totales', fmt(grasa), fmt100(n['fat_100g']),       'g')}
+          ${filaSubfila('Saturadas',      fmt(sat),    fmt100(n['saturated-fat_100g']),'g')}
+          ${fila('🧂 Sal',              fmt(sal),     fmt100(n['salt_100g']),       'g',    false)}
+        </tbody>
+      </table>
+
+      <p class="fuente">Fuente: Open Food Facts</p>
+      <button class="btn-volver" id="btn-volver">← Volver</button>
+    </div>
+  `;
+
+  $('gramos-input').addEventListener('input', () => {
+    const v = Math.max(1, parseInt($('gramos-input').value) || 1);
+    $('gramos-slider').value = Math.min(v, 500);
+    renderTabla(v);
+  });
+  $('gramos-slider').addEventListener('input', () => renderTabla(parseInt($('gramos-slider').value)));
+
+  $('tbl-fav').addEventListener('click', () => {
+    const btn = $('tbl-fav');
+    const idx = favoritos.findIndex(f2 => f2.id === p.id);
+    if (idx === -1) { favoritos.unshift(p); btn.textContent = '⭐ En favoritos'; }
+    else { favoritos.splice(idx, 1); btn.textContent = '☆ Agregar a favoritos'; }
+    guardarFavs();
+  });
+
+  $('tbl-comp').addEventListener('click', () => {
+    const btn = $('tbl-comp');
+    const idx = enComparacion.findIndex(c => c.id === p.id);
+    if (idx === -1) {
+      if (enComparacion.length >= 3) { alert('Máximo 3 alimentos. Quita uno desde Comparar.'); return; }
+      enComparacion.push(p);
+      btn.textContent = '⊕ En comparación';
+      btn.style.cssText = 'background:#fff3e0;border-color:#ffcc80;color:#e65100';
+    } else {
+      enComparacion.splice(idx, 1);
+      btn.textContent = '⊕ Agregar a comparar';
+      btn.style.cssText = '';
+    }
+    guardarComp();
+    actualizarBadge();
+  });
+
+  $('btn-volver').addEventListener('click', () => {
+    $('vista-tabla').style.display = 'none';
+    // Reactivar el tab que estaba activo antes
+    const tabActivo = document.querySelector('.tab-btn.active');
+    if (tabActivo) $(`panel-${tabActivo.dataset.tab}`).classList.add('active');
+    else { document.querySelector('.tab-btn').classList.add('active'); $('panel-buscar').classList.add('active'); }
+  });
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function val(base, factor) {
+  if (base == null || base === '') return null;
+  return parseFloat(base) * factor;
+}
+
+function calcAlmidon(n, f) {
+  const carb  = parseFloat(n['carbohydrates_100g']) || 0;
+  const azuc  = parseFloat(n['sugars_100g'])        || 0;
+  const fibra = parseFloat(n['fiber_100g'])         || 0;
+  const a = carb - azuc - fibra;
+  return a > 0 ? a * f : null;
+}
+
+function fmt(v)    { return v == null ? '<span class="sin-datos">—</span>' : v.toFixed(1); }
+function fmt100(v) { return (v == null || v === '') ? '<span class="sin-datos">—</span>' : parseFloat(v).toFixed(1); }
+function fmtNum(v) { return (v == null || v === '') ? '—' : parseFloat(v).toFixed(1); }
+
+function fila(nombre, por, base, unidad, destacado) {
+  const cls = destacado ? 'valor destacado' : 'valor';
+  return `<tr><td>${nombre}</td><td class="${cls}">${por} ${unidad}</td><td class="valor muted">${base} ${unidad}</td></tr>`;
+}
+function filaGrupo(nombre, por, base, unidad) {
+  return `<tr style="background:#f9fdf9"><td><strong>${nombre}</strong></td><td class="valor destacado">${por} ${unidad}</td><td class="valor muted">${base} ${unidad}</td></tr>`;
+}
+function filaSubfila(nombre, por, base, unidad) {
+  return `<tr><td style="padding-left:1.75rem;color:#666">↳ ${nombre}</td><td class="valor">${por} ${unidad}</td><td class="valor muted">${base} ${unidad}</td></tr>`;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+actualizarBadge();
+</script>
+</body>
+</html>
