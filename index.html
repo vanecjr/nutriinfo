@@ -389,8 +389,9 @@ async function buscar() {
   $('error-busqueda').innerHTML = '';
   $('resultados').innerHTML = '<div class="spinner">Buscando…</div>';
 
-  const qLow = q.toLowerCase();
-  const locales = LOCALES.filter(p => p.product_name.toLowerCase().includes(qLow));
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const qLow = norm(q);
+  const locales = LOCALES.filter(p => norm(p.product_name).includes(qLow));
 
   if (locales.length) {
     renderResultados('resultados', locales, false);
