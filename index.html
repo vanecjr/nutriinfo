@@ -197,6 +197,80 @@ header p  { color: #666; margin-top: 0.25rem; }
   display: inline-block; background: #fff3e0; color: #e65100;
   border-radius: 20px; padding: 2px 10px; font-size: 0.78rem; font-weight: 600;
 }
+
+/* ── Mi Día ── */
+.midia-ring-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:1.5rem; }
+.midia-ring-wrap svg { width:160px; height:160px; }
+.midia-ring-label { text-align:center; margin-top:0.5rem; }
+.midia-ring-label .kcal-num { font-size:1.6rem; font-weight:700; color:#2d6a2d; }
+.midia-ring-label .kcal-meta { font-size:0.82rem; color:#888; }
+.midia-macro-bars { display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem; }
+.midia-macro-row { display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; }
+.midia-macro-row .mlabel { width:90px; color:#555; }
+.midia-macro-row .mbar-bg { flex:1; height:10px; background:#eee; border-radius:8px; overflow:hidden; }
+.midia-macro-row .mbar-fill { height:100%; border-radius:8px; transition:width 0.4s; }
+.midia-macro-row .mval { width:70px; text-align:right; font-variant-numeric:tabular-nums; color:#333; }
+.midia-comidas { display:flex; flex-direction:column; gap:1rem; }
+.comida-section { background:white; border-radius:14px; padding:1rem 1.25rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); }
+.comida-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.6rem; }
+.comida-header h3 { font-size:1rem; color:#2d6a2d; }
+.comida-header .comida-kcal { font-size:0.8rem; color:#888; }
+.comida-item { display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0; border-bottom:1px solid #f5f5f5; font-size:0.88rem; }
+.comida-item:last-child { border-bottom:none; }
+.comida-item .ci-name { flex:1; }
+.comida-item .ci-gramos { width:60px; text-align:right; color:#888; font-size:0.82rem; }
+.comida-item .ci-kcal  { width:60px; text-align:right; color:#2d6a2d; font-weight:600; font-size:0.85rem; }
+.comida-item .ci-del   { background:none; border:none; cursor:pointer; color:#bbb; font-size:1rem; padding:2px 4px; border-radius:4px; }
+.comida-item .ci-del:hover { color:#e53935; background:#ffebee; }
+.comida-vacio { font-size:0.85rem; color:#ccc; font-style:italic; }
+.btn-agregar-dia { font-size:0.8rem; background:#e8f5e9; color:#2d6a2d; border:1px solid #c8e6c8; border-radius:8px; padding:4px 10px; cursor:pointer; }
+.btn-agregar-dia:hover { background:#c8e6c9; }
+.midia-meta-btn { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.25rem; font-size:0.85rem; color:#555; }
+.midia-meta-btn label { flex:1; }
+.midia-meta-btn input { width:80px; padding:4px 8px; border:2px solid #c8e6c8; border-radius:8px; font-size:0.9rem; text-align:center; }
+.midia-reset { font-size:0.8rem; background:none; border:1px solid #e0e0e0; color:#aaa; border-radius:8px; padding:4px 10px; cursor:pointer; float:right; }
+.midia-reset:hover { border-color:#e53935; color:#e53935; }
+
+/* Modal agregar a Mi Día */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; display:flex; align-items:flex-end; justify-content:center; }
+.modal-box { background:white; border-radius:20px 20px 0 0; padding:1.5rem; width:100%; max-width:500px; }
+.modal-box h3 { font-size:1rem; color:#2d6a2d; margin-bottom:1rem; }
+.modal-box .modal-row { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem; }
+.modal-box label { font-size:0.85rem; color:#555; }
+.modal-box select, .modal-box input[type=number] { padding:0.6rem 0.8rem; border:2px solid #c8e6c8; border-radius:10px; font-size:1rem; width:100%; }
+.modal-btns { display:flex; gap:0.5rem; }
+.modal-btns button { flex:1; padding:0.7rem; border-radius:10px; border:none; cursor:pointer; font-size:0.95rem; font-weight:600; }
+.modal-btns .btn-confirm { background:#2d6a2d; color:white; }
+.modal-btns .btn-cancel  { background:#f0f0f0; color:#555; }
+
+/* ── Recetas ── */
+.recetas-filtros { margin-bottom:1.25rem; display:flex; flex-direction:column; gap:0.75rem; }
+.filtro-grupo { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.filtro-grupo label { font-size:0.82rem; color:#555; white-space:nowrap; }
+.filtro-btns { display:flex; gap:0.35rem; flex-wrap:wrap; }
+.filtro-btn { padding:5px 12px; border-radius:20px; border:1px solid #c8e6c8; background:white; color:#555; font-size:0.8rem; cursor:pointer; transition:all 0.15s; }
+.filtro-btn.active { background:#2d6a2d; color:white; border-color:#2d6a2d; }
+.receta-card { background:white; border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:0.85rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); cursor:pointer; transition:box-shadow 0.15s; }
+.receta-card:hover { box-shadow:0 3px 12px rgba(0,0,0,0.12); }
+.receta-card .rec-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0.5rem; }
+.receta-card .rec-nombre { font-weight:700; font-size:1rem; color:#1a2e1a; }
+.receta-card .rec-tiempo { font-size:0.78rem; color:#888; white-space:nowrap; margin-left:0.5rem; }
+.receta-card .rec-tags { display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:0.6rem; }
+.rec-tag { padding:2px 9px; border-radius:20px; font-size:0.73rem; font-weight:600; }
+.rec-tag.bajar-peso    { background:#e3f2fd; color:#1565c0; }
+.rec-tag.ganar-musculo { background:#e8f5e9; color:#2d6a2d; }
+.rec-tag.mantenimiento { background:#fff3e0; color:#e65100; }
+.receta-card .rec-macros { display:flex; gap:1rem; font-size:0.82rem; color:#555; }
+.receta-card .rec-macros span { display:flex; align-items:center; gap:3px; }
+.receta-detalle { display:none; margin-top:0.75rem; border-top:1px solid #f0f0f0; padding-top:0.75rem; }
+.receta-detalle.abierto { display:block; }
+.receta-detalle h4 { font-size:0.85rem; color:#555; margin-bottom:0.4rem; }
+.receta-detalle ul { padding-left:1.2rem; font-size:0.85rem; color:#444; margin-bottom:0.75rem; }
+.receta-detalle ul li { margin-bottom:2px; }
+.receta-tabla-mini { width:100%; border-collapse:collapse; font-size:0.82rem; }
+.receta-tabla-mini th { background:#f1f8f1; text-align:left; padding:4px 8px; font-size:0.75rem; text-transform:uppercase; color:#555; }
+.receta-tabla-mini td { padding:4px 8px; border-bottom:1px solid #f5f5f5; }
+.receta-tabla-mini tr:last-child td { border-bottom:none; }
 </style>
 </head>
 <body>
@@ -209,6 +283,8 @@ header p  { color: #666; margin-top: 0.25rem; }
   <!-- Tabs -->
   <div class="tabs" id="tabs">
     <button class="tab-btn active" data-tab="buscar">🔍 Buscar</button>
+    <button class="tab-btn" data-tab="midia">📋 Mi Día</button>
+    <button class="tab-btn" data-tab="recetas">🍽️ Recetas</button>
     <button class="tab-btn" data-tab="comparar">📊 Comparar <span id="badge-count" class="badge-comparar" style="display:none">0</span></button>
     <button class="tab-btn" data-tab="favoritos">⭐ Favoritos</button>
   </div>
@@ -232,6 +308,36 @@ header p  { color: #666; margin-top: 0.25rem; }
         Puedes comparar hasta 3 alimentos.
       </div>
     </div>
+  </div>
+
+  <!-- Panel: Mi Día -->
+  <div class="panel" id="panel-midia">
+    <div id="midia-contenido"></div>
+  </div>
+
+  <!-- Panel: Recetas -->
+  <div class="panel" id="panel-recetas">
+    <div class="recetas-filtros">
+      <div class="filtro-grupo">
+        <label>Objetivo:</label>
+        <div class="filtro-btns" id="filtro-objetivo">
+          <button class="filtro-btn active" data-val="">Todos</button>
+          <button class="filtro-btn" data-val="bajar-peso">Bajar peso</button>
+          <button class="filtro-btn" data-val="ganar-musculo">Ganar músculo</button>
+          <button class="filtro-btn" data-val="mantenimiento">Mantenimiento</button>
+        </div>
+      </div>
+      <div class="filtro-grupo">
+        <label>Tiempo máx:</label>
+        <div class="filtro-btns" id="filtro-tiempo">
+          <button class="filtro-btn active" data-val="0">Cualquiera</button>
+          <button class="filtro-btn" data-val="15">≤15 min</button>
+          <button class="filtro-btn" data-val="30">≤30 min</button>
+          <button class="filtro-btn" data-val="60">≤60 min</button>
+        </div>
+      </div>
+    </div>
+    <div id="recetas-lista"></div>
   </div>
 
   <!-- Panel: Favoritos -->
@@ -407,6 +513,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     $('vista-tabla').style.display = 'none';
     if (btn.dataset.tab === 'favoritos') renderFavoritos();
     if (btn.dataset.tab === 'comparar')  renderComparar();
+    if (btn.dataset.tab === 'midia')     renderMiDia();
+    if (btn.dataset.tab === 'recetas')   renderRecetas();
   });
 });
 
@@ -458,6 +566,7 @@ function renderResultados(contenedorId, productos, cargando) {
         ${cat ? `<div class="categoria">${cat}</div>` : ''}
       </div>
       <div class="acciones">
+        <button class="btn-icon btn-dia"  title="Agregar a Mi Día">➕</button>
         <button class="btn-icon btn-comp ${esComp ? 'comparar-activo' : ''}" title="Agregar a comparar">⊕</button>
         <button class="btn-icon btn-fav"  title="${esFav ? 'Quitar de favoritos' : 'Agregar a favoritos'}">${esFav ? '⭐' : '☆'}</button>
         <button class="btn-icon btn-ver"  title="Ver tabla">📋</button>
@@ -467,6 +576,7 @@ function renderResultados(contenedorId, productos, cargando) {
     div.querySelector('.btn-ver').addEventListener('click', e => { e.stopPropagation(); mostrarTabla(p); });
     div.querySelector('.btn-fav').addEventListener('click', e => { e.stopPropagation(); toggleFav(p, div.querySelector('.btn-fav')); });
     div.querySelector('.btn-comp').addEventListener('click', e => { e.stopPropagation(); toggleComparar(p, div.querySelector('.btn-comp')); });
+    div.querySelector('.btn-dia').addEventListener('click', e => { e.stopPropagation(); mostrarModalAgregarDia(p); });
     div.querySelector('.info').addEventListener('click', () => mostrarTabla(p));
 
     contenedor.appendChild(div);
@@ -783,6 +893,295 @@ function filaGrupo(nombre, por, base, unidad) {
 function filaSubfila(nombre, por, base, unidad) {
   return `<tr><td style="padding-left:1.75rem;color:#666">↳ ${nombre}</td><td class="valor">${por} ${unidad}</td><td class="valor muted">${base} ${unidad}</td></tr>`;
 }
+
+// ── Mi Día ────────────────────────────────────────────────────────────────────
+const COMIDAS = ['Desayuno','Almuerzo','Merienda','Cena'];
+let miDia = JSON.parse(localStorage.getItem('nutriDia') || '{"Desayuno":[],"Almuerzo":[],"Merienda":[],"Cena":[]}');
+let metaKcal = parseInt(localStorage.getItem('nutriMeta') || '2000');
+
+function guardarDia() { localStorage.setItem('nutriDia', JSON.stringify(miDia)); }
+function guardarMeta() { localStorage.setItem('nutriMeta', String(metaKcal)); }
+
+function calcDia() {
+  let kcal=0, prot=0, carb=0, grasa=0;
+  COMIDAS.forEach(c => (miDia[c]||[]).forEach(item => {
+    const f = item.gramos/100;
+    const n = item.nutriments||{};
+    kcal  += (parseFloat(n['energy-kcal_100g'])||0)*f;
+    prot  += (parseFloat(n['proteins_100g'])||0)*f;
+    carb  += (parseFloat(n['carbohydrates_100g'])||0)*f;
+    grasa += (parseFloat(n['fat_100g'])||0)*f;
+  }));
+  return {kcal, prot, carb, grasa};
+}
+
+function renderMiDia() {
+  const {kcal, prot, carb, grasa} = calcDia();
+  const pct = Math.min(kcal/metaKcal, 1);
+  const r=70, cx=80, cy=80, circum=2*Math.PI*r;
+  const dash = pct*circum;
+  const color = pct>=1 ? '#e53935' : pct>=0.85 ? '#ff9800' : '#4caf50';
+
+  // macro metas aproximadas
+  const metaProt  = Math.round(metaKcal*0.30/4);
+  const metaCarb  = Math.round(metaKcal*0.40/4);
+  const metaGrasa = Math.round(metaKcal*0.30/9);
+
+  const barProt  = Math.min(prot/metaProt,1)*100;
+  const barCarb  = Math.min(carb/metaCarb,1)*100;
+  const barGrasa = Math.min(grasa/metaGrasa,1)*100;
+
+  let html = `
+    <div style="display:flex;justify-content:flex-end;margin-bottom:0.5rem">
+      <button class="midia-reset" id="btn-reset-dia">🗑 Reiniciar día</button>
+    </div>
+    <div class="midia-meta-btn">
+      <label>Meta diaria de calorías:</label>
+      <input type="number" id="meta-kcal-input" value="${metaKcal}" min="500" max="5000" />
+    </div>
+    <div class="midia-ring-wrap">
+      <svg viewBox="0 0 160 160">
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#eee" stroke-width="14"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="14"
+          stroke-dasharray="${dash} ${circum}" stroke-dashoffset="${circum/4}"
+          stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/>
+      </svg>
+      <div class="midia-ring-label">
+        <div class="kcal-num">${Math.round(kcal)} kcal</div>
+        <div class="kcal-meta">de ${metaKcal} kcal · ${Math.round((metaKcal-kcal)>0?metaKcal-kcal:0)} restantes</div>
+      </div>
+    </div>
+    <div class="midia-macro-bars">
+      <div class="midia-macro-row">
+        <span class="mlabel">💪 Proteína</span>
+        <div class="mbar-bg"><div class="mbar-fill" style="width:${barProt}%;background:#4caf50"></div></div>
+        <span class="mval">${prot.toFixed(1)}g / ${metaProt}g</span>
+      </div>
+      <div class="midia-macro-row">
+        <span class="mlabel">🌾 Carbos</span>
+        <div class="mbar-bg"><div class="mbar-fill" style="width:${barCarb}%;background:#ff9800"></div></div>
+        <span class="mval">${carb.toFixed(1)}g / ${metaCarb}g</span>
+      </div>
+      <div class="midia-macro-row">
+        <span class="mlabel">🧈 Grasas</span>
+        <div class="mbar-bg"><div class="mbar-fill" style="width:${barGrasa}%;background:#e53935"></div></div>
+        <span class="mval">${grasa.toFixed(1)}g / ${metaGrasa}g</span>
+      </div>
+    </div>
+    <div class="midia-comidas">
+  `;
+
+  COMIDAS.forEach(comida => {
+    const items = miDia[comida]||[];
+    const kcalComida = items.reduce((s,i)=>s+(parseFloat(i.nutriments['energy-kcal_100g'])||0)*i.gramos/100, 0);
+    html += `
+      <div class="comida-section">
+        <div class="comida-header">
+          <h3>${comida}</h3>
+          <span class="comida-kcal">${Math.round(kcalComida)} kcal</span>
+        </div>
+        ${items.length ? items.map((it,idx)=>`
+          <div class="comida-item">
+            <span class="ci-name">${it.product_name}</span>
+            <span class="ci-gramos">${it.gramos}g</span>
+            <span class="ci-kcal">${((parseFloat(it.nutriments['energy-kcal_100g'])||0)*it.gramos/100).toFixed(0)} kcal</span>
+            <button class="ci-del" data-comida="${comida}" data-idx="${idx}">✕</button>
+          </div>`).join('') : '<div class="comida-vacio">Sin alimentos</div>'}
+      </div>`;
+  });
+
+  html += '</div>';
+  $('midia-contenido').innerHTML = html;
+
+  $('meta-kcal-input').addEventListener('change', e => {
+    metaKcal = Math.max(500, parseInt(e.target.value)||2000);
+    guardarMeta(); renderMiDia();
+  });
+  $('btn-reset-dia').addEventListener('click', () => {
+    if (confirm('¿Reiniciar el registro del día?')) {
+      miDia = {Desayuno:[],Almuerzo:[],Merienda:[],Cena:[]};
+      guardarDia(); renderMiDia();
+    }
+  });
+  document.querySelectorAll('.ci-del').forEach(btn => {
+    btn.addEventListener('click', () => {
+      miDia[btn.dataset.comida].splice(parseInt(btn.dataset.idx),1);
+      guardarDia(); renderMiDia();
+    });
+  });
+}
+
+function mostrarModalAgregarDia(producto) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>Agregar a Mi Día</h3>
+      <p style="font-size:0.88rem;color:#555;margin-bottom:1rem">${producto.product_name}</p>
+      <div class="modal-row">
+        <label>Comida:</label>
+        <select id="modal-comida">${COMIDAS.map(c=>`<option>${c}</option>`).join('')}</select>
+      </div>
+      <div class="modal-row">
+        <label>Gramos:</label>
+        <input type="number" id="modal-gramos" value="100" min="1" max="2000"/>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-cancel">Cancelar</button>
+        <button class="btn-confirm">Agregar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('.btn-cancel').addEventListener('click', ()=>overlay.remove());
+  overlay.querySelector('.btn-confirm').addEventListener('click', ()=>{
+    const comida = overlay.querySelector('#modal-comida').value;
+    const gramos = Math.max(1, parseInt(overlay.querySelector('#modal-gramos').value)||100);
+    miDia[comida].push({...producto, gramos});
+    guardarDia(); overlay.remove();
+    // Si estamos en Mi Día, actualizar
+    if (document.querySelector('[data-tab="midia"]')?.classList.contains('active')) renderMiDia();
+  });
+  overlay.addEventListener('click', e => { if (e.target===overlay) overlay.remove(); });
+}
+
+// ── Recetas ───────────────────────────────────────────────────────────────────
+const RECETAS = [
+  { nombre:'Bowl de pollo y arroz', tiempo:25, objetivos:['ganar-musculo','mantenimiento'],
+    ingredientes:[{id:'pollo-pechuga',g:150},{id:'arroz-blanco',g:180},{id:'aceite-oliva',g:10}],
+    pasos:['Cocina el pollo a la plancha con aceite de oliva.','Sirve sobre el arroz blanco cocido.','Sazona con sal y limón al gusto.'] },
+  { nombre:'Ensalada de atún y aguacate', tiempo:10, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'atun-lata',g:140},{id:'aguacate',g:80},{id:'camaron-cocido',g:0}],
+    pasos:['Escurre el atún.','Corta el aguacate en cubos.','Mezcla y sazona con limón y sal.'] },
+  { nombre:'Omelette de claras', tiempo:10, objetivos:['bajar-peso','ganar-musculo'],
+    ingredientes:[{id:'huevo-clara',g:200},{id:'huevo-entero',g:50},{id:'aceite-oliva',g:5}],
+    pasos:['Bate las claras con el huevo entero.','Cocina en sartén con aceite de oliva a fuego medio.','Dobla y sirve.'] },
+  { nombre:'Salmón con camote', tiempo:30, objetivos:['ganar-musculo','mantenimiento'],
+    ingredientes:[{id:'salmon',g:180},{id:'papa-dulce-camote',g:200},{id:'aceite-aguacate',g:10}],
+    pasos:['Hornea el camote 20 min a 200°C.','Cocina el salmón en sartén con aceite de aguacate 4 min por lado.','Sirve juntos.'] },
+  { nombre:'Bowl de frijoles y arroz', tiempo:20, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'frijoles-neg',g:180},{id:'arroz-integral',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Calienta los frijoles cocidos con aceite y sazón.','Sirve sobre arroz integral.'] },
+  { nombre:'Batido de proteína natural', tiempo:5, objetivos:['ganar-musculo'],
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena',g:40},{id:'leche-entera',g:250}],
+    pasos:['Licúa todos los ingredientes.','Sirve frío.'] },
+  { nombre:'Pechuga con yuca', tiempo:30, objetivos:['ganar-musculo','mantenimiento'],
+    ingredientes:[{id:'pollo-pechuga',g:180},{id:'yuca',g:200},{id:'aceite-oliva',g:10}],
+    pasos:['Hierve la yuca hasta suave.','Cocina la pechuga a la plancha con aceite.','Sirve con limón.'] },
+  { nombre:'Tilapia con plátano verde', tiempo:25, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'tilapia',g:180},{id:'platano-verde',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina la tilapia al vapor o plancha.','Hierve el plátano verde hasta suave.','Sirve con ensalada.'] },
+  { nombre:'Avena con almendras', tiempo:10, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'avena-cocida',g:250},{id:'almendras',g:25},{id:'manzana',g:100}],
+    pasos:['Prepara la avena cocida con agua.','Añade almendras troceadas y manzana picada.'] },
+  { nombre:'Ensalada de garbanzo', tiempo:15, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'garbanzo',g:200},{id:'aguacate',g:80},{id:'aceite-oliva',g:10}],
+    pasos:['Mezcla garbanzos con aguacate en cubos.','Aliña con aceite de oliva, limón y sal.'] },
+  { nombre:'Camarones salteados con arroz', tiempo:20, objetivos:['ganar-musculo','bajar-peso'],
+    ingredientes:[{id:'camaron-cocido',g:200},{id:'arroz-blanco',g:150},{id:'aceite-oliva',g:10}],
+    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre arroz blanco cocido.'] },
+  { nombre:'Lentejas guisadas', tiempo:35, objetivos:['bajar-peso','mantenimiento'],
+    ingredientes:[{id:'lentejas',g:200},{id:'yuca',g:100},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina las lentejas con agua y sofrito.','Añade yuca en trozos los últimos 10 min.','Rectifica sal.'] },
+  { nombre:'Huevos con plátano maduro', tiempo:10, objetivos:['mantenimiento','ganar-musculo'],
+    ingredientes:[{id:'huevo-entero',g:150},{id:'platano-tabasco',g:120},{id:'aceite-coco',g:8}],
+    pasos:['Fríe los huevos en aceite de coco.','Sirve con plátano maduro.'] },
+  { nombre:'Pavo con quinoa', tiempo:30, objetivos:['bajar-peso','ganar-musculo'],
+    ingredientes:[{id:'pavo-pechuga',g:180},{id:'quinoa',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina la quinoa en agua o caldo.','Cocina la pechuga de pavo a la plancha con aceite.','Sirve juntos.'] },
+  { nombre:'Res con gandules', tiempo:40, objetivos:['ganar-musculo','mantenimiento'],
+    ingredientes:[{id:'res-filete',g:180},{id:'gandules',g:150},{id:'arroz-blanco',g:120}],
+    pasos:['Cocina el filete al gusto.','Calienta los gandules con sofrito.','Sirve con arroz.'] },
+];
+
+function calcReceta(rec) {
+  let kcal=0,prot=0,carb=0,grasa=0;
+  rec.ingredientes.forEach(({id,g})=>{
+    const alimento = LOCALES.find(l=>l.id===id);
+    if(!alimento||!g) return;
+    const n=alimento.nutriments, f=g/100;
+    kcal  +=(parseFloat(n['energy-kcal_100g'])||0)*f;
+    prot  +=(parseFloat(n['proteins_100g'])||0)*f;
+    carb  +=(parseFloat(n['carbohydrates_100g'])||0)*f;
+    grasa +=(parseFloat(n['fat_100g'])||0)*f;
+  });
+  return {kcal,prot,carb,grasa};
+}
+
+let filtroObj='', filtroTiempo=0;
+
+function renderRecetas() {
+  const lista = $('recetas-lista');
+  const filtradas = RECETAS.filter(r=>{
+    if(filtroObj && !r.objetivos.includes(filtroObj)) return false;
+    if(filtroTiempo && r.tiempo > filtroTiempo) return false;
+    return true;
+  });
+  if(!filtradas.length){ lista.innerHTML='<div class="spinner">No hay recetas con esos filtros.</div>'; return; }
+
+  lista.innerHTML = filtradas.map((rec,i)=>{
+    const {kcal,prot,carb,grasa} = calcReceta(rec);
+    const tags = rec.objetivos.map(o=>`<span class="rec-tag ${o}">${{bajar-peso:'Bajar peso','ganar-musculo':'Ganar músculo',mantenimiento:'Mantenimiento'}[o]}</span>`).join('');
+    const ingredsHtml = rec.ingredientes.map(({id,g})=>{
+      const a=LOCALES.find(l=>l.id===id);
+      return a?`<li>${a.product_name} — ${g}g</li>`:'';
+    }).join('');
+    return `
+    <div class="receta-card" data-rec="${i}">
+      <div class="rec-header">
+        <span class="rec-nombre">${rec.nombre}</span>
+        <span class="rec-tiempo">⏱ ${rec.tiempo} min</span>
+      </div>
+      <div class="rec-tags">${tags}</div>
+      <div class="rec-macros">
+        <span>⚡ ${Math.round(kcal)} kcal</span>
+        <span>💪 ${prot.toFixed(1)}g prot</span>
+        <span>🌾 ${carb.toFixed(1)}g carbs</span>
+        <span>🧈 ${grasa.toFixed(1)}g grasas</span>
+      </div>
+      <div class="receta-detalle" id="rec-det-${i}">
+        <h4>Ingredientes:</h4>
+        <ul>${ingredsHtml}</ul>
+        <h4>Preparación:</h4>
+        <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
+          ${rec.pasos.map(p=>`<li style="margin-bottom:4px">${p}</li>`).join('')}
+        </ol>
+        <table class="receta-tabla-mini">
+          <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
+          <tbody>
+            <tr><td>⚡ Calorías</td><td>${Math.round(kcal)} kcal</td></tr>
+            <tr><td>💪 Proteínas</td><td>${prot.toFixed(1)} g</td></tr>
+            <tr><td>🌾 Carbohidratos</td><td>${carb.toFixed(1)} g</td></tr>
+            <tr><td>🧈 Grasas</td><td>${grasa.toFixed(1)} g</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('');
+
+  lista.querySelectorAll('.receta-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const det = card.querySelector('.receta-detalle');
+      det.classList.toggle('abierto');
+    });
+  });
+}
+
+document.querySelectorAll('#filtro-objetivo .filtro-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#filtro-objetivo .filtro-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filtroObj = btn.dataset.val;
+    renderRecetas();
+  });
+});
+document.querySelectorAll('#filtro-tiempo .filtro-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#filtro-tiempo .filtro-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filtroTiempo = parseInt(btn.dataset.val);
+    renderRecetas();
+  });
+});
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 actualizarBadge();
