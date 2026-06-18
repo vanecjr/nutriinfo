@@ -209,7 +209,6 @@ header p  { color: #666; margin-top: 0.25rem; }
   <!-- Tabs -->
   <div class="tabs" id="tabs">
     <button class="tab-btn active" data-tab="buscar">🔍 Buscar</button>
-    <button class="tab-btn" data-tab="barcode">📷 Código de barras</button>
     <button class="tab-btn" data-tab="comparar">📊 Comparar <span id="badge-count" class="badge-comparar" style="display:none">0</span></button>
     <button class="tab-btn" data-tab="favoritos">⭐ Favoritos</button>
   </div>
@@ -224,16 +223,6 @@ header p  { color: #666; margin-top: 0.25rem; }
     <div id="resultados"></div>
   </div>
 
-  <!-- Panel: Código de barras -->
-  <div class="panel" id="panel-barcode">
-    <p class="barcode-hint">Ingresa el código de barras del producto (EAN-13, UPC-A, etc.)</p>
-    <div class="barcode-row">
-      <input id="barcode-input" type="text" inputmode="numeric" placeholder="Ej: 7501055300472" maxlength="14" />
-      <button id="btn-barcode">Buscar</button>
-    </div>
-    <div id="error-barcode"></div>
-    <div id="resultado-barcode"></div>
-  </div>
 
   <!-- Panel: Comparar -->
   <div class="panel" id="panel-comparar">
@@ -271,6 +260,13 @@ const LOCALES = [
   { id:'pavo-pechuga',      product_name:'Pechuga de pavo (cocida)',         brands:'', categories_tags:['Pavo'],  nutriments:{'energy-kcal_100g':135,'proteins_100g':30,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':1,   'saturated-fat_100g':0.3, 'salt_100g':0.2} },
   { id:'pavo-muslo',        product_name:'Muslo de pavo (cocido)',           brands:'', categories_tags:['Pavo'],  nutriments:{'energy-kcal_100g':195,'proteins_100g':27,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':9,   'saturated-fat_100g':2.5, 'salt_100g':0.3} },
   { id:'pavo-molido',       product_name:'Carne molida de pavo (cocida)',    brands:'', categories_tags:['Pavo'],  nutriments:{'energy-kcal_100g':189,'proteins_100g':23,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':11,  'saturated-fat_100g':3,   'salt_100g':0.3} },
+  { id:'jamon-pavo',        product_name:'Jamón de pavo',                    brands:'', categories_tags:['Pavo'],  nutriments:{'energy-kcal_100g':100,'proteins_100g':17,  'carbohydrates_100g':2,  'sugars_100g':1,  'fiber_100g':0, 'fat_100g':2.5, 'saturated-fat_100g':0.8, 'salt_100g':1.5} },
+  { id:'salchicha-pavo',    product_name:'Salchicha de pollo / pavo',        brands:'', categories_tags:['Pavo'],  nutriments:{'energy-kcal_100g':152,'proteins_100g':14,  'carbohydrates_100g':3,  'sugars_100g':1,  'fiber_100g':0, 'fat_100g':9,   'saturated-fat_100g':2.5, 'salt_100g':1.2} },
+  // ── EMBUTIDOS ────────────────────────────────────────────────────────────────
+  { id:'jamon-cerdo',       product_name:'Jamón de cerdo',                   brands:'', categories_tags:['Embutidos'], nutriments:{'energy-kcal_100g':145,'proteins_100g':18,  'carbohydrates_100g':1.5,'sugars_100g':1,  'fiber_100g':0, 'fat_100g':7,   'saturated-fat_100g':2.5, 'salt_100g':2.2} },
+  { id:'prosciutto',        product_name:'Prosciutto / jamón serrano',       brands:'', categories_tags:['Embutidos'], nutriments:{'energy-kcal_100g':220,'proteins_100g':26,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':13,  'saturated-fat_100g':4.5, 'salt_100g':3.5} },
+  { id:'salchicha-res',     product_name:'Salchicha de carne de res',        brands:'', categories_tags:['Embutidos'], nutriments:{'energy-kcal_100g':290,'proteins_100g':12,  'carbohydrates_100g':3,  'sugars_100g':1,  'fiber_100g':0, 'fat_100g':26,  'saturated-fat_100g':10,  'salt_100g':1.5} },
+  { id:'salchicha-cerdo',   product_name:'Salchicha de cochino / cerdo',     brands:'', categories_tags:['Embutidos'], nutriments:{'energy-kcal_100g':320,'proteins_100g':11,  'carbohydrates_100g':2,  'sugars_100g':0.5,'fiber_100g':0, 'fat_100g':30,  'saturated-fat_100g':11,  'salt_100g':1.8} },
   // ── RES ──────────────────────────────────────────────────────────────────────
   { id:'res-molida-90',     product_name:'Carne molida de res 90/10',        brands:'', categories_tags:['Res'],   nutriments:{'energy-kcal_100g':176,'proteins_100g':20,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':10,  'saturated-fat_100g':4,   'salt_100g':0.3} },
   { id:'res-molida-80',     product_name:'Carne molida de res 80/20',        brands:'', categories_tags:['Res'],   nutriments:{'energy-kcal_100g':215,'proteins_100g':17,  'carbohydrates_100g':0,  'sugars_100g':0,  'fiber_100g':0, 'fat_100g':17,  'saturated-fat_100g':6,   'salt_100g':0.3} },
@@ -439,39 +435,6 @@ async function buscar() {
   btn.disabled = false;
 }
 
-// ── Buscar por código de barras ───────────────────────────────────────────────
-$('barcode-input').addEventListener('keydown', e => { if (e.key === 'Enter') buscarBarcode(); });
-$('btn-barcode').addEventListener('click', buscarBarcode);
-
-async function buscarBarcode() {
-  const codigo = $('barcode-input').value.trim().replace(/\D/g, '');
-  if (!codigo) return;
-
-  $('error-barcode').innerHTML = '';
-  $('resultado-barcode').innerHTML = '<div class="spinner">Buscando producto…</div>';
-  $('btn-barcode').disabled = true;
-
-  try {
-    const url = `https://world.openfoodfacts.org/api/v0/product/${codigo}.json`;
-    const res  = await fetch(url, { signal: AbortSignal.timeout(5000) });
-    const data = await res.json();
-
-    if (data.status !== 1 || !data.product) {
-      $('resultado-barcode').innerHTML = '<div class="spinner">Producto no encontrado. Verifica el código.</div>';
-      return;
-    }
-
-    const p = data.product;
-    p.id = p._id || codigo;
-    $('resultado-barcode').innerHTML = '';
-    renderResultados('resultado-barcode', [p], false);
-  } catch {
-    $('error-barcode').innerHTML = '<div class="error">Error de conexión. Verifica tu internet.</div>';
-    $('resultado-barcode').innerHTML = '';
-  } finally {
-    $('btn-barcode').disabled = false;
-  }
-}
 
 // ── Render lista de resultados ────────────────────────────────────────────────
 function renderResultados(contenedorId, productos, cargando) {
