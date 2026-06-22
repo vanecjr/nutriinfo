@@ -248,6 +248,42 @@ header p  { color: #666; margin-top: 0.25rem; }
 .modal-btns .btn-cancel  { background:#f0f0f0; color:#555; }
 
 /* ── Recetas ── */
+/* ── Dieta Premium ── */
+.tab-premium { background: linear-gradient(135deg, #f9a825, #f57f17) !important; color: white !important; font-weight: 700 !important; }
+.tab-premium.active { background: linear-gradient(135deg, #f57f17, #e65100) !important; color: white !important; }
+.dieta-hero { background: linear-gradient(135deg, #1b5e20, #2d6a2d); color:white; border-radius:16px; padding:1.5rem; text-align:center; margin-bottom:1.25rem; }
+.dieta-hero-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); border-radius:20px; padding:3px 14px; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; margin-bottom:0.75rem; }
+.dieta-hero h2 { font-size:1.5rem; margin-bottom:0.5rem; }
+.dieta-hero p  { font-size:0.9rem; opacity:0.9; margin-bottom:1rem; }
+.dieta-precio  { font-size:2.5rem; font-weight:900; }
+.dieta-precio span { font-size:1rem; font-weight:400; opacity:0.8; }
+.dieta-precio-sub { font-size:0.78rem; opacity:0.7; margin-top:2px; }
+.dieta-incluye { background:white; border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:1.25rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); }
+.dieta-incluye h3 { font-size:0.95rem; color:#2d6a2d; margin-bottom:0.75rem; }
+.dieta-incluye ul { list-style:none; display:flex; flex-direction:column; gap:0.45rem; }
+.dieta-incluye li { font-size:0.88rem; color:#333; }
+.dieta-pasos { background:white; border-radius:14px; padding:1.25rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); }
+.dieta-pasos h3 { font-size:1rem; color:#2d6a2d; margin-bottom:1rem; }
+.dieta-field { display:flex; flex-direction:column; gap:0.3rem; margin-bottom:0.9rem; }
+.dieta-field label { font-size:0.82rem; color:#555; font-weight:600; }
+.dieta-field input, .dieta-field select, .dieta-field textarea {
+  padding:0.65rem 0.85rem; border:2px solid #c8e6c8; border-radius:10px;
+  font-size:0.95rem; outline:none; transition:border-color 0.2s; width:100%;
+  font-family:inherit;
+}
+.dieta-field input:focus, .dieta-field select:focus, .dieta-field textarea:focus { border-color:#4caf50; }
+.dieta-row { flex-direction:row !important; gap:0.75rem; }
+.dieta-row > div { flex:1; display:flex; flex-direction:column; gap:0.3rem; }
+.dieta-row > div label { font-size:0.82rem; color:#555; font-weight:600; }
+.dieta-row > div input, .dieta-row > div select { padding:0.65rem 0.85rem; border:2px solid #c8e6c8; border-radius:10px; font-size:0.95rem; outline:none; width:100%; font-family:inherit; }
+.dieta-btn-continuar { width:100%; padding:0.85rem; background:#2d6a2d; color:white; border:none; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; margin-top:0.5rem; transition:background 0.2s; }
+.dieta-btn-continuar:hover { background:#1b5e20; }
+.dieta-btn-paypal { display:block; background:#FFC439; color:#003087; border:none; border-radius:12px; padding:1rem; text-align:center; font-size:1rem; font-weight:700; text-decoration:none; margin-bottom:1.25rem; transition:background 0.2s; }
+.dieta-btn-paypal:hover { background:#f0b429; }
+.dieta-aviso { background:#f1f8f1; border-radius:10px; padding:0.9rem 1rem; display:flex; flex-direction:column; gap:0.5rem; }
+.dieta-aviso p { font-size:0.85rem; color:#444; }
+.dieta-form-ok { background:#e8f5e9; color:#2d6a2d; border-radius:10px; padding:0.7rem 1rem; font-size:0.88rem; margin-bottom:0.75rem; }
+.dieta-form-err { background:#ffebee; color:#c62828; border-radius:10px; padding:0.7rem 1rem; font-size:0.88rem; margin-bottom:0.75rem; }
 .rec-seccion-label { font-size:0.82rem; font-weight:700; color:#555; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem; }
 .rec-cat-grid { display:flex; flex-direction:column; gap:0.6rem; }
 .rec-cat-btn {
@@ -300,6 +336,7 @@ header p  { color: #666; margin-top: 0.25rem; }
     <button class="tab-btn" data-tab="recetas">🍽️ Recetas</button>
     <button class="tab-btn" data-tab="comparar">📊 Comparar <span id="badge-count" class="badge-comparar" style="display:none">0</span></button>
     <button class="tab-btn" data-tab="favoritos">⭐ Favoritos</button>
+    <button class="tab-btn tab-premium" data-tab="dieta">👑 Mi Dieta</button>
   </div>
 
   <!-- Panel: Buscar -->
@@ -379,6 +416,108 @@ header p  { color: #666; margin-top: 0.25rem; }
   <!-- Panel: Favoritos -->
   <div class="panel" id="panel-favoritos">
     <div id="favoritos-lista"></div>
+  </div>
+
+  <!-- Panel: Dieta Personalizada -->
+  <div class="panel" id="panel-dieta">
+    <div class="dieta-hero">
+      <div class="dieta-hero-badge">👑 PREMIUM</div>
+      <h2>Dieta Personalizada</h2>
+      <p>Un plan de alimentación hecho <strong>solo para ti</strong> según tu cuerpo, meta y estilo de vida.</p>
+      <div class="dieta-precio">$20 <span>USD</span></div>
+      <div class="dieta-precio-sub">Pago único · Plan completo</div>
+    </div>
+
+    <div class="dieta-incluye">
+      <h3>¿Qué incluye?</h3>
+      <ul>
+        <li>✅ Plan de comidas para 7 días</li>
+        <li>✅ Desayuno, almuerzo, merienda y cena</li>
+        <li>✅ Calculado según tu peso, talla y meta</li>
+        <li>✅ Macros diarios (proteína, carbos, grasas)</li>
+        <li>✅ Lista de compras semanal</li>
+        <li>✅ Enviado a tu email en 24-48 horas</li>
+      </ul>
+    </div>
+
+    <div class="dieta-pasos">
+      <div id="dieta-paso-1">
+        <h3>1. Llena tu información</h3>
+        <form id="dieta-form">
+          <div class="dieta-field">
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Tu nombre" required />
+          </div>
+          <div class="dieta-field">
+            <label>Email (donde recibirás tu dieta)</label>
+            <input type="email" name="email" placeholder="tuemail@ejemplo.com" required />
+          </div>
+          <div class="dieta-field dieta-row">
+            <div>
+              <label>Peso (kg)</label>
+              <input type="number" name="peso" placeholder="70" min="30" max="300" required />
+            </div>
+            <div>
+              <label>Estatura (cm)</label>
+              <input type="number" name="estatura" placeholder="170" min="100" max="250" required />
+            </div>
+          </div>
+          <div class="dieta-field dieta-row">
+            <div>
+              <label>Edad</label>
+              <input type="number" name="edad" placeholder="28" min="15" max="90" required />
+            </div>
+            <div>
+              <label>Sexo</label>
+              <select name="sexo" required>
+                <option value="">Selecciona</option>
+                <option value="femenino">Femenino</option>
+                <option value="masculino">Masculino</option>
+              </select>
+            </div>
+          </div>
+          <div class="dieta-field">
+            <label>Objetivo</label>
+            <select name="objetivo" required>
+              <option value="">Selecciona tu objetivo</option>
+              <option value="bajar-grasa">Bajar grasa corporal</option>
+              <option value="ganar-musculo">Ganar músculo / masa</option>
+              <option value="mantenimiento">Mantenimiento</option>
+            </select>
+          </div>
+          <div class="dieta-field">
+            <label>Nivel de actividad física</label>
+            <select name="actividad" required>
+              <option value="">Selecciona</option>
+              <option value="sedentario">Sedentario (poco o sin ejercicio)</option>
+              <option value="ligero">Ligero (1-2 días/semana)</option>
+              <option value="moderado">Moderado (3-4 días/semana)</option>
+              <option value="activo">Activo (5+ días/semana)</option>
+            </select>
+          </div>
+          <div class="dieta-field">
+            <label>¿Tienes alguna restricción alimentaria?</label>
+            <textarea name="restricciones" placeholder="Ej: no como cerdo, soy intolerante a la lactosa, etc. (opcional)" rows="2"></textarea>
+          </div>
+          <div id="dieta-form-msg"></div>
+          <button type="submit" class="dieta-btn-continuar">Continuar al pago →</button>
+        </form>
+      </div>
+
+      <div id="dieta-paso-2" style="display:none">
+        <h3>2. Realiza tu pago</h3>
+        <p style="color:#555;font-size:0.9rem;margin-bottom:1.25rem">Tu información fue guardada. Ahora realiza el pago de <strong>$20 USD</strong> por PayPal:</p>
+        <a id="dieta-paypal-btn" href="#" target="_blank" class="dieta-btn-paypal">
+          <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal" style="height:20px;vertical-align:middle;margin-right:6px"/>
+          Pagar $20 USD con PayPal
+        </a>
+        <div class="dieta-aviso">
+          <p>📧 Después de pagar envía tu comprobante a <strong>vanecjr@gmail.com</strong></p>
+          <p>⏱ Recibirás tu dieta personalizada en <strong>24-48 horas</strong></p>
+        </div>
+        <button id="dieta-btn-reiniciar" class="btn-volver" style="margin-top:1rem">← Editar información</button>
+      </div>
+    </div>
   </div>
 
   <!-- Vista tabla (capa sobre todo) -->
@@ -1240,6 +1379,59 @@ $('btn-volver-recetas').addEventListener('click', () => renderRecetas());
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 actualizarBadge();
+
+// ── Dieta Personalizada ───────────────────────────────────────────────────────
+const FORMSPREE_ID = 'xkolnkgj';
+const PAYPAL_EMAIL = 'vanecjr@gmail.com';
+
+const dietaForm = $('dieta-form');
+const dietaPaso1 = $('dieta-paso-1');
+const dietaPaso2 = $('dieta-paso-2');
+const dietaMsg   = $('dieta-form-msg');
+
+function buildPayPalLink(data) {
+  const desc = encodeURIComponent(`Dieta Personalizada NutriInfo - ${data.nombre} - ${data.objetivo}`);
+  return `https://www.paypal.com/paypalme/vanecjr/20USD`;
+}
+
+dietaForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = dietaForm.querySelector('.dieta-btn-continuar');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  dietaMsg.innerHTML = '';
+
+  const fd = new FormData(dietaForm);
+  const data = Object.fromEntries(fd.entries());
+
+  try {
+    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: fd
+    });
+    if (res.ok) {
+      dietaPaso1.style.display = 'none';
+      $('dieta-paypal-btn').href = buildPayPalLink(data);
+      dietaPaso2.style.display = 'block';
+    } else {
+      dietaMsg.innerHTML = '<div class="dieta-form-err">Error al enviar. Intenta de nuevo.</div>';
+      btn.textContent = 'Continuar al pago →';
+      btn.disabled = false;
+    }
+  } catch {
+    dietaMsg.innerHTML = '<div class="dieta-form-err">Sin conexión. Intenta de nuevo.</div>';
+    btn.textContent = 'Continuar al pago →';
+    btn.disabled = false;
+  }
+});
+
+$('dieta-btn-reiniciar').addEventListener('click', () => {
+  dietaPaso2.style.display = 'none';
+  dietaPaso1.style.display = 'block';
+  dietaForm.querySelector('.dieta-btn-continuar').textContent = 'Continuar al pago →';
+  dietaForm.querySelector('.dieta-btn-continuar').disabled = false;
+});
 </script>
 </body>
 </html>
