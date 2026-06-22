@@ -368,42 +368,58 @@ header p  { color: #666; margin-top: 0.25rem; }
   <!-- Panel: Recetas -->
   <div class="panel" id="panel-recetas">
     <div id="recetas-categorias">
-      <p class="rec-seccion-label">Por objetivo:</p>
       <div class="rec-cat-grid">
-        <button class="rec-cat-btn" data-tipo="obj" data-val="bajar-peso">
+        <button class="rec-cat-btn" data-tipo="cat" data-val="air-fryer">
+          <span class="rec-cat-icon">🫕</span>
+          <div><span class="rec-cat-label">Air Fryer</span><span class="rec-cat-sub">Rápido · sin aceite extra</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="ensaladas">
+          <span class="rec-cat-icon">🥗</span>
+          <div><span class="rec-cat-label">Ensaladas</span><span class="rec-cat-sub">Frescas · ligeras</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="grill">
           <span class="rec-cat-icon">🔥</span>
-          <div><span class="rec-cat-label">Bajar grasa corporal</span><span class="rec-cat-sub">Déficit calórico · alta proteína</span></div>
+          <div><span class="rec-cat-label">Grill</span><span class="rec-cat-sub">A la parrilla · ahumado</span></div>
         </button>
-        <button class="rec-cat-btn" data-tipo="obj" data-val="ganar-musculo">
+        <button class="rec-cat-btn" data-tipo="cat" data-val="mediterraneo">
+          <span class="rec-cat-icon">🫒</span>
+          <div><span class="rec-cat-label">Mediterráneo</span><span class="rec-cat-sub">Aceite oliva · garbanzos</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="smoothies">
+          <span class="rec-cat-icon">🥤</span>
+          <div><span class="rec-cat-label">Smoothies</span><span class="rec-cat-sub">Batidos naturales</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="desayunos">
+          <span class="rec-cat-icon">🍳</span>
+          <div><span class="rec-cat-label">Desayunos</span><span class="rec-cat-sub">Energía para empezar</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="almuerzos">
+          <span class="rec-cat-icon">🍽️</span>
+          <div><span class="rec-cat-label">Almuerzos</span><span class="rec-cat-sub">Completos y balanceados</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="cenas">
+          <span class="rec-cat-icon">🌙</span>
+          <div><span class="rec-cat-label">Cenas</span><span class="rec-cat-sub">Ligeras · proteicas</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="alta-proteina">
           <span class="rec-cat-icon">💪</span>
-          <div><span class="rec-cat-label">Aumento de masa</span><span class="rec-cat-sub">Superávit calórico · máxima proteína</span></div>
+          <div><span class="rec-cat-label">Alta proteína / Bajo carb</span><span class="rec-cat-sub">Músculo · sin almidón</span></div>
         </button>
-        <button class="rec-cat-btn" data-tipo="obj" data-val="mantenimiento">
-          <span class="rec-cat-icon">⚖️</span>
-          <div><span class="rec-cat-label">Mantenimiento</span><span class="rec-cat-sub">Balance · variedad de macros</span></div>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="pre-workout">
+          <span class="rec-cat-icon">⚡</span>
+          <div><span class="rec-cat-label">Pre Workout</span><span class="rec-cat-sub">Energía antes de entrenar</span></div>
         </button>
-      </div>
-      <p class="rec-seccion-label" style="margin-top:1.25rem">Por tipo de proteína:</p>
-      <div class="rec-cat-grid">
-        <button class="rec-cat-btn" data-tipo="prot" data-val="pollo">
-          <span class="rec-cat-icon">🐔</span>
-          <div><span class="rec-cat-label">Pollo / Pavo</span><span class="rec-cat-sub">Alta proteína, baja grasa</span></div>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="post-workout">
+          <span class="rec-cat-icon">🏋️</span>
+          <div><span class="rec-cat-label">Post Workout</span><span class="rec-cat-sub">Recuperación muscular</span></div>
         </button>
-        <button class="rec-cat-btn" data-tipo="prot" data-val="res">
-          <span class="rec-cat-icon">🥩</span>
-          <div><span class="rec-cat-label">Carne de res</span><span class="rec-cat-sub">Proteína y hierro</span></div>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="sopas">
+          <span class="rec-cat-icon">🍲</span>
+          <div><span class="rec-cat-label">Sopas</span><span class="rec-cat-sub">Caldos y cremas</span></div>
         </button>
-        <button class="rec-cat-btn" data-tipo="prot" data-val="cochino">
-          <span class="rec-cat-icon">🐷</span>
-          <div><span class="rec-cat-label">Cochino / Cerdo</span><span class="rec-cat-sub">Sabor intenso, versátil</span></div>
-        </button>
-        <button class="rec-cat-btn" data-tipo="prot" data-val="pescado">
-          <span class="rec-cat-icon">🐟</span>
-          <div><span class="rec-cat-label">Pescado / Mariscos</span><span class="rec-cat-sub">Omega-3 · ligero</span></div>
-        </button>
-        <button class="rec-cat-btn" data-tipo="prot" data-val="huevo">
-          <span class="rec-cat-icon">🥚</span>
-          <div><span class="rec-cat-label">Huevo</span><span class="rec-cat-sub">Completo y económico</span></div>
+        <button class="rec-cat-btn" data-tipo="cat" data-val="detox">
+          <span class="rec-cat-icon">🥬</span>
+          <div><span class="rec-cat-label">Jugos Detox</span><span class="rec-cat-sub">Limpiar y energizar</span></div>
         </button>
       </div>
     </div>
@@ -1222,74 +1238,175 @@ function mostrarModalAgregarDia(producto) {
 
 // ── Recetas ───────────────────────────────────────────────────────────────────
 const RECETAS = [
-  // ── POLLO / PAVO ──────────────────────────────────────────────────────────────
-  { nombre:'Bowl de pollo y arroz', tiempo:25, objetivos:['ganar-musculo','mantenimiento'], proteina:'pollo',
-    ingredientes:[{id:'pollo-pechuga',g:150},{id:'arroz-blanco',g:180},{id:'aceite-oliva',g:10}],
-    pasos:['Cocina el pollo a la plancha con aceite de oliva.','Sirve sobre el arroz blanco cocido.','Sazona con sal y limón al gusto.'] },
-  { nombre:'Pechuga con yuca y aguacate', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'pollo',
-    ingredientes:[{id:'pollo-pechuga',g:180},{id:'yuca',g:200},{id:'aguacate',g:80}],
-    pasos:['Hierve la yuca hasta suave.','Cocina la pechuga a la plancha con poco aceite.','Sirve con aguacate en rodajas y limón.'] },
-  { nombre:'Pavo con quinoa y almendras', tiempo:30, objetivos:['bajar-peso','ganar-musculo'], proteina:'pollo',
-    ingredientes:[{id:'pavo-pechuga',g:200},{id:'quinoa',g:80},{id:'almendras',g:20},{id:'aceite-oliva',g:8}],
-    pasos:['Cocina la quinoa en agua o caldo (porción pequeña).','Cocina la pechuga de pavo a la plancha con aceite.','Sirve con almendras tostadas encima.'] },
-  { nombre:'Pollo con camote y nueces', tiempo:30, objetivos:['bajar-peso','mantenimiento'], proteina:'pollo',
-    ingredientes:[{id:'pollo-muslo',g:200},{id:'papa-dulce-camote',g:80},{id:'nuez-castilla',g:20},{id:'aceite-oliva',g:8}],
-    pasos:['Hornea el camote 20 min a 200°C (porción moderada).','Cocina el muslo de pollo a la plancha con aceite.','Sirve con nueces picadas encima.'] },
-  // ── CARNE DE RES ──────────────────────────────────────────────────────────────
-  { nombre:'Bowl de carne molida con batata', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'res',
+  // AIR FRYER
+  { nombre:'Pollo crujiente al air fryer', tiempo:22, cats:['air-fryer','alta-proteina','almuerzos'],
+    ingredientes:[{id:'pollo-pechuga',g:180},{id:'papa-dulce-camote',g:100},{id:'aceite-aguacate',g:8}],
+    pasos:['Corta la pechuga en tiras, sazona con ajo en polvo, paprika, sal y pimienta.','Rocía con aceite de aguacate.','Air fryer 200°C por 12-14 min, volteando a la mitad.','Mientras, cuece el camote en cubos al air fryer 15 min a 190°C.','Sirve con ensalada verde fresca.'] },
+  { nombre:'Salmón al air fryer con quinoa', tiempo:20, cats:['air-fryer','cenas','alta-proteina'],
+    ingredientes:[{id:'salmon',g:180},{id:'quinoa',g:80},{id:'aceite-aguacate',g:8},{id:'almendras',g:15}],
+    pasos:['Sazona el salmón con limón, ajo, sal y pimienta. Rocía con aceite de aguacate.','Air fryer 200°C por 8-10 min.','Sirve sobre quinoa cocida con almendras tostadas encima.'] },
+  { nombre:'Camarones al air fryer', tiempo:15, cats:['air-fryer','alta-proteina','cenas'],
+    ingredientes:[{id:'camaron-cocido',g:220},{id:'aguacate',g:80},{id:'aceite-oliva',g:8}],
+    pasos:['Sazona los camarones con ajo, limón, paprika y sal.','Air fryer 190°C por 6-8 min.','Sirve con aguacate en rodajas, limón y ensalada fresca.'] },
+  { nombre:'Chuleta de cerdo al air fryer', tiempo:20, cats:['air-fryer','almuerzos'],
+    ingredientes:[{id:'cerdo-chuleta',g:180},{id:'papa-dulce-camote',g:100},{id:'aceite-oliva',g:8}],
+    pasos:['Marina la chuleta con ajo, orégano, sal y aceite.','Air fryer 200°C por 12 min (6 por lado).','Camote en cubos al air fryer 15 min separado.','Sirve juntos con rodajas de limón.'] },
+
+  // ENSALADAS
+  { nombre:'Ensalada de atún con aguacate', tiempo:10, cats:['ensaladas','alta-proteina','cenas'],
+    ingredientes:[{id:'atun-lata',g:150},{id:'aguacate',g:100},{id:'garbanzo',g:80},{id:'aceite-oliva',g:10}],
+    pasos:['Escurre el atún y desmenúzalo.','Corta el aguacate en cubos.','Mezcla todo con garbanzos, tomate cherry, cebolla morada y pepino.','Aliña con aceite de oliva, limón, sal y pimienta.'] },
+  { nombre:'Ensalada de pollo con quinoa', tiempo:20, cats:['ensaladas','alta-proteina','almuerzos'],
+    ingredientes:[{id:'pollo-pechuga',g:150},{id:'quinoa',g:80},{id:'aguacate',g:70},{id:'aceite-oliva',g:10}],
+    pasos:['Cocina la quinoa y deja enfriar.','Cocina el pollo a la plancha y córtalo en tiras.','Mezcla quinoa, pollo, aguacate, tomate y lechuga.','Aliña con aceite de oliva, limón y sal.'] },
+  { nombre:'Ensalada mediterránea de garbanzos', tiempo:10, cats:['ensaladas','mediterraneo','cenas'],
+    ingredientes:[{id:'garbanzo',g:150},{id:'aguacate',g:80},{id:'aceite-oliva',g:15}],
+    pasos:['Escurre los garbanzos cocidos.','Mezcla con pepino, tomate, cebolla morada, aceitunas y aguacate.','Aliña con aceite de oliva extra virgen, limón, orégano y sal.','Sirve frío.'] },
+  { nombre:'Ensalada de salmón ahumado', tiempo:10, cats:['ensaladas','alta-proteina','cenas'],
+    ingredientes:[{id:'salmon',g:150},{id:'aguacate',g:80},{id:'aceite-oliva',g:10},{id:'nuez-castilla',g:20}],
+    pasos:['Desmorona el salmón sobre una cama de lechuga mixta.','Añade aguacate, pepino y tomate cherry.','Espolvorea nueces tostadas.','Aliña con aceite de oliva, limón y sal.'] },
+
+  // GRILL
+  { nombre:'Bistec a la parrilla con yuca', tiempo:25, cats:['grill','almuerzos','cenas'],
+    ingredientes:[{id:'res-bistec',g:200},{id:'yuca',g:180},{id:'aguacate',g:70},{id:'aceite-oliva',g:8}],
+    pasos:['Sazona el bistec con ajo, sal, pimienta y un toque de aceite.','Asa a la parrilla 4-5 min por lado al gusto.','Hierve la yuca hasta suave.','Sirve con yuca, aguacate en rodajas y limón.'] },
+  { nombre:'Pollo a la parrilla con camote', tiempo:30, cats:['grill','almuerzos','post-workout'],
+    ingredientes:[{id:'pollo-pechuga',g:200},{id:'papa-dulce-camote',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Marina el pollo con limón, ajo, orégano y aceite 15 min.','Asa a la parrilla 6-7 min por lado.','Hornea el camote en rodajas al grill 15 min.','Sirve con ensalada de tomate y cebolla.'] },
+  { nombre:'Salmón a la parrilla con quinoa', tiempo:25, cats:['grill','cenas','alta-proteina'],
+    ingredientes:[{id:'salmon',g:180},{id:'quinoa',g:80},{id:'aceite-aguacate',g:10},{id:'almendras',g:15}],
+    pasos:['Sazona el salmón con eneldo, limón y aceite de aguacate.','Asa a la parrilla 4-5 min por lado.','Sirve sobre quinoa con almendras tostadas y ensalada verde.'] },
+  { nombre:'Lomo de cerdo a la parrilla', tiempo:35, cats:['grill','almuerzos'],
+    ingredientes:[{id:'cerdo-lomo',g:200},{id:'papa-dulce-camote',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Marina el lomo con ajo, romero, sal y aceite 20 min.','Asa a la parrilla 7 min por lado.','Acompaña con camote asado y ensalada fresca.'] },
+
+  // MEDITERRÁNEO
+  { nombre:'Pollo mediterráneo con garbanzos', tiempo:30, cats:['mediterraneo','almuerzos'],
+    ingredientes:[{id:'pollo-pechuga',g:180},{id:'garbanzo',g:120},{id:'aceite-oliva',g:15},{id:'almendras',g:20}],
+    pasos:['Cocina el pollo con aceite de oliva, ajo, romero y tomillo.','Calienta los garbanzos con pimentón ahumado y limón.','Sirve el pollo sobre los garbanzos con almendras tostadas.','Decora con perejil fresco.'] },
+  { nombre:'Atún mediterráneo con garbanzos', tiempo:10, cats:['mediterraneo','alta-proteina','cenas'],
+    ingredientes:[{id:'atun-lata',g:140},{id:'garbanzo',g:120},{id:'aguacate',g:70},{id:'aceite-oliva',g:12}],
+    pasos:['Mezcla el atún escurrido con garbanzos, aguacate, aceitunas y tomate.','Aliña con aceite de oliva extra virgen, limón, orégano y sal marina.','Sirve frío con pan pita opcional.'] },
+  { nombre:'Salmón con espinaca y nueces', tiempo:20, cats:['mediterraneo','cenas','alta-proteina'],
+    ingredientes:[{id:'salmon',g:180},{id:'nuez-castilla',g:25},{id:'aceite-oliva',g:12}],
+    pasos:['Cocina el salmón en sartén con aceite de oliva y ajo 4 min por lado.','Saltea espinaca fresca con ajo y un poco de aceite.','Sirve el salmón sobre la espinaca con nueces picadas y limón.'] },
+
+  // SMOOTHIES
+  { nombre:'Smoothie verde proteico', tiempo:5, cats:['smoothies','pre-workout','desayunos'],
+    ingredientes:[{id:'huevo-entero',g:50},{id:'almendras',g:20},{id:'leche-entera',g:250}],
+    pasos:['Licúa: 1 taza de espinaca, 1 banana, leche, almendras y 1 huevo entero (pasteurizado).','Añade hielo al gusto.','Sirve inmediatamente.','Opcional: añade 1 cdta de semillas de chía.'] },
+  { nombre:'Batido de proteína con avena', tiempo:5, cats:['smoothies','post-workout','desayunos'],
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena-cocida',g:80},{id:'leche-entera',g:250},{id:'almendras',g:15}],
+    pasos:['Licúa avena, leche, huevos pasteurizados y almendras.','Añade canela, miel y una banana.','Sirve frío.','Para mayor proteína añade 2 cdas de mantequilla de maní natural.'] },
+  { nombre:'Smoothie tropical pre-entreno', tiempo:5, cats:['smoothies','pre-workout'],
+    ingredientes:[{id:'platano-tabasco',g:100},{id:'aceite-coco',g:8},{id:'leche-entera',g:200}],
+    pasos:['Licúa: plátano maduro, mango, piña, leche y aceite de coco.','Añade 1 pizca de jengibre fresco.','Sirve con hielo.','Consume 30-45 min antes de entrenar.'] },
+  { nombre:'Smoothie de fresa y aguacate', tiempo:5, cats:['smoothies','desayunos'],
+    ingredientes:[{id:'aguacate',g:70},{id:'leche-entera',g:250},{id:'almendras',g:15}],
+    pasos:['Licúa: 1 taza de fresas, aguacate, leche y almendras.','Añade miel al gusto y hielo.','Sirve inmediatamente.','Rico en grasas buenas y antioxidantes.'] },
+
+  // DESAYUNOS
+  { nombre:'Omelette de claras con vegetales', tiempo:15, cats:['desayunos','alta-proteina'],
+    ingredientes:[{id:'huevo-clara',g:200},{id:'huevo-entero',g:50},{id:'aceite-oliva',g:5}],
+    pasos:['Bate 5 claras con 1 huevo entero.','Saltea en aceite: pimentón, espinaca y cebolla 2 min.','Añade el huevo batido y cocina a fuego medio.','Dobla el omelette y sirve con aguacate.'] },
+  { nombre:'Avena con huevo y almendras', tiempo:15, cats:['desayunos','pre-workout'],
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena-cocida',g:80},{id:'almendras',g:25}],
+    pasos:['Prepara la avena con leche o agua.','Cocina los huevos revueltos con aceite.','Sirve la avena y los huevos juntos.','Añade almendras, canela y fruta fresca encima.'] },
+  { nombre:'Huevos con plátano y aceite de coco', tiempo:10, cats:['desayunos','pre-workout'],
+    ingredientes:[{id:'huevo-entero',g:150},{id:'platano-tabasco',g:120},{id:'aceite-coco',g:8}],
+    pasos:['Fríe los huevos en aceite de coco.','Sirve con plátano maduro tajado al lado.','Opcional: añade canela sobre el plátano.'] },
+  { nombre:'Bowl desayuno proteico con avena', tiempo:10, cats:['desayunos','post-workout'],
+    ingredientes:[{id:'avena-cocida',g:100},{id:'huevo-entero',g:100},{id:'almendras',g:20},{id:'leche-entera',g:150}],
+    pasos:['Cocina la avena con leche.','Añade huevos cocidos picados o revueltos al lado.','Decora con almendras, chía y fruta.','Ideal como desayuno o post-entreno matutino.'] },
+
+  // ALMUERZOS
+  { nombre:'Bowl de pollo y arroz', tiempo:25, cats:['almuerzos','post-workout'],
+    ingredientes:[{id:'pollo-pechuga',g:180},{id:'arroz-blanco',g:180},{id:'aceite-oliva',g:10}],
+    pasos:['Cocina el pollo a la plancha con aceite y especias.','Sirve sobre arroz blanco cocido.','Añade tomate, lechuga y pepino frescos al lado.','Sazona con sal y limón.'] },
+  { nombre:'Bowl de carne molida con batata', tiempo:30, cats:['almuerzos','post-workout'],
     ingredientes:[{id:'res-molida-90',g:150},{id:'papa-dulce-camote',g:200},{id:'queso-parmesano',g:20},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea la batata 20 min a 200°C.','Saltea la carne molida con ajo, cebolla y aceite hasta dorar.','Sirve la carne sobre la batata y espolvorea queso parmesano.','Acompaña con lechuga, tomate, pepino y cebolla frescos.'] },
-  { nombre:'Res con gandules y arroz', tiempo:40, objetivos:['ganar-musculo','mantenimiento'], proteina:'res',
+    pasos:['Hornea la batata 20 min a 200°C.','Saltea la carne molida con ajo, cebolla y aceite.','Sirve la carne sobre la batata con queso parmesano.','Acompaña con lechuga, tomate, pepino y cebolla.'] },
+  { nombre:'Res con gandules y arroz', tiempo:40, cats:['almuerzos'],
     ingredientes:[{id:'res-filete',g:180},{id:'gandules',g:150},{id:'arroz-blanco',g:120},{id:'aceite-oliva',g:10}],
-    pasos:['Cocina el filete al gusto.','Calienta los gandules con sofrito y aceite.','Sirve con arroz blanco.'] },
-  { nombre:'Bowl carne molida, batata y parmesano', tiempo:30, objetivos:['ganar-musculo'], proteina:'res',
-    ingredientes:[{id:'res-molida-80',g:180},{id:'papa-dulce-camote',g:220},{id:'queso-parmesano',g:25},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea la batata entera 25 min y ábrela por la mitad.','Saltea la carne molida con ajo y cebolla hasta bien dorada.','Rellena la batata con la carne.','Espolvorea queso parmesano generosamente.','Sirve con lechuga, tomate, cebolla y pepino frescos al lado.'] },
-  { nombre:'Bistec con yuca y aguacate', tiempo:25, objetivos:['mantenimiento','ganar-musculo'], proteina:'res',
-    ingredientes:[{id:'res-bistec',g:180},{id:'yuca',g:200},{id:'aguacate',g:70},{id:'aceite-oliva',g:8}],
-    pasos:['Hierve la yuca hasta suave.','Cocina el bistec a la plancha con aceite al gusto.','Sirve con aguacate en rodajas y limón.'] },
-  // ── COCHINO / CERDO ───────────────────────────────────────────────────────────
-  { nombre:'Lomo de cerdo con camote', tiempo:35, objetivos:['ganar-musculo','mantenimiento'], proteina:'cochino',
-    ingredientes:[{id:'cerdo-lomo',g:180},{id:'papa-dulce-camote',g:200},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea el camote 20 min a 200°C.','Cocina el lomo de cerdo a la plancha con aceite, sal y pimienta 5 min por lado.','Sirve juntos con ensalada fresca de tomate y cebolla.'] },
-  { nombre:'Chuleta de cerdo con arroz y aguacate', tiempo:30, objetivos:['mantenimiento','ganar-musculo'], proteina:'cochino',
-    ingredientes:[{id:'cerdo-chuleta',g:180},{id:'arroz-blanco',g:180},{id:'aguacate',g:70},{id:'aceite-oliva',g:8}],
-    pasos:['Cocina la chuleta a la plancha con aceite, ajo y sal 4 min por lado.','Sirve sobre arroz blanco.','Añade aguacate en rodajas al lado.'] },
-  { nombre:'Cerdo molido con gandules y arroz', tiempo:30, objetivos:['mantenimiento','ganar-musculo'], proteina:'cochino',
-    ingredientes:[{id:'cerdo-molido',g:160},{id:'gandules',g:150},{id:'arroz-blanco',g:150},{id:'aceite-oliva',g:8}],
-    pasos:['Saltea la carne molida de cerdo con sofrito y aceite.','Añade los gandules y mezcla bien.','Sirve sobre arroz blanco.'] },
-  { nombre:'Costilla de cerdo con yuca', tiempo:45, objetivos:['mantenimiento'], proteina:'cochino',
-    ingredientes:[{id:'cerdo-costilla',g:200},{id:'yuca',g:200},{id:'aceite-oliva',g:8}],
-    pasos:['Hierve la yuca hasta suave.','Cocina las costillas al horno 35 min a 190°C con aceite y sazón.','Sirve juntos con limón y ensalada fresca.'] },
-  // ── PESCADO / MARISCOS ────────────────────────────────────────────────────────
-  { nombre:'Salmón con camote y nueces', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'pescado',
-    ingredientes:[{id:'salmon',g:180},{id:'papa-dulce-camote',g:200},{id:'nuez-castilla',g:20},{id:'aceite-aguacate',g:10}],
-    pasos:['Hornea el camote 20 min a 200°C.','Cocina el salmón en sartén con aceite de aguacate 4 min por lado.','Sirve con nueces picadas encima.'] },
-  { nombre:'Tilapia con plátano verde', tiempo:25, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
+    pasos:['Cocina el filete a la plancha al gusto.','Calienta los gandules con sofrito y aceite.','Sirve con arroz blanco y ensalada fresca.'] },
+  { nombre:'Tilapia con plátano verde y ensalada', tiempo:25, cats:['almuerzos','cenas'],
     ingredientes:[{id:'tilapia',g:200},{id:'platano-verde',g:80},{id:'aceite-oliva',g:8}],
-    pasos:['Cocina la tilapia al vapor o plancha con aceite.','Hierve el plátano verde hasta suave (porción moderada).','Sirve con abundante lechuga, tomate y pepino.'] },
-  { nombre:'Camarones con arroz y aguacate', tiempo:20, objetivos:['ganar-musculo','bajar-peso'], proteina:'pescado',
-    ingredientes:[{id:'camaron-cocido',g:220},{id:'arroz-blanco',g:80},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
-    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre arroz blanco (porción pequeña).','Añade aguacate en rodajas al lado.'] },
-  { nombre:'Atún con garbanzo y aguacate', tiempo:10, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
+    pasos:['Cocina la tilapia a la plancha con aceite, ajo y limón.','Hierve el plátano verde hasta suave.','Sirve con abundante lechuga, tomate y pepino.'] },
+
+  // CENAS
+  { nombre:'Pechuga con yuca y aguacate', tiempo:25, cats:['cenas','alta-proteina'],
+    ingredientes:[{id:'pollo-pechuga',g:180},{id:'yuca',g:150},{id:'aguacate',g:80}],
+    pasos:['Hierve la yuca hasta suave.','Cocina la pechuga a la plancha con aceite, ajo y limón.','Sirve con aguacate en rodajas y ensalada verde.'] },
+  { nombre:'Salmón con camote y nueces', tiempo:25, cats:['cenas','alta-proteina'],
+    ingredientes:[{id:'salmon',g:180},{id:'papa-dulce-camote',g:100},{id:'nuez-castilla',g:20},{id:'aceite-aguacate',g:10}],
+    pasos:['Hornea el camote 20 min.','Cocina el salmón con aceite de aguacate 4 min por lado.','Sirve con nueces picadas y ensalada verde.'] },
+  { nombre:'Camarones con aguacate', tiempo:15, cats:['cenas','alta-proteina'],
+    ingredientes:[{id:'camaron-cocido',g:220},{id:'aguacate',g:80},{id:'aceite-oliva',g:8}],
+    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre lechuga mixta con aguacate.','Aliña con limón, sal y pimienta.','Cena ligera y alta en proteína.'] },
+  { nombre:'Mojarra con ensalada', tiempo:20, cats:['cenas','alta-proteina'],
+    ingredientes:[{id:'mojarra',g:220},{id:'aguacate',g:70},{id:'aceite-oliva',g:10}],
+    pasos:['Cocina la mojarra a la plancha con aceite, ajo y limón.','Sirve sobre cama de lechuga, tomate, cebolla y pepino.','Añade aguacate y aliña con aceite y limón.'] },
+
+  // ALTA PROTEÍNA / BAJO CARB
+  { nombre:'Pavo con quinoa y almendras', tiempo:30, cats:['alta-proteina','almuerzos'],
+    ingredientes:[{id:'pavo-pechuga',g:200},{id:'quinoa',g:80},{id:'almendras',g:20},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina la quinoa en caldo de pollo.','Cocina la pechuga de pavo a la plancha con aceite.','Sirve con almendras tostadas y ensalada.'] },
+  { nombre:'Claras de huevo con espinaca', tiempo:10, cats:['alta-proteina','desayunos','cenas'],
+    ingredientes:[{id:'huevo-clara',g:240},{id:'huevo-entero',g:50},{id:'aceite-oliva',g:5}],
+    pasos:['Bate 6 claras con 1 huevo entero.','Saltea espinaca fresca con ajo en aceite.','Añade el huevo batido y cocina.','Sirve con aguacate. Sin almidón, máxima proteína.'] },
+  { nombre:'Bowl de atún con garbanzo', tiempo:10, cats:['alta-proteina','cenas','ensaladas'],
     ingredientes:[{id:'atun-lata',g:140},{id:'garbanzo',g:100},{id:'aguacate',g:80},{id:'aceite-oliva',g:8}],
-    pasos:['Escurre el atún.','Mezcla con garbanzos y aguacate en cubos.','Aliña con aceite de oliva, limón y sal.','Acompaña con abundante lechuga, tomate y pepino frescos.'] },
-  { nombre:'Bowl de mojarra con camote', tiempo:30, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
-    ingredientes:[{id:'mojarra',g:220},{id:'papa-dulce-camote',g:80},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea el camote 20 min (porción pequeña).','Cocina la mojarra a la plancha con aceite y limón.','Completa el plato con ensalada fresca de tomate, lechuga y pepino.'] },
-  // ── HUEVO ─────────────────────────────────────────────────────────────────────
-  { nombre:'Omelette de claras con avena', tiempo:15, objetivos:['bajar-peso','ganar-musculo'], proteina:'huevo',
-    ingredientes:[{id:'huevo-clara',g:200},{id:'huevo-entero',g:50},{id:'avena-cocida',g:80},{id:'aceite-oliva',g:5}],
-    pasos:['Bate las claras con el huevo entero y cocina en aceite a fuego medio.','Sirve con avena cocida en porción pequeña.'] },
-  { nombre:'Huevos con plátano y aceite de coco', tiempo:10, objetivos:['mantenimiento','ganar-musculo'], proteina:'huevo',
-    ingredientes:[{id:'huevo-entero',g:150},{id:'platano-tabasco',g:120},{id:'avena-cocida',g:100},{id:'aceite-coco',g:8}],
-    pasos:['Fríe los huevos en aceite de coco.','Sirve con plátano maduro y avena cocida al lado.'] },
-  { nombre:'Avena con huevo y almendras', tiempo:15, objetivos:['bajar-peso','mantenimiento'], proteina:'huevo',
-    ingredientes:[{id:'huevo-entero',g:150},{id:'avena-cocida',g:80},{id:'almendras',g:25}],
-    pasos:['Prepara la avena cocida en porción pequeña.','Cocina los huevos revueltos aparte.','Sirve juntos con almendras troceadas y fruta al gusto.'] },
-  { nombre:'Batido de proteína natural', tiempo:5, objetivos:['ganar-musculo'], proteina:'huevo',
-    ingredientes:[{id:'huevo-entero',g:100},{id:'avena',g:40},{id:'leche-entera',g:250},{id:'almendras',g:15}],
-    pasos:['Licúa todos los ingredientes.','Sirve frío.'] },
+    pasos:['Mezcla atún con garbanzos, aguacate y pepino.','Aliña con aceite de oliva y limón.','Sin arroz ni pasta — carbohidratos solo del garbanzo.'] },
+
+  // PRE WORKOUT
+  { nombre:'Avena con banana y miel', tiempo:8, cats:['pre-workout','desayunos'],
+    ingredientes:[{id:'avena-cocida',g:100},{id:'platano-tabasco',g:120},{id:'almendras',g:15},{id:'leche-entera',g:200}],
+    pasos:['Cocina la avena con leche.','Añade banana en rodajas, almendras y 1 cdta de miel.','Come 45-60 min antes de entrenar.','Fuente de energía sostenida.'] },
+  { nombre:'Tostadas de camote con mantequilla de maní', tiempo:10, cats:['pre-workout'],
+    ingredientes:[{id:'papa-dulce-camote',g:200},{id:'almendras',g:20}],
+    pasos:['Corta el camote en rodajas de 1 cm.','Tuesta en sartén o air fryer hasta dorar.','Unta mantequilla de maní natural.','Come 30-45 min antes de entrenar.'] },
+  { nombre:'Batido pre-entreno de plátano', tiempo:5, cats:['pre-workout','smoothies'],
+    ingredientes:[{id:'platano-tabasco',g:120},{id:'avena-cocida',g:60},{id:'leche-entera',g:200},{id:'aceite-coco',g:8}],
+    pasos:['Licúa plátano maduro, avena, leche y aceite de coco.','Añade canela y 1 cdta de miel.','Toma 30 min antes del entreno.','Proporciona carbohidratos y energía rápida.'] },
+
+  // POST WORKOUT
+  { nombre:'Bowl post-entreno de pollo y arroz', tiempo:25, cats:['post-workout','almuerzos'],
+    ingredientes:[{id:'pollo-pechuga',g:200},{id:'arroz-blanco',g:200},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina el pollo a la plancha con especias.','Sirve sobre arroz blanco (carbos de recuperación).','Añade aguacate y vegetales frescos.','Consume en los primeros 30-60 min post-entreno.'] },
+  { nombre:'Batido recuperador con huevo y avena', tiempo:5, cats:['post-workout','smoothies'],
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena-cocida',g:80},{id:'leche-entera',g:250},{id:'almendras',g:15}],
+    pasos:['Licúa todos los ingredientes.','Añade banana y 1 cdta de miel.','Toma inmediatamente post-entreno.','Alto en proteína y carbohidratos de recuperación.'] },
+  { nombre:'Camarones con arroz post-entreno', tiempo:20, cats:['post-workout','almuerzos'],
+    ingredientes:[{id:'camaron-cocido',g:200},{id:'arroz-blanco',g:180},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
+    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre arroz blanco con aguacate.','Come dentro de la primera hora post-entreno.'] },
+
+  // SOPAS
+  { nombre:'Sopa de pollo con yuca', tiempo:40, cats:['sopas','almuerzos'],
+    ingredientes:[{id:'pollo-pechuga',g:200},{id:'yuca',g:200},{id:'aceite-oliva',g:8}],
+    pasos:['Hierve el pollo en 1.5L de agua con ajo, cebolla, coriandro y sal.','Retira el pollo, desmenuza y devuelve al caldo.','Añade yuca en trozos y cocina 20 min más.','Añade zanahoria, apio y cilantro fresco al final.'] },
+  { nombre:'Sopa de res con gandules', tiempo:50, cats:['sopas','almuerzos'],
+    ingredientes:[{id:'res-filete',g:180},{id:'gandules',g:150},{id:'yuca',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Dora la carne en aceite con ajo y cebolla.','Añade 1.5L de agua, gandules, yuca y zanahoria.','Cocina a fuego lento 35-40 min.','Sazona con sal, pimienta y cilantro.'] },
+  { nombre:'Crema de camote y pollo', tiempo:30, cats:['sopas','cenas'],
+    ingredientes:[{id:'papa-dulce-camote',g:250},{id:'pollo-pechuga',g:150},{id:'aceite-oliva',g:10}],
+    pasos:['Hornea el camote 20 min hasta suave.','Cocina el pollo y desmenuza.','Licúa el camote con caldo de pollo hasta cremoso.','Sirve la crema con trozos de pollo y aceite de oliva.'] },
+  { nombre:'Sopa de lentejas con vegetales', tiempo:35, cats:['sopas','almuerzos'],
+    ingredientes:[{id:'garbanzo',g:150},{id:'aceite-oliva',g:10}],
+    pasos:['Sofríe cebolla, ajo y zanahoria en aceite 3 min.','Añade lentejas o garbanzos, tomate triturado y caldo.','Cocina a fuego medio 25-30 min.','Sazona con comino, pimentón y sal.'] },
+
+  // JUGOS DETOX
+  { nombre:'Jugo verde detox', tiempo:5, cats:['detox'],
+    ingredientes:[{id:'aceite-oliva',g:5}],
+    pasos:['Licúa: 2 tazas de espinaca, 1 pepino, 1 manzana verde, jugo de 1 limón y jengibre.','Añade 1 taza de agua fría.','Cuela si prefieres sin pulpa.','Toma en ayunas por mejores resultados.'] },
+  { nombre:'Jugo de zanahoria, naranja y cúrcuma', tiempo:5, cats:['detox'],
+    ingredientes:[{id:'aceite-coco',g:5}],
+    pasos:['Extrae el jugo de 3 zanahorias y 2 naranjas.','Añade 1 cdta de cúrcuma y jengibre fresco.','Mezcla bien y sirve frío.','Anti-inflamatorio natural ideal en ayunas.'] },
+  { nombre:'Agua detox de pepino y menta', tiempo:5, cats:['detox'],
+    ingredientes:[],
+    pasos:['Corta 1 pepino en rodajas.','Añade hojas de menta fresca y jugo de 1 limón.','Agrega 1.5L de agua fría y hielo.','Deja reposar 1 hora o toma inmediatamente.','Hidratante, desinflamante y refrescante.'] },
+  { nombre:'Shot detox de limón y jengibre', tiempo:3, cats:['detox'],
+    ingredientes:[],
+    pasos:['Exprime 1 limón.','Ralla 1 cm de jengibre fresco y exprime su jugo.','Mezcla con 1 cdta de cúrcuma y pizca de pimienta negra.','Toma en ayunas de un sorbo.','Activa el metabolismo y limpia el hígado.'] },
 ];
 
 function calcReceta(rec) {
@@ -1306,8 +1423,12 @@ function calcReceta(rec) {
   return {kcal,prot,carb,grasa};
 }
 
-const OBJ_LABELS  = {'bajar-peso':'🔥 Bajar grasa corporal','ganar-musculo':'💪 Aumento de masa','mantenimiento':'⚖️ Mantenimiento'};
-const PROT_LABELS = {'pollo':'🐔 Pollo / Pavo','res':'🥩 Carne de res','cochino':'🐷 Cochino / Cerdo','pescado':'🐟 Pescado / Mariscos','huevo':'🥚 Huevo'};
+const CAT_LABELS = {
+  'air-fryer':'🫕 Air Fryer','ensaladas':'🥗 Ensaladas','grill':'🔥 Grill',
+  'mediterraneo':'🫒 Mediterráneo','smoothies':'🥤 Smoothies','desayunos':'🍳 Desayunos',
+  'almuerzos':'🍽️ Almuerzos','cenas':'🌙 Cenas','alta-proteina':'💪 Alta Proteína / Bajo Carb',
+  'pre-workout':'⚡ Pre Workout','post-workout':'🏋️ Post Workout','sopas':'🍲 Sopas','detox':'🥬 Jugos Detox'
+};
 
 function renderRecetas() {
   $('recetas-categorias').style.display = '';
@@ -1317,12 +1438,8 @@ function renderRecetas() {
 function mostrarRecetas(tipo, val) {
   $('recetas-categorias').style.display = 'none';
   $('recetas-lista').style.display = '';
-
-  const filtradas = tipo === 'obj'
-    ? RECETAS.filter(r => r.objetivos.includes(val))
-    : RECETAS.filter(r => r.proteina === val);
-
-  const titulo = tipo === 'obj' ? OBJ_LABELS[val] : PROT_LABELS[val];
+  const filtradas = RECETAS.filter(r => r.cats && r.cats.includes(val));
+  const titulo = CAT_LABELS[val] || val;
   const inner = $('recetas-lista-inner');
 
   inner.innerHTML = `<h3 style="font-size:1.05rem;color:#2d6a2d;margin-bottom:1rem">${titulo}</h3>` +
@@ -1346,12 +1463,12 @@ function mostrarRecetas(tipo, val) {
         </div>
         <div class="receta-detalle">
           <h4>Ingredientes:</h4>
-          <ul>${ingredsHtml}</ul>
+          <ul>${ingredsHtml || '<li style="color:#888;font-size:0.82rem">Ver preparación para ingredientes</li>'}</ul>
           <h4>Preparación:</h4>
           <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
             ${rec.pasos.map(p => `<li style="margin-bottom:4px">${p}</li>`).join('')}
           </ol>
-          <table class="receta-tabla-mini">
+          ${kcal > 0 ? `<table class="receta-tabla-mini">
             <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
             <tbody>
               <tr><td>⚡ Calorías</td><td>${Math.round(kcal)} kcal</td></tr>
@@ -1359,7 +1476,7 @@ function mostrarRecetas(tipo, val) {
               <tr><td>🌾 Carbohidratos</td><td>${carb.toFixed(1)} g</td></tr>
               <tr><td>🧈 Grasas</td><td>${grasa.toFixed(1)} g</td></tr>
             </tbody>
-          </table>
+          </table>` : ''}
         </div>
       </div>`;
     }).join('') : '<div class="spinner">Sin recetas en esta categoría.</div>');
