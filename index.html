@@ -248,12 +248,20 @@ header p  { color: #666; margin-top: 0.25rem; }
 .modal-btns .btn-cancel  { background:#f0f0f0; color:#555; }
 
 /* ── Recetas ── */
-.recetas-filtros { margin-bottom:1.25rem; display:flex; flex-direction:column; gap:0.75rem; }
-.filtro-grupo { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
-.filtro-grupo label { font-size:0.82rem; color:#555; white-space:nowrap; }
-.filtro-btns { display:flex; gap:0.35rem; flex-wrap:wrap; }
-.filtro-btn { padding:5px 12px; border-radius:20px; border:1px solid #c8e6c8; background:white; color:#555; font-size:0.8rem; cursor:pointer; transition:all 0.15s; }
-.filtro-btn.active { background:#2d6a2d; color:white; border-color:#2d6a2d; }
+.rec-cat-grid { display:flex; flex-direction:column; gap:0.85rem; }
+.rec-cat-btn {
+  display:flex; align-items:center; gap:1rem;
+  background:white; border:2px solid #e0f0e0; border-radius:16px;
+  padding:1.1rem 1.25rem; cursor:pointer; text-align:left;
+  transition:all 0.2s; width:100%;
+}
+.rec-cat-btn:hover { border-color:#4caf50; box-shadow:0 3px 12px rgba(76,175,80,0.15); }
+.rec-cat-btn[data-obj="bajar-peso"]    { border-left:5px solid #1565c0; }
+.rec-cat-btn[data-obj="ganar-musculo"] { border-left:5px solid #2d6a2d; }
+.rec-cat-btn[data-obj="mantenimiento"] { border-left:5px solid #e65100; }
+.rec-cat-icon  { font-size:2rem; line-height:1; }
+.rec-cat-label { font-weight:700; font-size:1rem; color:#1a2e1a; display:block; margin-bottom:2px; }
+.rec-cat-sub   { font-size:0.78rem; color:#888; display:block; }
 .receta-card { background:white; border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:0.85rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); cursor:pointer; transition:box-shadow 0.15s; }
 .receta-card:hover { box-shadow:0 3px 12px rgba(0,0,0,0.12); }
 .receta-card .rec-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0.5rem; }
@@ -321,27 +329,30 @@ header p  { color: #666; margin-top: 0.25rem; }
 
   <!-- Panel: Recetas -->
   <div class="panel" id="panel-recetas">
-    <div class="recetas-filtros">
-      <div class="filtro-grupo">
-        <label>Objetivo:</label>
-        <div class="filtro-btns" id="filtro-objetivo">
-          <button class="filtro-btn active" data-val="">Todos</button>
-          <button class="filtro-btn" data-val="bajar-peso">Bajar peso</button>
-          <button class="filtro-btn" data-val="ganar-musculo">Ganar músculo</button>
-          <button class="filtro-btn" data-val="mantenimiento">Mantenimiento</button>
-        </div>
-      </div>
-      <div class="filtro-grupo">
-        <label>Tiempo máx:</label>
-        <div class="filtro-btns" id="filtro-tiempo">
-          <button class="filtro-btn active" data-val="0">Cualquiera</button>
-          <button class="filtro-btn" data-val="15">≤15 min</button>
-          <button class="filtro-btn" data-val="30">≤30 min</button>
-          <button class="filtro-btn" data-val="60">≤60 min</button>
-        </div>
+    <div id="recetas-categorias">
+      <p style="color:#666;font-size:0.9rem;margin-bottom:1.25rem">Elige tu objetivo:</p>
+      <div class="rec-cat-grid">
+        <button class="rec-cat-btn" data-obj="bajar-peso">
+          <span class="rec-cat-icon">🔥</span>
+          <span class="rec-cat-label">Bajar grasa corporal</span>
+          <span class="rec-cat-sub">Déficit calórico · alta proteína</span>
+        </button>
+        <button class="rec-cat-btn" data-obj="ganar-musculo">
+          <span class="rec-cat-icon">💪</span>
+          <span class="rec-cat-label">Aumento de masa</span>
+          <span class="rec-cat-sub">Superávit calórico · máxima proteína</span>
+        </button>
+        <button class="rec-cat-btn" data-obj="mantenimiento">
+          <span class="rec-cat-icon">⚖️</span>
+          <span class="rec-cat-label">Mantenimiento</span>
+          <span class="rec-cat-sub">Balance · variedad de macros</span>
+        </button>
       </div>
     </div>
-    <div id="recetas-lista"></div>
+    <div id="recetas-lista" style="display:none">
+      <button id="btn-volver-recetas" class="btn-volver" style="margin-bottom:1rem;margin-top:0">← Objetivos</button>
+      <div id="recetas-lista-inner"></div>
+    </div>
   </div>
 
   <!-- Panel: Favoritos -->
@@ -1119,81 +1130,71 @@ function calcReceta(rec) {
   return {kcal,prot,carb,grasa};
 }
 
-let filtroObj='', filtroTiempo=0;
+const OBJ_LABELS = {'bajar-peso':'🔥 Bajar grasa corporal','ganar-musculo':'💪 Aumento de masa','mantenimiento':'⚖️ Mantenimiento'};
 
 function renderRecetas() {
-  const lista = $('recetas-lista');
-  const filtradas = RECETAS.filter(r=>{
-    if(filtroObj && !r.objetivos.includes(filtroObj)) return false;
-    if(filtroTiempo && r.tiempo > filtroTiempo) return false;
-    return true;
-  });
-  if(!filtradas.length){ lista.innerHTML='<div class="spinner">No hay recetas con esos filtros.</div>'; return; }
+  $('recetas-categorias').style.display = '';
+  $('recetas-lista').style.display = 'none';
+}
 
-  lista.innerHTML = filtradas.map((rec,i)=>{
-    const {kcal,prot,carb,grasa} = calcReceta(rec);
-    const tags = rec.objetivos.map(o=>`<span class="rec-tag ${o}">${{bajar-peso:'Bajar peso','ganar-musculo':'Ganar músculo',mantenimiento:'Mantenimiento'}[o]}</span>`).join('');
-    const ingredsHtml = rec.ingredientes.map(({id,g})=>{
-      const a=LOCALES.find(l=>l.id===id);
-      return a?`<li>${a.product_name} — ${g}g</li>`:'';
+function mostrarRecetasPorObj(obj) {
+  $('recetas-categorias').style.display = 'none';
+  $('recetas-lista').style.display = '';
+
+  const filtradas = RECETAS.filter(r => r.objetivos.includes(obj));
+  const inner = $('recetas-lista-inner');
+
+  inner.innerHTML = `<h3 style="font-size:1.05rem;color:#2d6a2d;margin-bottom:1rem">${OBJ_LABELS[obj]}</h3>` +
+    filtradas.map((rec, i) => {
+      const {kcal,prot,carb,grasa} = calcReceta(rec);
+      const ingredsHtml = rec.ingredientes.map(({id,g})=>{
+        const a = LOCALES.find(l=>l.id===id);
+        return a ? `<li>${a.product_name} — ${g}g</li>` : '';
+      }).join('');
+      return `
+      <div class="receta-card" data-idx="${i}">
+        <div class="rec-header">
+          <span class="rec-nombre">${rec.nombre}</span>
+          <span class="rec-tiempo">⏱ ${rec.tiempo} min</span>
+        </div>
+        <div class="rec-macros">
+          <span>⚡ ${Math.round(kcal)} kcal</span>
+          <span>💪 ${prot.toFixed(1)}g prot</span>
+          <span>🌾 ${carb.toFixed(1)}g carbs</span>
+          <span>🧈 ${grasa.toFixed(1)}g grasas</span>
+        </div>
+        <div class="receta-detalle">
+          <h4>Ingredientes:</h4>
+          <ul>${ingredsHtml}</ul>
+          <h4>Preparación:</h4>
+          <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
+            ${rec.pasos.map(p=>`<li style="margin-bottom:4px">${p}</li>`).join('')}
+          </ol>
+          <table class="receta-tabla-mini">
+            <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
+            <tbody>
+              <tr><td>⚡ Calorías</td><td>${Math.round(kcal)} kcal</td></tr>
+              <tr><td>💪 Proteínas</td><td>${prot.toFixed(1)} g</td></tr>
+              <tr><td>🌾 Carbohidratos</td><td>${carb.toFixed(1)} g</td></tr>
+              <tr><td>🧈 Grasas</td><td>${grasa.toFixed(1)} g</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`;
     }).join('');
-    return `
-    <div class="receta-card" data-rec="${i}">
-      <div class="rec-header">
-        <span class="rec-nombre">${rec.nombre}</span>
-        <span class="rec-tiempo">⏱ ${rec.tiempo} min</span>
-      </div>
-      <div class="rec-tags">${tags}</div>
-      <div class="rec-macros">
-        <span>⚡ ${Math.round(kcal)} kcal</span>
-        <span>💪 ${prot.toFixed(1)}g prot</span>
-        <span>🌾 ${carb.toFixed(1)}g carbs</span>
-        <span>🧈 ${grasa.toFixed(1)}g grasas</span>
-      </div>
-      <div class="receta-detalle" id="rec-det-${i}">
-        <h4>Ingredientes:</h4>
-        <ul>${ingredsHtml}</ul>
-        <h4>Preparación:</h4>
-        <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
-          ${rec.pasos.map(p=>`<li style="margin-bottom:4px">${p}</li>`).join('')}
-        </ol>
-        <table class="receta-tabla-mini">
-          <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
-          <tbody>
-            <tr><td>⚡ Calorías</td><td>${Math.round(kcal)} kcal</td></tr>
-            <tr><td>💪 Proteínas</td><td>${prot.toFixed(1)} g</td></tr>
-            <tr><td>🌾 Carbohidratos</td><td>${carb.toFixed(1)} g</td></tr>
-            <tr><td>🧈 Grasas</td><td>${grasa.toFixed(1)} g</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-  }).join('');
 
-  lista.querySelectorAll('.receta-card').forEach(card=>{
-    card.addEventListener('click', ()=>{
-      const det = card.querySelector('.receta-detalle');
-      det.classList.toggle('abierto');
+  inner.querySelectorAll('.receta-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.querySelector('.receta-detalle').classList.toggle('abierto');
     });
   });
 }
 
-document.querySelectorAll('#filtro-objetivo .filtro-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#filtro-objetivo .filtro-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    filtroObj = btn.dataset.val;
-    renderRecetas();
-  });
+document.querySelectorAll('.rec-cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => mostrarRecetasPorObj(btn.dataset.obj));
 });
-document.querySelectorAll('#filtro-tiempo .filtro-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#filtro-tiempo .filtro-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    filtroTiempo = parseInt(btn.dataset.val);
-    renderRecetas();
-  });
-});
+
+$('btn-volver-recetas').addEventListener('click', () => renderRecetas());
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 actualizarBadge();
