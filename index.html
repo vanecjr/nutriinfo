@@ -248,7 +248,8 @@ header p  { color: #666; margin-top: 0.25rem; }
 .modal-btns .btn-cancel  { background:#f0f0f0; color:#555; }
 
 /* ── Recetas ── */
-.rec-cat-grid { display:flex; flex-direction:column; gap:0.85rem; }
+.rec-seccion-label { font-size:0.82rem; font-weight:700; color:#555; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem; }
+.rec-cat-grid { display:flex; flex-direction:column; gap:0.6rem; }
 .rec-cat-btn {
   display:flex; align-items:center; gap:1rem;
   background:white; border:2px solid #e0f0e0; border-radius:16px;
@@ -330,27 +331,47 @@ header p  { color: #666; margin-top: 0.25rem; }
   <!-- Panel: Recetas -->
   <div class="panel" id="panel-recetas">
     <div id="recetas-categorias">
-      <p style="color:#666;font-size:0.9rem;margin-bottom:1.25rem">Elige tu objetivo:</p>
+      <p class="rec-seccion-label">Por objetivo:</p>
       <div class="rec-cat-grid">
-        <button class="rec-cat-btn" data-obj="bajar-peso">
+        <button class="rec-cat-btn" data-tipo="obj" data-val="bajar-peso">
           <span class="rec-cat-icon">🔥</span>
-          <span class="rec-cat-label">Bajar grasa corporal</span>
-          <span class="rec-cat-sub">Déficit calórico · alta proteína</span>
+          <div><span class="rec-cat-label">Bajar grasa corporal</span><span class="rec-cat-sub">Déficit calórico · alta proteína</span></div>
         </button>
-        <button class="rec-cat-btn" data-obj="ganar-musculo">
+        <button class="rec-cat-btn" data-tipo="obj" data-val="ganar-musculo">
           <span class="rec-cat-icon">💪</span>
-          <span class="rec-cat-label">Aumento de masa</span>
-          <span class="rec-cat-sub">Superávit calórico · máxima proteína</span>
+          <div><span class="rec-cat-label">Aumento de masa</span><span class="rec-cat-sub">Superávit calórico · máxima proteína</span></div>
         </button>
-        <button class="rec-cat-btn" data-obj="mantenimiento">
+        <button class="rec-cat-btn" data-tipo="obj" data-val="mantenimiento">
           <span class="rec-cat-icon">⚖️</span>
-          <span class="rec-cat-label">Mantenimiento</span>
-          <span class="rec-cat-sub">Balance · variedad de macros</span>
+          <div><span class="rec-cat-label">Mantenimiento</span><span class="rec-cat-sub">Balance · variedad de macros</span></div>
+        </button>
+      </div>
+      <p class="rec-seccion-label" style="margin-top:1.25rem">Por tipo de proteína:</p>
+      <div class="rec-cat-grid">
+        <button class="rec-cat-btn" data-tipo="prot" data-val="pollo">
+          <span class="rec-cat-icon">🐔</span>
+          <div><span class="rec-cat-label">Pollo / Pavo</span><span class="rec-cat-sub">Alta proteína, baja grasa</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="prot" data-val="res">
+          <span class="rec-cat-icon">🥩</span>
+          <div><span class="rec-cat-label">Carne de res</span><span class="rec-cat-sub">Proteína y hierro</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="prot" data-val="cochino">
+          <span class="rec-cat-icon">🐷</span>
+          <div><span class="rec-cat-label">Cochino / Cerdo</span><span class="rec-cat-sub">Sabor intenso, versátil</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="prot" data-val="pescado">
+          <span class="rec-cat-icon">🐟</span>
+          <div><span class="rec-cat-label">Pescado / Mariscos</span><span class="rec-cat-sub">Omega-3 · ligero</span></div>
+        </button>
+        <button class="rec-cat-btn" data-tipo="prot" data-val="huevo">
+          <span class="rec-cat-icon">🥚</span>
+          <div><span class="rec-cat-label">Huevo</span><span class="rec-cat-sub">Completo y económico</span></div>
         </button>
       </div>
     </div>
     <div id="recetas-lista" style="display:none">
-      <button id="btn-volver-recetas" class="btn-volver" style="margin-bottom:1rem;margin-top:0">← Objetivos</button>
+      <button id="btn-volver-recetas" class="btn-volver" style="margin-bottom:1rem;margin-top:0">← Recetas</button>
       <div id="recetas-lista-inner"></div>
     </div>
   </div>
@@ -1062,58 +1083,74 @@ function mostrarModalAgregarDia(producto) {
 
 // ── Recetas ───────────────────────────────────────────────────────────────────
 const RECETAS = [
-  // ── CON LOS 3 GRUPOS: PROTEÍNA + ALMIDÓN + GRASA ─────────────────────────────
-  { nombre:'Bowl de pollo y arroz', tiempo:25, objetivos:['ganar-musculo','mantenimiento'],
+  // ── POLLO / PAVO ──────────────────────────────────────────────────────────────
+  { nombre:'Bowl de pollo y arroz', tiempo:25, objetivos:['ganar-musculo','mantenimiento'], proteina:'pollo',
     ingredientes:[{id:'pollo-pechuga',g:150},{id:'arroz-blanco',g:180},{id:'aceite-oliva',g:10}],
     pasos:['Cocina el pollo a la plancha con aceite de oliva.','Sirve sobre el arroz blanco cocido.','Sazona con sal y limón al gusto.'] },
-  { nombre:'Bowl de carne molida con batata', tiempo:30, objetivos:['ganar-musculo','mantenimiento'],
-    ingredientes:[{id:'res-molida-90',g:150},{id:'papa-dulce-camote',g:200},{id:'queso-parmesano',g:20},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea la batata/camote 20 min a 200°C.','Saltea la carne molida con ajo, cebolla y aceite hasta dorar.','Sirve la carne sobre la batata y espolvorea queso parmesano.','Acompaña con lechuga, tomate, pepino y cebolla frescos.'] },
-  { nombre:'Salmón con camote y nueces', tiempo:30, objetivos:['ganar-musculo','mantenimiento'],
-    ingredientes:[{id:'salmon',g:180},{id:'papa-dulce-camote',g:200},{id:'nuez-castilla',g:20},{id:'aceite-aguacate',g:10}],
-    pasos:['Hornea el camote 20 min a 200°C.','Cocina el salmón en sartén con aceite de aguacate 4 min por lado.','Sirve con nueces picadas encima.'] },
-  { nombre:'Pechuga con yuca y aguacate', tiempo:30, objetivos:['ganar-musculo','mantenimiento'],
+  { nombre:'Pechuga con yuca y aguacate', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'pollo',
     ingredientes:[{id:'pollo-pechuga',g:180},{id:'yuca',g:200},{id:'aguacate',g:80}],
     pasos:['Hierve la yuca hasta suave.','Cocina la pechuga a la plancha con poco aceite.','Sirve con aguacate en rodajas y limón.'] },
-  { nombre:'Tilapia con plátano verde y aceite', tiempo:25, objetivos:['bajar-peso','mantenimiento'],
-    ingredientes:[{id:'tilapia',g:180},{id:'platano-verde',g:150},{id:'aceite-oliva',g:8}],
-    pasos:['Cocina la tilapia al vapor o plancha con aceite.','Hierve el plátano verde hasta suave.','Sirve con ensalada de lechuga, tomate y pepino.'] },
-  { nombre:'Camarones con arroz y aguacate', tiempo:20, objetivos:['ganar-musculo','bajar-peso'],
-    ingredientes:[{id:'camaron-cocido',g:200},{id:'arroz-blanco',g:150},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
-    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre arroz blanco.','Añade aguacate en rodajas al lado.'] },
-  { nombre:'Atún con garbanzo y aguacate', tiempo:10, objetivos:['bajar-peso','mantenimiento'],
-    ingredientes:[{id:'atun-lata',g:140},{id:'garbanzo',g:150},{id:'aguacate',g:80},{id:'aceite-oliva',g:8}],
-    pasos:['Escurre el atún.','Mezcla con garbanzos y aguacate en cubos.','Aliña con aceite de oliva, limón y sal.','Acompaña con lechuga, tomate y pepino frescos.'] },
-  { nombre:'Omelette de claras con avena', tiempo:15, objetivos:['bajar-peso','ganar-musculo'],
-    ingredientes:[{id:'huevo-clara',g:200},{id:'huevo-entero',g:50},{id:'avena-cocida',g:150},{id:'aceite-oliva',g:5}],
-    pasos:['Bate las claras con el huevo entero y cocina en aceite a fuego medio.','Sirve con avena cocida endulzada con fruta al gusto.'] },
-  { nombre:'Pavo con quinoa y almendras', tiempo:30, objetivos:['bajar-peso','ganar-musculo'],
+  { nombre:'Pavo con quinoa y almendras', tiempo:30, objetivos:['bajar-peso','ganar-musculo'], proteina:'pollo',
     ingredientes:[{id:'pavo-pechuga',g:180},{id:'quinoa',g:150},{id:'almendras',g:20},{id:'aceite-oliva',g:8}],
     pasos:['Cocina la quinoa en agua o caldo.','Cocina la pechuga de pavo a la plancha con aceite.','Sirve con almendras tostadas encima.'] },
-  { nombre:'Bowl de frijoles y arroz con aguacate', tiempo:20, objetivos:['bajar-peso','mantenimiento'],
-    ingredientes:[{id:'frijoles-neg',g:180},{id:'arroz-integral',g:150},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
-    pasos:['Calienta los frijoles con aceite y sazón.','Sirve sobre arroz integral.','Añade aguacate en rodajas.'] },
-  { nombre:'Lentejas con yuca y aceite', tiempo:35, objetivos:['bajar-peso','mantenimiento'],
-    ingredientes:[{id:'lentejas',g:200},{id:'yuca',g:150},{id:'aceite-oliva',g:10}],
-    pasos:['Cocina las lentejas con agua y sofrito.','Añade yuca en trozos los últimos 10 min.','Termina con un chorrito de aceite de oliva.'] },
-  { nombre:'Huevos con plátano y aceite de coco', tiempo:10, objetivos:['mantenimiento','ganar-musculo'],
-    ingredientes:[{id:'huevo-entero',g:150},{id:'platano-tabasco',g:120},{id:'avena-cocida',g:100},{id:'aceite-coco',g:8}],
-    pasos:['Fríe los huevos en aceite de coco.','Sirve con plátano maduro y avena cocida al lado.'] },
-  { nombre:'Res con gandules y aceite', tiempo:40, objetivos:['ganar-musculo','mantenimiento'],
+  { nombre:'Pollo con camote y nueces', tiempo:30, objetivos:['bajar-peso','mantenimiento'], proteina:'pollo',
+    ingredientes:[{id:'pollo-muslo',g:180},{id:'papa-dulce-camote',g:200},{id:'nuez-castilla',g:20},{id:'aceite-oliva',g:8}],
+    pasos:['Hornea el camote 20 min a 200°C.','Cocina el muslo de pollo a la plancha con aceite.','Sirve con nueces picadas encima.'] },
+  // ── CARNE DE RES ──────────────────────────────────────────────────────────────
+  { nombre:'Bowl de carne molida con batata', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'res',
+    ingredientes:[{id:'res-molida-90',g:150},{id:'papa-dulce-camote',g:200},{id:'queso-parmesano',g:20},{id:'aceite-oliva',g:10}],
+    pasos:['Hornea la batata 20 min a 200°C.','Saltea la carne molida con ajo, cebolla y aceite hasta dorar.','Sirve la carne sobre la batata y espolvorea queso parmesano.','Acompaña con lechuga, tomate, pepino y cebolla frescos.'] },
+  { nombre:'Res con gandules y arroz', tiempo:40, objetivos:['ganar-musculo','mantenimiento'], proteina:'res',
     ingredientes:[{id:'res-filete',g:180},{id:'gandules',g:150},{id:'arroz-blanco',g:120},{id:'aceite-oliva',g:10}],
     pasos:['Cocina el filete al gusto.','Calienta los gandules con sofrito y aceite.','Sirve con arroz blanco.'] },
-  { nombre:'Batido de proteína natural', tiempo:5, objetivos:['ganar-musculo'],
-    ingredientes:[{id:'huevo-entero',g:100},{id:'avena',g:40},{id:'leche-entera',g:250},{id:'almendras',g:15}],
-    pasos:['Licúa todos los ingredientes.','Sirve frío.'] },
-  { nombre:'Avena con huevo y almendras', tiempo:15, objetivos:['bajar-peso','mantenimiento'],
-    ingredientes:[{id:'huevo-entero',g:100},{id:'avena-cocida',g:250},{id:'almendras',g:25}],
-    pasos:['Prepara la avena cocida.','Cocina los huevos revueltos aparte.','Sirve juntos con almendras troceadas y fruta al gusto.'] },
-  { nombre:'Bowl de mojarra con camote', tiempo:30, objetivos:['bajar-peso','mantenimiento'],
+  { nombre:'Bowl carne molida, batata y parmesano', tiempo:30, objetivos:['ganar-musculo'], proteina:'res',
+    ingredientes:[{id:'res-molida-80',g:180},{id:'papa-dulce-camote',g:220},{id:'queso-parmesano',g:25},{id:'aceite-oliva',g:10}],
+    pasos:['Hornea la batata entera 25 min y ábrela por la mitad.','Saltea la carne molida con ajo y cebolla hasta bien dorada.','Rellena la batata con la carne.','Espolvorea queso parmesano generosamente.','Sirve con lechuga, tomate, cebolla y pepino frescos al lado.'] },
+  { nombre:'Bistec con yuca y aguacate', tiempo:25, objetivos:['mantenimiento','ganar-musculo'], proteina:'res',
+    ingredientes:[{id:'res-bistec',g:180},{id:'yuca',g:200},{id:'aguacate',g:70},{id:'aceite-oliva',g:8}],
+    pasos:['Hierve la yuca hasta suave.','Cocina el bistec a la plancha con aceite al gusto.','Sirve con aguacate en rodajas y limón.'] },
+  // ── COCHINO / CERDO ───────────────────────────────────────────────────────────
+  { nombre:'Lomo de cerdo con camote', tiempo:35, objetivos:['ganar-musculo','mantenimiento'], proteina:'cochino',
+    ingredientes:[{id:'cerdo-lomo',g:180},{id:'papa-dulce-camote',g:200},{id:'aceite-oliva',g:10}],
+    pasos:['Hornea el camote 20 min a 200°C.','Cocina el lomo de cerdo a la plancha con aceite, sal y pimienta 5 min por lado.','Sirve juntos con ensalada fresca de tomate y cebolla.'] },
+  { nombre:'Chuleta de cerdo con arroz y aguacate', tiempo:30, objetivos:['mantenimiento','ganar-musculo'], proteina:'cochino',
+    ingredientes:[{id:'cerdo-chuleta',g:180},{id:'arroz-blanco',g:180},{id:'aguacate',g:70},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina la chuleta a la plancha con aceite, ajo y sal 4 min por lado.','Sirve sobre arroz blanco.','Añade aguacate en rodajas al lado.'] },
+  { nombre:'Cerdo molido con gandules y arroz', tiempo:30, objetivos:['mantenimiento','ganar-musculo'], proteina:'cochino',
+    ingredientes:[{id:'cerdo-molido',g:160},{id:'gandules',g:150},{id:'arroz-blanco',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Saltea la carne molida de cerdo con sofrito y aceite.','Añade los gandules y mezcla bien.','Sirve sobre arroz blanco.'] },
+  { nombre:'Costilla de cerdo con yuca', tiempo:45, objetivos:['mantenimiento'], proteina:'cochino',
+    ingredientes:[{id:'cerdo-costilla',g:200},{id:'yuca',g:200},{id:'aceite-oliva',g:8}],
+    pasos:['Hierve la yuca hasta suave.','Cocina las costillas al horno 35 min a 190°C con aceite y sazón.','Sirve juntos con limón y ensalada fresca.'] },
+  // ── PESCADO / MARISCOS ────────────────────────────────────────────────────────
+  { nombre:'Salmón con camote y nueces', tiempo:30, objetivos:['ganar-musculo','mantenimiento'], proteina:'pescado',
+    ingredientes:[{id:'salmon',g:180},{id:'papa-dulce-camote',g:200},{id:'nuez-castilla',g:20},{id:'aceite-aguacate',g:10}],
+    pasos:['Hornea el camote 20 min a 200°C.','Cocina el salmón en sartén con aceite de aguacate 4 min por lado.','Sirve con nueces picadas encima.'] },
+  { nombre:'Tilapia con plátano verde', tiempo:25, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
+    ingredientes:[{id:'tilapia',g:180},{id:'platano-verde',g:150},{id:'aceite-oliva',g:8}],
+    pasos:['Cocina la tilapia al vapor o plancha con aceite.','Hierve el plátano verde hasta suave.','Sirve con lechuga, tomate y pepino.'] },
+  { nombre:'Camarones con arroz y aguacate', tiempo:20, objetivos:['ganar-musculo','bajar-peso'], proteina:'pescado',
+    ingredientes:[{id:'camaron-cocido',g:200},{id:'arroz-blanco',g:150},{id:'aguacate',g:60},{id:'aceite-oliva',g:8}],
+    pasos:['Saltea los camarones con ajo y aceite 3 min.','Sirve sobre arroz blanco.','Añade aguacate en rodajas al lado.'] },
+  { nombre:'Atún con garbanzo y aguacate', tiempo:10, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
+    ingredientes:[{id:'atun-lata',g:140},{id:'garbanzo',g:150},{id:'aguacate',g:80},{id:'aceite-oliva',g:8}],
+    pasos:['Escurre el atún.','Mezcla con garbanzos y aguacate en cubos.','Aliña con aceite de oliva, limón y sal.','Acompaña con lechuga, tomate y pepino frescos.'] },
+  { nombre:'Bowl de mojarra con camote', tiempo:30, objetivos:['bajar-peso','mantenimiento'], proteina:'pescado',
     ingredientes:[{id:'mojarra',g:200},{id:'papa-dulce-camote',g:180},{id:'aceite-oliva',g:10}],
     pasos:['Hornea el camote 20 min.','Cocina la mojarra a la plancha con aceite y limón.','Sirve con ensalada fresca de tomate y pepino.'] },
-  { nombre:'Bowl carne molida con batata y parmesano', tiempo:30, objetivos:['ganar-musculo'],
-    ingredientes:[{id:'res-molida-80',g:180},{id:'papa-dulce-camote',g:220},{id:'queso-parmesano',g:25},{id:'aceite-oliva',g:10}],
-    pasos:['Hornea la batata entera 25 min a 200°C y ábrela por la mitad.','Saltea la carne molida con ajo, cebolla picada y aceite hasta bien dorada.','Rellena la batata con la carne.','Espolvorea queso parmesano generosamente.','Sirve con lechuga, tomate, cebolla y pepino frescos al lado.'] },
+  // ── HUEVO ─────────────────────────────────────────────────────────────────────
+  { nombre:'Omelette de claras con avena', tiempo:15, objetivos:['bajar-peso','ganar-musculo'], proteina:'huevo',
+    ingredientes:[{id:'huevo-clara',g:200},{id:'huevo-entero',g:50},{id:'avena-cocida',g:150},{id:'aceite-oliva',g:5}],
+    pasos:['Bate las claras con el huevo entero y cocina en aceite a fuego medio.','Sirve con avena cocida y fruta al gusto.'] },
+  { nombre:'Huevos con plátano y aceite de coco', tiempo:10, objetivos:['mantenimiento','ganar-musculo'], proteina:'huevo',
+    ingredientes:[{id:'huevo-entero',g:150},{id:'platano-tabasco',g:120},{id:'avena-cocida',g:100},{id:'aceite-coco',g:8}],
+    pasos:['Fríe los huevos en aceite de coco.','Sirve con plátano maduro y avena cocida al lado.'] },
+  { nombre:'Avena con huevo y almendras', tiempo:15, objetivos:['bajar-peso','mantenimiento'], proteina:'huevo',
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena-cocida',g:250},{id:'almendras',g:25}],
+    pasos:['Prepara la avena cocida.','Cocina los huevos revueltos aparte.','Sirve juntos con almendras troceadas y fruta al gusto.'] },
+  { nombre:'Batido de proteína natural', tiempo:5, objetivos:['ganar-musculo'], proteina:'huevo',
+    ingredientes:[{id:'huevo-entero',g:100},{id:'avena',g:40},{id:'leche-entera',g:250},{id:'almendras',g:15}],
+    pasos:['Licúa todos los ingredientes.','Sirve frío.'] },
 ];
 
 function calcReceta(rec) {
@@ -1130,29 +1167,34 @@ function calcReceta(rec) {
   return {kcal,prot,carb,grasa};
 }
 
-const OBJ_LABELS = {'bajar-peso':'🔥 Bajar grasa corporal','ganar-musculo':'💪 Aumento de masa','mantenimiento':'⚖️ Mantenimiento'};
+const OBJ_LABELS  = {'bajar-peso':'🔥 Bajar grasa corporal','ganar-musculo':'💪 Aumento de masa','mantenimiento':'⚖️ Mantenimiento'};
+const PROT_LABELS = {'pollo':'🐔 Pollo / Pavo','res':'🥩 Carne de res','cochino':'🐷 Cochino / Cerdo','pescado':'🐟 Pescado / Mariscos','huevo':'🥚 Huevo'};
 
 function renderRecetas() {
   $('recetas-categorias').style.display = '';
   $('recetas-lista').style.display = 'none';
 }
 
-function mostrarRecetasPorObj(obj) {
+function mostrarRecetas(tipo, val) {
   $('recetas-categorias').style.display = 'none';
   $('recetas-lista').style.display = '';
 
-  const filtradas = RECETAS.filter(r => r.objetivos.includes(obj));
+  const filtradas = tipo === 'obj'
+    ? RECETAS.filter(r => r.objetivos.includes(val))
+    : RECETAS.filter(r => r.proteina === val);
+
+  const titulo = tipo === 'obj' ? OBJ_LABELS[val] : PROT_LABELS[val];
   const inner = $('recetas-lista-inner');
 
-  inner.innerHTML = `<h3 style="font-size:1.05rem;color:#2d6a2d;margin-bottom:1rem">${OBJ_LABELS[obj]}</h3>` +
-    filtradas.map((rec, i) => {
+  inner.innerHTML = `<h3 style="font-size:1.05rem;color:#2d6a2d;margin-bottom:1rem">${titulo}</h3>` +
+    (filtradas.length ? filtradas.map(rec => {
       const {kcal,prot,carb,grasa} = calcReceta(rec);
-      const ingredsHtml = rec.ingredientes.map(({id,g})=>{
-        const a = LOCALES.find(l=>l.id===id);
+      const ingredsHtml = rec.ingredientes.map(({id,g}) => {
+        const a = LOCALES.find(l => l.id === id);
         return a ? `<li>${a.product_name} — ${g}g</li>` : '';
       }).join('');
       return `
-      <div class="receta-card" data-idx="${i}">
+      <div class="receta-card">
         <div class="rec-header">
           <span class="rec-nombre">${rec.nombre}</span>
           <span class="rec-tiempo">⏱ ${rec.tiempo} min</span>
@@ -1168,7 +1210,7 @@ function mostrarRecetasPorObj(obj) {
           <ul>${ingredsHtml}</ul>
           <h4>Preparación:</h4>
           <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
-            ${rec.pasos.map(p=>`<li style="margin-bottom:4px">${p}</li>`).join('')}
+            ${rec.pasos.map(p => `<li style="margin-bottom:4px">${p}</li>`).join('')}
           </ol>
           <table class="receta-tabla-mini">
             <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
@@ -1181,7 +1223,7 @@ function mostrarRecetasPorObj(obj) {
           </table>
         </div>
       </div>`;
-    }).join('');
+    }).join('') : '<div class="spinner">Sin recetas en esta categoría.</div>');
 
   inner.querySelectorAll('.receta-card').forEach(card => {
     card.addEventListener('click', () => {
@@ -1191,7 +1233,7 @@ function mostrarRecetasPorObj(obj) {
 }
 
 document.querySelectorAll('.rec-cat-btn').forEach(btn => {
-  btn.addEventListener('click', () => mostrarRecetasPorObj(btn.dataset.obj));
+  btn.addEventListener('click', () => mostrarRecetas(btn.dataset.tipo, btn.dataset.val));
 });
 
 $('btn-volver-recetas').addEventListener('click', () => renderRecetas());
