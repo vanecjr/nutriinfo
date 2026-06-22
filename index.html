@@ -299,21 +299,21 @@ header p  { color: #666; margin-top: 0.25rem; }
 .rec-cat-icon  { font-size:2rem; line-height:1; }
 .rec-cat-label { font-weight:700; font-size:1rem; color:#1a2e1a; display:block; margin-bottom:2px; }
 .rec-cat-sub   { font-size:0.78rem; color:#888; display:block; }
-.receta-card { background:white; border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:0.85rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); cursor:pointer; transition:box-shadow 0.15s; }
-.receta-card:hover { box-shadow:0 3px 12px rgba(0,0,0,0.12); }
-.receta-card .rec-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:0.5rem; }
-.receta-card .rec-nombre { font-weight:700; font-size:1rem; color:#1a2e1a; }
-.receta-card .rec-tiempo { font-size:0.78rem; color:#888; white-space:nowrap; margin-left:0.5rem; }
-.receta-card .rec-tags { display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:0.6rem; }
-.rec-tag { padding:2px 9px; border-radius:20px; font-size:0.73rem; font-weight:600; }
-.rec-tag.bajar-peso    { background:#e3f2fd; color:#1565c0; }
-.rec-tag.ganar-musculo { background:#e8f5e9; color:#2d6a2d; }
-.rec-tag.mantenimiento { background:#fff3e0; color:#e65100; }
-.receta-card .rec-macros { display:flex; gap:1rem; font-size:0.82rem; color:#555; }
-.receta-card .rec-macros span { display:flex; align-items:center; gap:3px; }
-.receta-detalle { display:none; margin-top:0.75rem; border-top:1px solid #f0f0f0; padding-top:0.75rem; }
+.receta-card { background:white; border-radius:16px; margin-bottom:1rem; box-shadow:0 2px 10px rgba(0,0,0,0.09); cursor:pointer; transition:box-shadow 0.15s,transform 0.15s; overflow:hidden; }
+.receta-card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.14); transform:translateY(-2px); }
+.rec-img { width:100%; height:180px; object-fit:cover; display:block; background:#e0e0e0; }
+.rec-img-wrap { position:relative; }
+.rec-badges { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-end; padding:0.5rem 0.75rem; background:linear-gradient(to top,rgba(0,0,0,0.55),transparent); }
+.rec-badge-kcal { background:#ff6b35; color:white; font-size:0.78rem; font-weight:700; padding:4px 10px; border-radius:20px; }
+.rec-badge-tiempo { background:rgba(255,255,255,0.9); color:#333; font-size:0.78rem; font-weight:600; padding:4px 10px; border-radius:20px; }
+.rec-body { padding:0.85rem 1rem 0.9rem; }
+.receta-card .rec-nombre { font-weight:700; font-size:0.97rem; color:#1a2e1a; display:block; margin-bottom:0.45rem; }
+.rec-macros-row { display:flex; gap:0.6rem; flex-wrap:wrap; font-size:0.78rem; color:#666; margin-bottom:0.25rem; }
+.rec-macros-row span { background:#f4f9f4; padding:3px 8px; border-radius:12px; }
+.rec-expand-hint { font-size:0.75rem; color:#aaa; text-align:right; margin-top:0.3rem; }
+.receta-detalle { display:none; padding:0 1rem 1rem; border-top:1px solid #f0f0f0; }
 .receta-detalle.abierto { display:block; }
-.receta-detalle h4 { font-size:0.85rem; color:#555; margin-bottom:0.4rem; }
+.receta-detalle h4 { font-size:0.85rem; color:#555; margin:0.75rem 0 0.4rem; }
 .receta-detalle ul { padding-left:1.2rem; font-size:0.85rem; color:#444; margin-bottom:0.75rem; }
 .receta-detalle ul li { margin-bottom:2px; }
 .receta-tabla-mini { width:100%; border-collapse:collapse; font-size:0.82rem; }
@@ -1435,43 +1435,68 @@ function renderRecetas() {
   $('recetas-lista').style.display = 'none';
 }
 
+const CAT_PHOTOS = {
+  'air-fryer':    'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&h=360&fit=crop&q=80',
+  'ensaladas':    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=360&fit=crop&q=80',
+  'grill':        'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=360&fit=crop&q=80',
+  'mediterraneo': 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&h=360&fit=crop&q=80',
+  'smoothies':    'https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=600&h=360&fit=crop&q=80',
+  'desayunos':    'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&h=360&fit=crop&q=80',
+  'almuerzos':    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=360&fit=crop&q=80',
+  'cenas':        'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=360&fit=crop&q=80',
+  'alta-proteina':'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=360&fit=crop&q=80',
+  'pre-workout':  'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=360&fit=crop&q=80',
+  'post-workout': 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=600&h=360&fit=crop&q=80',
+  'sopas':        'https://images.unsplash.com/photo-1547592180-85f173990554?w=600&h=360&fit=crop&q=80',
+  'detox':        'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=600&h=360&fit=crop&q=80',
+};
+
 function mostrarRecetas(tipo, val) {
   $('recetas-categorias').style.display = 'none';
   $('recetas-lista').style.display = '';
   const filtradas = RECETAS.filter(r => r.cats && r.cats.includes(val));
   const titulo = CAT_LABELS[val] || val;
   const inner = $('recetas-lista-inner');
+  const fotoBase = CAT_PHOTOS[val] || CAT_PHOTOS['almuerzos'];
 
   inner.innerHTML = `<h3 style="font-size:1.05rem;color:#2d6a2d;margin-bottom:1rem">${titulo}</h3>` +
-    (filtradas.length ? filtradas.map(rec => {
+    (filtradas.length ? filtradas.map((rec, idx) => {
       const {kcal,prot,carb,grasa} = calcReceta(rec);
+      const foto = rec.foto || fotoBase;
       const ingredsHtml = rec.ingredientes.map(({id,g}) => {
         const a = LOCALES.find(l => l.id === id);
         return a ? `<li>${a.product_name} — ${g}g</li>` : '';
       }).join('');
+      const kcalStr = kcal > 0 ? `⚡ ${Math.round(kcal)} kcal` : '⚡ Ver receta';
       return `
       <div class="receta-card">
-        <div class="rec-header">
-          <span class="rec-nombre">${rec.nombre}</span>
-          <span class="rec-tiempo">⏱ ${rec.tiempo} min</span>
+        <div class="rec-img-wrap">
+          <img class="rec-img" src="${foto}" alt="${rec.nombre}" loading="${idx < 3 ? 'eager' : 'lazy'}" onerror="this.style.display='none'">
+          <div class="rec-badges">
+            <span class="rec-badge-kcal">${kcalStr}</span>
+            <span class="rec-badge-tiempo">⏱ ${rec.tiempo} min</span>
+          </div>
         </div>
-        <div class="rec-macros">
-          <span>⚡ ${Math.round(kcal)} kcal</span>
-          <span>💪 ${prot.toFixed(1)}g prot</span>
-          <span>🌾 ${carb.toFixed(1)}g carbs</span>
-          <span>🧈 ${grasa.toFixed(1)}g grasas</span>
+        <div class="rec-body">
+          <span class="rec-nombre">${rec.nombre}</span>
+          <div class="rec-macros-row">
+            <span>💪 ${prot.toFixed(1)}g prot</span>
+            <span>🌾 ${carb.toFixed(1)}g carbs</span>
+            <span>🧈 ${grasa.toFixed(1)}g grasas</span>
+          </div>
+          <div class="rec-expand-hint">Toca para ver receta ▾</div>
         </div>
         <div class="receta-detalle">
           <h4>Ingredientes:</h4>
-          <ul>${ingredsHtml || '<li style="color:#888;font-size:0.82rem">Ver preparación para ingredientes</li>'}</ul>
+          <ul>${ingredsHtml || '<li style="color:#888;font-size:0.82rem">Ver pasos de preparación</li>'}</ul>
           <h4>Preparación:</h4>
           <ol style="padding-left:1.2rem;font-size:0.85rem;color:#444;margin-bottom:0.75rem">
-            ${rec.pasos.map(p => `<li style="margin-bottom:4px">${p}</li>`).join('')}
+            ${rec.pasos.map(p => `<li style="margin-bottom:5px">${p}</li>`).join('')}
           </ol>
           ${kcal > 0 ? `<table class="receta-tabla-mini">
             <thead><tr><th>Nutriente</th><th>Total receta</th></tr></thead>
             <tbody>
-              <tr><td>⚡ Calorías</td><td>${Math.round(kcal)} kcal</td></tr>
+              <tr><td>⚡ Calorías</td><td><strong>${Math.round(kcal)} kcal</strong></td></tr>
               <tr><td>💪 Proteínas</td><td>${prot.toFixed(1)} g</td></tr>
               <tr><td>🌾 Carbohidratos</td><td>${carb.toFixed(1)} g</td></tr>
               <tr><td>🧈 Grasas</td><td>${grasa.toFixed(1)} g</td></tr>
@@ -1483,7 +1508,10 @@ function mostrarRecetas(tipo, val) {
 
   inner.querySelectorAll('.receta-card').forEach(card => {
     card.addEventListener('click', () => {
-      card.querySelector('.receta-detalle').classList.toggle('abierto');
+      const det = card.querySelector('.receta-detalle');
+      const hint = card.querySelector('.rec-expand-hint');
+      det.classList.toggle('abierto');
+      hint.textContent = det.classList.contains('abierto') ? 'Toca para cerrar ▴' : 'Toca para ver receta ▾';
     });
   });
 }
