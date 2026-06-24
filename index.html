@@ -967,7 +967,7 @@ function initCalorias() {
     });
 
     document.addEventListener('click', e => {
-      if (!$('cal-agregar') && !e.target.closest('.cal-agregar')) $('cal-sugerencias').innerHTML = '';
+      if (!e.target.closest('.cal-agregar')) $('cal-sugerencias').innerHTML = '';
     });
   }
 }
