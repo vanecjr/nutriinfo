@@ -306,6 +306,48 @@ header p  { color: #666; margin-top: 0.25rem; }
 .rec-badges { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:flex-end; padding:0.5rem 0.75rem; background:linear-gradient(to top,rgba(0,0,0,0.55),transparent); }
 .rec-badge-kcal { background:#ff6b35; color:white; font-size:0.78rem; font-weight:700; padding:4px 10px; border-radius:20px; }
 .rec-badge-tiempo { background:rgba(255,255,255,0.9); color:#333; font-size:0.78rem; font-weight:600; padding:4px 10px; border-radius:20px; }
+
+/* ── Contador de Calorías ─────────────────────────────────────── */
+.cal-header { background:white; border-radius:16px; padding:1rem 1.25rem; margin-bottom:1rem; box-shadow:0 1px 6px rgba(0,0,0,0.07); }
+.cal-fecha-wrap { display:flex; align-items:center; justify-content:center; gap:1rem; font-weight:700; font-size:1.05rem; margin-bottom:0.75rem; }
+.cal-fecha-wrap button { background:none; border:none; font-size:1.4rem; cursor:pointer; color:#e05a2b; padding:0 0.25rem; line-height:1; }
+.cal-meta-wrap { display:flex; align-items:center; justify-content:center; gap:0.5rem; font-size:0.88rem; color:#666; }
+.cal-meta-wrap input { width:70px; border:1.5px solid #e0e0e0; border-radius:8px; padding:4px 8px; font-size:0.9rem; text-align:center; }
+.cal-totales { display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; margin-bottom:0.75rem; }
+.cal-total-item { background:white; border-radius:14px; padding:0.85rem 0.5rem; text-align:center; box-shadow:0 1px 6px rgba(0,0,0,0.07); }
+.cal-total-num { display:block; font-size:1.3rem; font-weight:800; color:#e05a2b; }
+.cal-total-lbl { font-size:0.72rem; color:#888; }
+.cal-barra-wrap { background:#f0f0f0; border-radius:99px; height:10px; margin-bottom:1rem; overflow:hidden; }
+.cal-barra-fill { height:100%; background:linear-gradient(90deg,#e05a2b,#ff9f43); border-radius:99px; transition:width 0.4s; width:0%; }
+.cal-agregar { position:relative; margin-bottom:1rem; }
+.cal-agregar input { width:100%; box-sizing:border-box; padding:0.75rem 1rem; border:1.5px solid #e0e0e0; border-radius:12px; font-size:1rem; }
+.cal-agregar input:focus { outline:none; border-color:#e05a2b; }
+#cal-sugerencias { position:absolute; top:100%; left:0; right:0; background:white; border-radius:0 0 12px 12px; box-shadow:0 6px 20px rgba(0,0,0,0.12); z-index:50; max-height:260px; overflow-y:auto; }
+.cal-sug-item { padding:0.65rem 1rem; cursor:pointer; border-bottom:1px solid #f5f5f5; }
+.cal-sug-item:hover { background:#fff5f2; }
+.cal-sug-nombre { font-weight:600; font-size:0.9rem; }
+.cal-sug-kcal { font-size:0.78rem; color:#e05a2b; }
+.cal-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; display:flex; align-items:flex-end; justify-content:center; }
+.cal-modal { background:white; border-radius:20px 20px 0 0; padding:1.5rem; width:100%; max-width:480px; }
+.cal-modal h3 { margin:0 0 0.25rem; font-size:1.1rem; }
+.cal-modal p { margin:0 0 1rem; font-size:0.82rem; color:#888; }
+.cal-modal-gramos { display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem; }
+.cal-modal-gramos input { flex:1; padding:0.65rem 1rem; border:1.5px solid #e0e0e0; border-radius:10px; font-size:1rem; text-align:center; }
+.cal-modal-preview { background:#fff5f2; border-radius:10px; padding:0.75rem 1rem; margin-bottom:1rem; display:grid; grid-template-columns:repeat(4,1fr); gap:0.25rem; text-align:center; font-size:0.82rem; }
+.cal-modal-preview strong { display:block; font-size:1rem; color:#e05a2b; }
+.cal-modal-btns { display:flex; gap:0.75rem; }
+.cal-modal-btns button { flex:1; padding:0.75rem; border-radius:10px; border:none; font-weight:700; cursor:pointer; font-size:0.95rem; }
+.cal-btn-agregar { background:#e05a2b; color:white; }
+.cal-btn-cancelar { background:#f0f0f0; color:#555; }
+#cal-lista { display:flex; flex-direction:column; gap:0.5rem; }
+.cal-item { background:white; border-radius:12px; padding:0.75rem 1rem; display:flex; align-items:center; gap:0.75rem; box-shadow:0 1px 5px rgba(0,0,0,0.07); }
+.cal-item-info { flex:1; }
+.cal-item-nombre { font-weight:600; font-size:0.9rem; }
+.cal-item-det { font-size:0.78rem; color:#888; margin-top:2px; }
+.cal-item-kcal { font-weight:800; color:#e05a2b; font-size:1rem; white-space:nowrap; }
+.cal-item-del { background:none; border:none; color:#ccc; font-size:1.2rem; cursor:pointer; padding:0; line-height:1; }
+.cal-item-del:hover { color:#e05a2b; }
+.cal-vacio { text-align:center; color:#bbb; padding:2rem; font-size:0.9rem; }
 .rec-body { padding:0.85rem 1rem 0.9rem; }
 .receta-card .rec-nombre { font-weight:700; font-size:0.97rem; color:#1a2e1a; display:block; margin-bottom:0.45rem; }
 .rec-macros-row { display:flex; gap:0.6rem; flex-wrap:wrap; font-size:0.78rem; color:#666; margin-bottom:0.25rem; }
@@ -336,6 +378,7 @@ header p  { color: #666; margin-top: 0.25rem; }
     <button class="tab-btn" data-tab="recetas">🍽️ Recetas</button>
     <button class="tab-btn" data-tab="comparar">📊 Comparar <span id="badge-count" class="badge-comparar" style="display:none">0</span></button>
     <button class="tab-btn" data-tab="favoritos">⭐ Favoritos</button>
+    <button class="tab-btn" data-tab="calorias">🔥 Calorías</button>
     <button class="tab-btn tab-premium" data-tab="dieta">👑 Mi Dieta</button>
   </div>
 
@@ -427,6 +470,49 @@ header p  { color: #666; margin-top: 0.25rem; }
       <button id="btn-volver-recetas" class="btn-volver" style="margin-bottom:1rem;margin-top:0">← Recetas</button>
       <div id="recetas-lista-inner"></div>
     </div>
+  </div>
+
+  <!-- Panel: Calorías -->
+  <div class="panel" id="panel-calorias">
+    <div class="cal-header">
+      <div class="cal-fecha-wrap">
+        <button id="cal-prev">‹</button>
+        <span id="cal-fecha-label"></span>
+        <button id="cal-next">›</button>
+      </div>
+      <div class="cal-meta-wrap">
+        <span>Meta diaria:</span>
+        <input id="cal-meta" type="number" min="500" max="5000" placeholder="2000" />
+        <span>kcal</span>
+      </div>
+    </div>
+
+    <div class="cal-totales" id="cal-totales">
+      <div class="cal-total-item">
+        <span class="cal-total-num" id="ct-kcal">0</span>
+        <span class="cal-total-lbl">kcal</span>
+      </div>
+      <div class="cal-total-item">
+        <span class="cal-total-num" id="ct-prot">0g</span>
+        <span class="cal-total-lbl">proteína</span>
+      </div>
+      <div class="cal-total-item">
+        <span class="cal-total-num" id="ct-carb">0g</span>
+        <span class="cal-total-lbl">carbos</span>
+      </div>
+      <div class="cal-total-item">
+        <span class="cal-total-num" id="ct-grasa">0g</span>
+        <span class="cal-total-lbl">grasa</span>
+      </div>
+    </div>
+    <div class="cal-barra-wrap"><div class="cal-barra-fill" id="cal-barra-fill"></div></div>
+
+    <div class="cal-agregar">
+      <input id="cal-q" type="text" placeholder="Buscar alimento…" autocomplete="off" />
+      <div id="cal-sugerencias"></div>
+    </div>
+
+    <div id="cal-lista"></div>
   </div>
 
   <!-- Panel: Favoritos -->
@@ -695,6 +781,197 @@ let productoActual = null;
 function guardarFavs()  { localStorage.setItem('nutriFavs',  JSON.stringify(favoritos)); }
 function guardarComp()  { localStorage.setItem('nutriComp',  JSON.stringify(enComparacion)); }
 
+// ── Contador de Calorías ───────────────────────────────────────────────────────
+let calFechaOffset = 0; // 0=hoy, -1=ayer, etc.
+
+function calFechaKey(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toISOString().slice(0,10);
+}
+
+function calFechaLabel(offset) {
+  if (offset === 0) return 'Hoy';
+  if (offset === -1) return 'Ayer';
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return d.toLocaleDateString('es', {weekday:'long', day:'numeric', month:'short'});
+}
+
+function calCargarDia(key) {
+  return JSON.parse(localStorage.getItem('calDia_' + key) || '[]');
+}
+
+function calGuardarDia(key, items) {
+  localStorage.setItem('calDia_' + key, JSON.stringify(items));
+}
+
+function calGetMeta() {
+  return parseInt(localStorage.getItem('calMeta') || '2000');
+}
+
+function calRenderTotales(items) {
+  let kcal=0, prot=0, carb=0, grasa=0;
+  items.forEach(it => {
+    kcal  += it.kcal;
+    prot  += it.prot;
+    carb  += it.carb;
+    grasa += it.grasa;
+  });
+  $('ct-kcal').textContent  = Math.round(kcal);
+  $('ct-prot').textContent  = Math.round(prot)  + 'g';
+  $('ct-carb').textContent  = Math.round(carb)  + 'g';
+  $('ct-grasa').textContent = Math.round(grasa) + 'g';
+  const meta = calGetMeta();
+  const pct  = Math.min(100, Math.round(kcal / meta * 100));
+  $('cal-barra-fill').style.width = pct + '%';
+  $('cal-barra-fill').style.background = pct >= 100
+    ? 'linear-gradient(90deg,#e74c3c,#c0392b)'
+    : 'linear-gradient(90deg,#e05a2b,#ff9f43)';
+}
+
+function calRenderLista(items, key) {
+  const lista = $('cal-lista');
+  if (!items.length) {
+    lista.innerHTML = '<div class="cal-vacio">Aún no has registrado alimentos hoy.<br>Busca un alimento arriba para comenzar.</div>';
+    return;
+  }
+  lista.innerHTML = items.map((it, i) => `
+    <div class="cal-item">
+      <div class="cal-item-info">
+        <div class="cal-item-nombre">${it.nombre}</div>
+        <div class="cal-item-det">${it.g}g &nbsp;·&nbsp; P:${Math.round(it.prot)}g &nbsp;C:${Math.round(it.carb)}g &nbsp;G:${Math.round(it.grasa)}g</div>
+      </div>
+      <span class="cal-item-kcal">${Math.round(it.kcal)} kcal</span>
+      <button class="cal-item-del" data-i="${i}">✕</button>
+    </div>`).join('');
+  lista.querySelectorAll('.cal-item-del').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const items2 = calCargarDia(key);
+      items2.splice(+btn.dataset.i, 1);
+      calGuardarDia(key, items2);
+      calRenderLista(items2, key);
+      calRenderTotales(items2);
+    });
+  });
+}
+
+function calAbrirModal(alimento, key) {
+  const n = alimento.nutriments;
+  const kcal100  = parseFloat(n['energy-kcal_100g']) || 0;
+  const prot100  = parseFloat(n['proteins_100g'])    || 0;
+  const carb100  = parseFloat(n['carbohydrates_100g'])|| 0;
+  const grasa100 = parseFloat(n['fat_100g'])          || 0;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'cal-modal-overlay';
+  overlay.innerHTML = `
+    <div class="cal-modal">
+      <h3>${alimento.nombre || alimento.product_name_es || alimento.product_name || 'Alimento'}</h3>
+      <p>por 100g: ${Math.round(kcal100)} kcal · P:${Math.round(prot100)}g · C:${Math.round(carb100)}g · G:${Math.round(grasa100)}g</p>
+      <div class="cal-modal-gramos">
+        <span>Cantidad:</span>
+        <input id="cal-gramos-input" type="number" min="1" max="2000" value="100" />
+        <span>gramos</span>
+      </div>
+      <div class="cal-modal-preview" id="cal-modal-preview">
+        <div><strong id="mp-kcal">${Math.round(kcal100)}</strong>kcal</div>
+        <div><strong id="mp-prot">${Math.round(prot100)}g</strong>proteína</div>
+        <div><strong id="mp-carb">${Math.round(carb100)}g</strong>carbos</div>
+        <div><strong id="mp-grasa">${Math.round(grasa100)}g</strong>grasa</div>
+      </div>
+      <div class="cal-modal-btns">
+        <button class="cal-btn-cancelar">Cancelar</button>
+        <button class="cal-btn-agregar">+ Agregar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const inp = overlay.querySelector('#cal-gramos-input');
+  inp.addEventListener('input', () => {
+    const g = parseFloat(inp.value) || 0;
+    const f = g / 100;
+    overlay.querySelector('#mp-kcal').textContent  = Math.round(kcal100  * f);
+    overlay.querySelector('#mp-prot').textContent  = Math.round(prot100  * f) + 'g';
+    overlay.querySelector('#mp-carb').textContent  = Math.round(carb100  * f) + 'g';
+    overlay.querySelector('#mp-grasa').textContent = Math.round(grasa100 * f) + 'g';
+  });
+
+  overlay.querySelector('.cal-btn-cancelar').addEventListener('click', () => overlay.remove());
+  overlay.querySelector('.cal-btn-agregar').addEventListener('click', () => {
+    const g = parseFloat(inp.value) || 100;
+    const f = g / 100;
+    const items = calCargarDia(key);
+    items.push({
+      nombre: alimento.nombre || alimento.product_name_es || alimento.product_name || 'Alimento',
+      g,
+      kcal:  kcal100  * f,
+      prot:  prot100  * f,
+      carb:  carb100  * f,
+      grasa: grasa100 * f,
+    });
+    calGuardarDia(key, items);
+    calRenderLista(items, key);
+    calRenderTotales(items);
+    overlay.remove();
+    $('cal-q').value = '';
+    $('cal-sugerencias').innerHTML = '';
+  });
+}
+
+function initCalorias() {
+  const key = calFechaKey(calFechaOffset);
+  $('cal-fecha-label').textContent = calFechaLabel(calFechaOffset);
+  const meta = calGetMeta();
+  $('cal-meta').value = meta;
+
+  const items = calCargarDia(key);
+  calRenderTotales(items);
+  calRenderLista(items, key);
+
+  // navegación de fecha (solo asignar una vez)
+  if (!$('cal-prev')._calInit) {
+    $('cal-prev')._calInit = true;
+    $('cal-prev').addEventListener('click', () => { calFechaOffset--; initCalorias(); });
+    $('cal-next').addEventListener('click', () => { if (calFechaOffset < 0) { calFechaOffset++; initCalorias(); } });
+    $('cal-meta').addEventListener('change', () => {
+      localStorage.setItem('calMeta', $('cal-meta').value);
+      calRenderTotales(calCargarDia(calFechaKey(calFechaOffset)));
+    });
+
+    // Buscador de alimentos
+    $('cal-q').addEventListener('input', () => {
+      const q = $('cal-q').value.trim().toLowerCase();
+      const sug = $('cal-sugerencias');
+      if (q.length < 2) { sug.innerHTML = ''; return; }
+      const hits = LOCALES.filter(a =>
+        (a.nombre||'').toLowerCase().includes(q) ||
+        (a.product_name_es||'').toLowerCase().includes(q) ||
+        (a.product_name||'').toLowerCase().includes(q)
+      ).slice(0, 8);
+      if (!hits.length) { sug.innerHTML = '<div class="cal-sug-item" style="color:#aaa">Sin resultados</div>'; return; }
+      sug.innerHTML = hits.map((a,i) => {
+        const kcal = Math.round(parseFloat(a.nutriments?.['energy-kcal_100g']) || 0);
+        const nom  = a.nombre || a.product_name_es || a.product_name || '';
+        return `<div class="cal-sug-item" data-i="${i}">
+          <div class="cal-sug-nombre">${nom}</div>
+          <div class="cal-sug-kcal">${kcal} kcal / 100g</div>
+        </div>`;
+      }).join('');
+      sug.querySelectorAll('.cal-sug-item').forEach((el, i) => {
+        el.addEventListener('click', () => {
+          sug.innerHTML = '';
+          calAbrirModal(hits[i], calFechaKey(calFechaOffset));
+        });
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!$('cal-agregar') && !e.target.closest('.cal-agregar')) $('cal-sugerencias').innerHTML = '';
+    });
+  }
+}
+
 // ── Tabs ──────────────────────────────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -707,6 +984,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.dataset.tab === 'comparar')  renderComparar();
     if (btn.dataset.tab === 'midia')     renderMiDia();
     if (btn.dataset.tab === 'recetas')   renderRecetas();
+    if (btn.dataset.tab === 'calorias')  initCalorias();
   });
 });
 
