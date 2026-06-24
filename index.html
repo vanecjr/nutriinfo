@@ -331,8 +331,12 @@ header p  { color: #666; margin-top: 0.25rem; }
 .cal-modal { background:white; border-radius:20px 20px 0 0; padding:1.5rem; width:100%; max-width:480px; }
 .cal-modal h3 { margin:0 0 0.25rem; font-size:1.1rem; }
 .cal-modal p { margin:0 0 1rem; font-size:0.82rem; color:#888; }
+.cal-modal-unidad-sel { display:flex; gap:0.5rem; margin-bottom:0.75rem; }
+.cal-unidad-btn { flex:1; padding:0.5rem 0; border:1.5px solid #e0e0e0; border-radius:8px; background:white; font-size:0.82rem; font-weight:600; cursor:pointer; color:#888; transition:all 0.15s; }
+.cal-unidad-btn.active { background:#e05a2b; border-color:#e05a2b; color:white; }
 .cal-modal-gramos { display:flex; gap:0.75rem; align-items:center; margin-bottom:1rem; }
-.cal-modal-gramos input { flex:1; padding:0.65rem 1rem; border:1.5px solid #e0e0e0; border-radius:10px; font-size:1rem; text-align:center; }
+.cal-modal-gramos input { flex:1; padding:0.65rem 1rem; border:1.5px solid #e0e0e0; border-radius:10px; font-size:1.1rem; text-align:center; font-weight:700; }
+.cal-modal-gramos span { font-size:0.9rem; color:#666; min-width:60px; }
 .cal-modal-preview { background:#fff5f2; border-radius:10px; padding:0.75rem 1rem; margin-bottom:1rem; display:grid; grid-template-columns:repeat(4,1fr); gap:0.25rem; text-align:center; font-size:0.82rem; }
 .cal-modal-preview strong { display:block; font-size:1rem; color:#e05a2b; }
 .cal-modal-btns { display:flex; gap:0.75rem; }
@@ -840,7 +844,7 @@ function calRenderLista(items, key) {
     <div class="cal-item">
       <div class="cal-item-info">
         <div class="cal-item-nombre">${it.nombre}</div>
-        <div class="cal-item-det">${it.g}g &nbsp;·&nbsp; P:${Math.round(it.prot)}g &nbsp;C:${Math.round(it.carb)}g &nbsp;G:${Math.round(it.grasa)}g</div>
+        <div class="cal-item-det">${it.etiqueta || it.g+'g'} &nbsp;·&nbsp; P:${Math.round(it.prot)}g &nbsp;C:${Math.round(it.carb)}g &nbsp;G:${Math.round(it.grasa)}g</div>
       </div>
       <span class="cal-item-kcal">${Math.round(it.kcal)} kcal</span>
       <button class="cal-item-del" data-i="${i}">✕</button>
@@ -856,12 +860,27 @@ function calRenderLista(items, key) {
   });
 }
 
+// Peso en gramos por unidad típica según tipo de alimento
+const CAL_UNIDAD_G = {
+  'huevo-entero': 50, 'huevo-clara': 33, 'huevo-yema': 17,
+  'platano-tabasco': 120, 'platano-verde': 150, 'manzana': 180,
+  'naranja': 150, 'mandarina': 75, 'aguacate': 200, 'limon': 60,
+  'pan-integral': 30, 'tortilla-maiz': 30, 'tortilla-harina': 45,
+  'almendras': 1.2, 'nuez-castilla': 5, 'garbanzo': 100,
+  'leche-entera': 240, 'yogur-griego': 150, 'queso-parmesano': 10,
+};
+
+function calGrPerUnidad(alimento) {
+  return CAL_UNIDAD_G[alimento.id] || alimento.g_por_unidad || 100;
+}
+
 function calAbrirModal(alimento, key) {
   const n = alimento.nutriments;
   const kcal100  = parseFloat(n['energy-kcal_100g']) || 0;
   const prot100  = parseFloat(n['proteins_100g'])    || 0;
   const carb100  = parseFloat(n['carbohydrates_100g'])|| 0;
   const grasa100 = parseFloat(n['fat_100g'])          || 0;
+  const gPorUnidad = calGrPerUnidad(alimento);
 
   const overlay = document.createElement('div');
   overlay.className = 'cal-modal-overlay';
@@ -869,12 +888,17 @@ function calAbrirModal(alimento, key) {
     <div class="cal-modal">
       <h3>${alimento.nombre || alimento.product_name_es || alimento.product_name || 'Alimento'}</h3>
       <p>por 100g: ${Math.round(kcal100)} kcal · P:${Math.round(prot100)}g · C:${Math.round(carb100)}g · G:${Math.round(grasa100)}g</p>
-      <div class="cal-modal-gramos">
-        <span>Cantidad:</span>
-        <input id="cal-gramos-input" type="number" min="1" max="2000" value="100" />
-        <span>gramos</span>
+      <div class="cal-modal-unidad-sel">
+        <button class="cal-unidad-btn active" data-u="g">gramos</button>
+        <button class="cal-unidad-btn" data-u="oz">onzas</button>
+        <button class="cal-unidad-btn" data-u="taza">taza</button>
+        <button class="cal-unidad-btn" data-u="und">unidad</button>
       </div>
-      <div class="cal-modal-preview" id="cal-modal-preview">
+      <div class="cal-modal-gramos">
+        <input id="cal-gramos-input" type="number" min="0.1" max="2000" step="0.1" value="100" />
+        <span id="cal-unidad-label">g</span>
+      </div>
+      <div class="cal-modal-preview">
         <div><strong id="mp-kcal">${Math.round(kcal100)}</strong>kcal</div>
         <div><strong id="mp-prot">${Math.round(prot100)}g</strong>proteína</div>
         <div><strong id="mp-carb">${Math.round(carb100)}g</strong>carbos</div>
@@ -887,24 +911,48 @@ function calAbrirModal(alimento, key) {
     </div>`;
   document.body.appendChild(overlay);
 
+  let unidadActual = 'g';
+  const FACTOR = { g: 1, oz: 28.35, taza: 240, und: gPorUnidad };
+  const LABEL  = { g: 'g', oz: 'oz', taza: 'taza(s)', und: 'unidad(es)' };
+  const DEFAULT = { g: 100, oz: 3.5, taza: 1, und: 1 };
+
   const inp = overlay.querySelector('#cal-gramos-input');
-  inp.addEventListener('input', () => {
-    const g = parseFloat(inp.value) || 0;
-    const f = g / 100;
+  const lbl = overlay.querySelector('#cal-unidad-label');
+
+  function actualizarPreview() {
+    const cant = parseFloat(inp.value) || 0;
+    const gTotal = cant * FACTOR[unidadActual];
+    const f = gTotal / 100;
     overlay.querySelector('#mp-kcal').textContent  = Math.round(kcal100  * f);
     overlay.querySelector('#mp-prot').textContent  = Math.round(prot100  * f) + 'g';
     overlay.querySelector('#mp-carb').textContent  = Math.round(carb100  * f) + 'g';
     overlay.querySelector('#mp-grasa').textContent = Math.round(grasa100 * f) + 'g';
+  }
+
+  overlay.querySelectorAll('.cal-unidad-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      overlay.querySelectorAll('.cal-unidad-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      unidadActual = btn.dataset.u;
+      inp.value = DEFAULT[unidadActual];
+      lbl.textContent = LABEL[unidadActual];
+      actualizarPreview();
+    });
   });
+
+  inp.addEventListener('input', actualizarPreview);
 
   overlay.querySelector('.cal-btn-cancelar').addEventListener('click', () => overlay.remove());
   overlay.querySelector('.cal-btn-agregar').addEventListener('click', () => {
-    const g = parseFloat(inp.value) || 100;
+    const cant = parseFloat(inp.value) || 1;
+    const g = cant * FACTOR[unidadActual];
     const f = g / 100;
+    const etiqueta = `${cant} ${LABEL[unidadActual]} (${Math.round(g)}g)`;
     const items = calCargarDia(key);
     items.push({
       nombre: alimento.nombre || alimento.product_name_es || alimento.product_name || 'Alimento',
-      g,
+      g: Math.round(g),
+      etiqueta,
       kcal:  kcal100  * f,
       prot:  prot100  * f,
       carb:  carb100  * f,
