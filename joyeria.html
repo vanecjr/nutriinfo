@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>18K Miami Fine Jewelry</title>
+<meta name="description" content="18K Miami Fine Jewelry — joyería fina en oro de 18 quilates en Miami. Escríbenos por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f2ea;
+    --bg-soft: #efe7da;
+    --ink: #2b241b;
+    --muted: #85796a;
+    --gold: #a8834a;
+    --gold-light: #8a6a35;
+    --line: rgba(168, 131, 74, 0.28);
+    --wa: #25d366;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: 'Cormorant Garamond', serif; }
+
+  /* Navegación */
+  nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 6vw;
+    background: linear-gradient(to bottom, rgba(247,242,234,.96), rgba(247,242,234,0));
+    transition: background .4s;
+  }
+  nav.scrolled { background: rgba(247,242,234,.97); border-bottom: 1px solid var(--line); }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: .12em; }
+  .logo b { color: var(--gold); font-weight: 600; }
+  nav ul { display: flex; gap: 34px; list-style: none; }
+  nav ul a { font-size: .72rem; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); transition: color .3s; }
+  nav ul a:hover { color: var(--gold-light); }
+
+  /* Portada */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 16px 80px;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(168,131,74,.14), transparent 60%),
+      var(--bg);
+    position: relative;
+  }
+  .hero .eyebrow { font-size: .72rem; letter-spacing: .5em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif; font-weight: 400;
+    font-size: clamp(3rem, 9vw, 7rem); line-height: 1; letter-spacing: .04em;
+  }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .divider { width: 70px; height: 1px; background: var(--gold); margin: 34px auto; }
+  .hero p { max-width: 520px; color: var(--muted); font-size: .95rem; }
+  .hero .quote { font-size: clamp(1.4rem, 3vw, 1.9rem); font-style: italic; color: var(--ink); line-height: 1.35; max-width: 640px; margin-bottom: 18px; }
+  .hero .quote em { color: var(--gold); }
+  .btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 44px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 34px; font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+    border: 1px solid var(--gold); color: var(--gold-light); transition: all .35s;
+  }
+  .btn:hover { background: var(--gold); color: #fff; }
+  .btn.solid { background: var(--gold); color: #fff; }
+  .btn.solid:hover { background: var(--gold-light); color: #fff; }
+  .btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+  /* Secciones */
+  section { padding: 110px 6vw; }
+  .head { text-align: center; margin-bottom: 64px; }
+  .head .eyebrow { font-size: .7rem; letter-spacing: .45em; text-transform: uppercase; color: var(--gold); }
+  .head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.4rem); margin-top: 10px; }
+
+  /* Galería */
+  .gallery {
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    max-width: 1280px; margin: 0 auto;
+  }
+  .tile {
+    position: relative; aspect-ratio: 9 / 10; overflow: hidden; cursor: pointer;
+    background: linear-gradient(145deg, #efe7da, #e4d8c4);
+    border: 1px solid var(--line);
+  }
+  .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease, filter .6s; filter: saturate(.95); }
+  .tile:hover img { transform: scale(1.06); filter: saturate(1.1); }
+  .tile::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(43,36,27,.6), transparent 45%);
+    opacity: 0; transition: opacity .5s;
+  }
+  .tile:hover::after { opacity: 1; }
+  .tile .cap {
+    position: absolute; left: 22px; bottom: 18px; z-index: 2;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: #fff;
+    opacity: 0; transform: translateY(10px); transition: all .5s;
+  }
+  .tile:hover .cap { opacity: 1; transform: none; }
+  .tile .ph {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; color: var(--gold);
+  }
+  .tile .ph svg { width: 54px; height: 54px; stroke: var(--gold); fill: none; stroke-width: 1; opacity: .7; }
+  .tile .ph span { font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--muted); }
+  .gallery-cta { text-align: center; margin-top: 56px; }
+
+  /* Sobre nosotros */
+  .about { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .about-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; text-align: center; }
+  .about-grid h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.6rem; color: var(--gold-light); margin: 18px 0 10px; }
+  .about-grid p { color: var(--muted); font-size: .9rem; }
+  .about-grid .num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--gold); line-height: 1; }
+
+  /* Contacto */
+  .contact { text-align: center; }
+  .contact p { color: var(--muted); max-width: 520px; margin: 0 auto 40px; }
+
+  footer {
+    text-align: center; padding: 40px 16px; border-top: 1px solid var(--line);
+    font-size: .7rem; letter-spacing: .25em; text-transform: uppercase; color: var(--muted);
+  }
+  footer a { color: var(--gold); }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: center; justify-content: center; padding: 30px;
+    background: rgba(247,242,234,.97);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 92vw; max-height: 86vh; box-shadow: 0 20px 60px rgba(43,36,27,.25); }
+  .lb-btn {
+    position: absolute; background: none; border: none; color: var(--gold-light);
+    font-size: 2.4rem; cursor: pointer; padding: 10px 18px; font-family: 'Cormorant Garamond', serif;
+  }
+  .lb-close { top: 14px; right: 18px; }
+  .lb-prev { left: 10px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 10px; top: 50%; transform: translateY(-50%); }
+
+  /* WhatsApp flotante */
+  .wa-fab {
+    position: fixed; right: 24px; bottom: 24px; z-index: 90;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: var(--wa); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 28px rgba(0,0,0,.45); cursor: pointer; border: none;
+    animation: pulse 2.6s infinite;
+  }
+  .wa-fab svg { width: 32px; height: 32px; fill: #fff; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37,211,102,.5), 0 8px 28px rgba(0,0,0,.45); }
+    70% { box-shadow: 0 0 0 16px rgba(37,211,102,0), 0 8px 28px rgba(0,0,0,.45); }
+    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 8px 28px rgba(0,0,0,.45); }
+  }
+  .wa-box {
+    position: fixed; right: 24px; bottom: 100px; z-index: 90;
+    width: 330px; max-width: calc(100vw - 32px);
+    background: #fff; color: #1c1a16; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 18px 50px rgba(43,36,27,.25);
+    transform: translateY(20px) scale(.96); opacity: 0; pointer-events: none;
+    transition: all .35s ease;
+  }
+  .wa-box.open { transform: none; opacity: 1; pointer-events: auto; }
+  .wa-top { background: #2b241b; color: #f7f2ea; padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
+  .wa-avatar {
+    width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; color: #d9b878; font-size: 1.1rem; font-weight: 600;
+  }
+  .wa-top strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500; }
+  .wa-top small { color: #5fe08f; font-size: .7rem; }
+  .wa-x { margin-left: auto; background: none; border: none; color: #c9bfae; font-size: 1.5rem; cursor: pointer; }
+  .wa-body { padding: 20px 18px; background: #efe7da; }
+  .wa-msg { background: #fff; padding: 12px 14px; border-radius: 0 10px 10px 10px; font-size: .85rem; line-height: 1.5; max-width: 90%; }
+  .wa-form { display: flex; gap: 8px; padding: 12px; background: #fff; }
+  .wa-form input { flex: 1; border: 1px solid #d6cdbd; border-radius: 22px; padding: 10px 14px; font: inherit; font-size: .85rem; outline: none; }
+  .wa-form input:focus { border-color: var(--gold); }
+  .wa-form button { width: 42px; height: 42px; border-radius: 50%; border: none; background: var(--wa); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .wa-form button svg { width: 18px; height: 18px; fill: #fff; }
+
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s ease, transform 1s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    nav ul { display: none; }
+    section { padding: 80px 16px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .wa-fab { right: 16px; bottom: 16px; }
+    .wa-box { right: 16px; bottom: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo"><b>18K</b> MIAMI</a>
+  <ul>
+    <li><a href="#coleccion">Colección</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Fine Jewelry · Miami</div>
+  <h1>18K <em>Miami</em></h1>
+  <div class="divider"></div>
+  <p class="quote serif">“People don’t buy jewellery to have more things. They buy it to <em>feel</em> more like themselves.”</p>
+  <p>Joyería fina en oro de 18 quilates y diamantes, diseñada para lucirse todos los días.</p>
+  <div class="btns">
+    <a href="#coleccion" class="btn">Ver colección</a>
+    <a href="#" class="btn solid wa-link">
+      <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2S21.8 6.6 21.8 12 17.4 21.8 12 21.8zM12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>
+      Escríbenos
+    </a>
+  </div>
+</header>
+
+<section id="coleccion">
+  <div class="head reveal">
+    <div class="eyebrow">Instagram</div>
+    <h2 class="serif">Nuestra colección</h2>
+  </div>
+  <div class="gallery" id="gallery"></div>
+  <div class="gallery-cta reveal">
+    <a class="btn" id="ig-link" target="_blank" rel="noopener">Síguenos en Instagram</a>
+  </div>
+</section>
+
+<section id="nosotros" class="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="num">18K</div>
+      <h3>Oro auténtico</h3>
+      <p>Cada pieza en oro de 18 quilates, 75% oro puro, con brillo y durabilidad garantizados.</p>
+    </div>
+    <div class="reveal">
+      <div class="num">✦</div>
+      <h3>Diseño exclusivo</h3>
+      <p>Collares, anillos y aretes con diseños únicos: flores, mariposas, hojas y diamantes.</p>
+    </div>
+    <div class="reveal">
+      <div class="num">1:1</div>
+      <h3>Nuestro showroom</h3>
+      <p>Visítanos en Miami o escríbenos por WhatsApp: te asesoramos para encontrar la pieza perfecta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="head reveal">
+    <div class="eyebrow">Contacto</div>
+    <h2 class="serif">Hablemos de tu próxima joya</h2>
+  </div>
+  <p class="reveal">Pregunta por precios, disponibilidad o piezas personalizadas. Respondemos directamente por WhatsApp.</p>
+  <div class="btns reveal">
+    <a href="#" class="btn solid wa-link">Chatear por WhatsApp</a>
+    <a class="btn ig-link2" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> 18K Miami Fine Jewelry · <a class="ig-link2" target="_blank" rel="noopener">@18kmiamifinejewelry</a>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Cerrar">×</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Anterior">‹</button>
+  <img id="lb-img" alt="">
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Siguiente">›</button>
+</div>
+
+<!-- Chat de WhatsApp -->
+<div class="wa-box" id="wa-box">
+  <div class="wa-top">
+    <div class="wa-avatar">18K</div>
+    <div>
+      <strong>18K Miami Fine Jewelry</strong>
+      <small>● En línea</small>
+    </div>
+    <button class="wa-x" id="wa-x" aria-label="Cerrar">×</button>
+  </div>
+  <div class="wa-body">
+    <div class="wa-msg">Hola 👋 Bienvenido a 18K Miami Fine Jewelry. ¿Qué pieza te interesa? Escríbenos y te respondemos al instante.</div>
+  </div>
+  <form class="wa-form" id="wa-form">
+    <input id="wa-input" type="text" placeholder="Escribe tu mensaje…" autocomplete="off">
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+  </form>
+</div>
+<button class="wa-fab" id="wa-fab" aria-label="Chat de WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2S21.8 6.6 21.8 12 17.4 21.8 12 21.8zM12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.2 1.6 6L0 24l6.2-1.6c1.8 1 3.8 1.5 5.8 1.5 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>
+</button>
+
+<script>
+  // ===== CONFIGURACIÓN — edita aquí =====
+  const CONFIG = {
+    // Número de WhatsApp con código de país, solo dígitos (ej. 13055551234 para +1 305 555 1234)
+    whatsapp: '13050000000',
+    mensajeInicial: 'Hola, vi su página de 18K Miami Fine Jewelry y me interesa una pieza.',
+    instagram: 'https://www.instagram.com/18kmiamifinejewelry/',
+    // Fotos del Instagram (carpeta "fotos/"). Para agregar más, guarda la imagen ahí y añade una línea.
+    fotos: [
+      { src: 'fotos/1.jpg', titulo: 'Diamantes · Aretes y Collar Riviera' },
+      { src: 'fotos/2.jpg', titulo: 'Diamante Amarillo Pera' },
+      { src: 'fotos/3.jpg', titulo: 'Anillo Flor en Oro 18K' },
+      { src: 'fotos/4.jpg', titulo: 'Gargantilla de Hojas' },
+      { src: 'fotos/5.jpg', titulo: 'Anillos Abiertos con Diamantes' },
+      { src: 'fotos/6.jpg', titulo: 'Collar con Gemas' },
+      { src: 'fotos/7.jpg', titulo: 'Collar Mariposa' },
+      { src: 'fotos/8.jpg', titulo: 'Gargantilla Escamas' },
+      { src: 'fotos/9.jpg', titulo: 'Colección Margarita' },
+      { src: 'fotos/10.jpg', titulo: 'Dije Aguamarina' }
+    ]
+  };
+  // =====================================
+
+  const waUrl = (text) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+
+  // Enlaces
+  document.querySelectorAll('.wa-link').forEach(a => { a.href = waUrl(CONFIG.mensajeInicial); a.target = '_blank'; a.rel = 'noopener'; });
+  document.querySelectorAll('#ig-link, .ig-link2').forEach(a => a.href = CONFIG.instagram);
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Galería
+  const gem = '<svg viewBox="0 0 64 64"><path d="M14 8h36l10 16-28 32L4 24z"/><path d="M4 24h56M24 8l-6 16 14 32 14-32-6-16"/></svg>';
+  const gallery = document.getElementById('gallery');
+  const loaded = [];
+  CONFIG.fotos.forEach((f, i) => {
+    const tile = document.createElement('div');
+    tile.className = 'tile reveal';
+    tile.innerHTML = `<div class="ph">${gem}<span>${f.titulo}</span></div>`;
+    const img = new Image();
+    img.alt = f.titulo;
+    img.onload = () => {
+      tile.innerHTML = '';
+      tile.appendChild(img);
+      tile.insertAdjacentHTML('beforeend', `<div class="cap">${f.titulo}</div>`);
+      loaded[i] = f;
+      tile.onclick = () => openLb(i);
+    };
+    img.src = f.src;
+    // Sin foto todavía: el recuadro abre Instagram
+    tile.onclick = () => window.open(CONFIG.instagram, '_blank', 'noopener');
+    gallery.appendChild(tile);
+  });
+
+  // Lightbox
+  const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img');
+  let cur = 0;
+  const shown = () => loaded.map((f, i) => f ? i : -1).filter(i => i >= 0);
+  function openLb(i) { cur = i; lbImg.src = CONFIG.fotos[i].src; lbImg.alt = CONFIG.fotos[i].titulo; lb.classList.add('open'); }
+  function step(d) { const s = shown(); const k = (s.indexOf(cur) + d + s.length) % s.length; openLb(s[k]); }
+  document.getElementById('lb-close').onclick = () => lb.classList.remove('open');
+  document.getElementById('lb-prev').onclick = (e) => { e.stopPropagation(); step(-1); };
+  document.getElementById('lb-next').onclick = (e) => { e.stopPropagation(); step(1); };
+  lb.onclick = (e) => { if (e.target === lb) lb.classList.remove('open'); };
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') lb.classList.remove('open');
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  // Chat de WhatsApp
+  const box = document.getElementById('wa-box');
+  document.getElementById('wa-fab').onclick = () => { box.classList.toggle('open'); if (box.classList.contains('open')) document.getElementById('wa-input').focus(); };
+  document.getElementById('wa-x').onclick = () => box.classList.remove('open');
+  document.getElementById('wa-form').onsubmit = (e) => {
+    e.preventDefault();
+    const t = document.getElementById('wa-input').value.trim() || CONFIG.mensajeInicial;
+    window.open(waUrl(t), '_blank', 'noopener');
+  };
+
+  // Nav y animaciones
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
