@@ -111,7 +111,10 @@
   .salon .left p { justify-self: end; }
   .vitrine { position: relative; padding: 14px 14px 0; border: 1px solid var(--line-strong); border-bottom: none; background: linear-gradient(180deg, rgba(255, 240, 205, .08), rgba(255, 240, 205, .02)); box-shadow: inset 0 0 40px rgba(212, 175, 106, .08); }
   .vitrine::before { content: ''; position: absolute; left: 10%; right: 10%; top: -140px; height: 160px; background: radial-gradient(ellipse at 50% 100%, rgba(255, 230, 175, .35), transparent 70%); pointer-events: none; }
-  .vitrine img { width: 100%; aspect-ratio: 5 / 6; object-fit: cover; filter: saturate(.95) contrast(1.05); }
+  .vitrine .slides { position: relative; aspect-ratio: 5 / 6; overflow: hidden; }
+  .vitrine .slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.95) contrast(1.05); }
+  .vitrine .slides img + img { opacity: 0; animation: swap 12s ease-in-out infinite; }
+  @keyframes swap { 0%, 38% { opacity: 0; } 50%, 88% { opacity: 1; } 100% { opacity: 0; } }
   .vitrine .base { height: 26px; margin: 0 -14px; background: linear-gradient(180deg, #2a2016, #120d08); border-top: 1px solid var(--line-strong); }
   .vitrine .stand { height: 60px; margin: 0 20%; background: linear-gradient(90deg, #0d0a07, #1d160e, #0d0a07); }
 
@@ -302,7 +305,7 @@
       <p>18k Miami es una joyería fina con showroom en el Seybold Building, el corazón del distrito de joyería de Miami. Diseños propios, piedras de color y diamantes, siempre sobre oro de 18 quilates.</p>
     </div>
     <div class="vitrine reveal">
-      <img src="fotos/riviera-diamantes.jpg" alt="Collar riviera de diamantes con dije en oro blanco 18K">
+      <div class="slides"><img src="fotos/riviera-diamantes.jpg" alt="Modelo con collar riviera de diamantes y dije"><img src="fotos/busto-collar.jpg" alt="El mismo collar de diamantes exhibido en un busto de terciopelo"></div>
       <div class="base"></div>
       <div class="stand"></div>
     </div>
