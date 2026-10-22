@@ -10,11 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --night: #0a0806;
-    --night-2: #110d09;
-    --panel: rgba(30, 23, 15, 0.62);
+    --night: #2b2017;
+    --night-2: #34281c;
+    --panel: rgba(72, 55, 36, 0.55);
     --ink: #f3ead9;
-    --muted: #b3a68f;
+    --muted: #cbbda3;
     --label: #c9ad78;
     --gold: #d4af6a;
     --gold-deep: #a07e3f;
@@ -42,7 +42,7 @@
 
   /* Navegación */
   nav { position: fixed; inset: 0 0 auto 0; z-index: 60; transition: background .4s, border-color .4s; border-bottom: 1px solid transparent; }
-  nav.solid { background: rgba(10, 8, 6, .9); backdrop-filter: blur(10px); border-color: var(--line); }
+  nav.solid { background: rgba(43, 32, 23, .92); backdrop-filter: blur(10px); border-color: var(--line); }
   nav .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: 18px; }
   nav ul { display: flex; gap: 30px; list-style: none; }
   nav ul a { font-size: .68rem; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); transition: color .3s; }
@@ -194,7 +194,7 @@
     70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0), 0 8px 26px rgba(0, 0, 0, .5); }
     100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 8px 26px rgba(0, 0, 0, .5); }
   }
-  .wa-box { position: fixed; right: 22px; bottom: 96px; z-index: 90; width: 330px; max-width: calc(100vw - 32px); background: #15100b; border: 1px solid var(--line-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 18px 50px rgba(0, 0, 0, .6); transform: translateY(16px) scale(.97); opacity: 0; pointer-events: none; transition: transform .3s, opacity .3s; }
+  .wa-box { position: fixed; right: 22px; bottom: 96px; z-index: 90; width: 330px; max-width: calc(100vw - 32px); background: #33271b; border: 1px solid var(--line-strong); border-radius: 16px; overflow: hidden; box-shadow: 0 18px 50px rgba(0, 0, 0, .6); transform: translateY(16px) scale(.97); opacity: 0; pointer-events: none; transition: transform .3s, opacity .3s; }
   .wa-box.open { transform: none; opacity: 1; pointer-events: auto; }
   .wa-top { padding: 14px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); }
   .wa-avatar { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; flex: none; }
@@ -203,9 +203,9 @@
   .wa-top small { color: #5fe08f; font-size: .7rem; }
   .wa-x { margin-left: auto; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
   .wa-body { padding: 18px 16px; background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 106, .1), transparent 70%); }
-  .wa-msg { background: #221a11; border: 1px solid var(--line); padding: 11px 14px; border-radius: 0 12px 12px 12px; font-size: .86rem; line-height: 1.5; max-width: 92%; }
+  .wa-msg { background: #3f3123; border: 1px solid var(--line); padding: 11px 14px; border-radius: 0 12px 12px 12px; font-size: .86rem; line-height: 1.5; max-width: 92%; }
   .wa-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
-  .wa-form input { flex: 1; min-width: 0; background: #0d0a07; color: var(--ink); border: 1px solid var(--line); border-radius: 22px; padding: 10px 14px; font: inherit; font-size: .85rem; outline: none; }
+  .wa-form input { flex: 1; min-width: 0; background: #261d14; color: var(--ink); border: 1px solid var(--line); border-radius: 22px; padding: 10px 14px; font: inherit; font-size: .85rem; outline: none; }
   .wa-form input:focus { border-color: var(--gold); }
   .wa-form button { width: 42px; height: 42px; border-radius: 50%; border: none; background: var(--wa); cursor: pointer; display: flex; align-items: center; justify-content: center; flex: none; }
   .wa-form button svg { width: 18px; height: 18px; fill: #fff; }
